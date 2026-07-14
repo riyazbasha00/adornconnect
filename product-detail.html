@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Details - ADORN.AE</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    :root{
+      --blue:#4a327e;--blue-light:#6D3BFF;--blue-lighter:#eef1ff;
+      --orange:#FF9A3D;
+      --gradient:linear-gradient(135deg,#4a327e 0%,#6D3BFF 35%,#FF4E8A 70%,#FF9A3D 100%);
+      --gray-900:#1e293b;--gray-700:#334155;--gray-500:#64748b;--gray-200:#e2e8f0;--gray-100:#f0f5fa;
+      --radius:8px;--shadow:0 2px 8px rgba(0,0,0,.06);
+    }
+    html{scroll-behavior:smooth}
+    body{font-family:'Inter',sans-serif;color:var(--gray-900);line-height:1.5;background:var(--gray-100)}
+
+    .container{max-width:1200px;margin:0 auto;padding:0 20px}
+
+    .top-bar{background:var(--blue);color:rgba(255,255,255,.8);font-size:.78rem;padding:6px 0}
+    .top-bar .container{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px}
+    .top-bar a{color:rgba(255,255,255,.8);text-decoration:none;transition:color .2s}
+    .top-bar a:hover{color:#fff}
+    .top-bar .left{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+    .top-bar .right{display:flex;align-items:center;gap:14px}
+    .top-bar .right .admin-link{color:var(--orange);font-weight:600}
+
+    header{background:#fff;border-bottom:1px solid var(--gray-200);position:sticky;top:0;z-index:100}
+    header .container{display:flex;align-items:center;gap:20px;height:70px}
+    .logo{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0}
+    .logo img{height:44px;width:auto;display:block}
+    .search-bar{flex:1;max-width:480px;display:flex;border:2px solid var(--blue);border-radius:50px;overflow:hidden}
+    .search-bar input{flex:1;border:none;padding:8px 16px;font-size:.85rem;font-family:inherit;outline:none}
+    .search-bar button{background:var(--blue);color:#fff;border:none;padding:8px 20px;cursor:pointer;font-size:.85rem;transition:background .2s}
+    .search-bar button:hover{background:var(--blue-light)}
+    header nav{display:flex;align-items:center;gap:4px;margin-left:auto}
+    header nav a{text-decoration:none;color:var(--gray-700);font-size:.82rem;font-weight:500;padding:6px 14px;border-radius:6px;transition:all .2s;white-space:nowrap}
+    header nav a:hover,header nav a.active{background:var(--blue-lighter);color:var(--blue)}
+    header nav .btn{background:var(--orange);color:#fff;padding:7px 18px;border-radius:50px;font-weight:600;font-size:.82rem}
+    header nav .btn:hover{background:#e07c2e;color:#fff}
+    .menu-toggle{display:none;background:none;border:none;font-size:1.3rem;color:var(--blue);cursor:pointer;padding:4px}
+
+    .mobile-nav{display:none;flex-direction:column;gap:8px;padding:14px 20px 18px;background:#fff;border-bottom:1px solid var(--gray-200)}
+    .mobile-nav.open{display:flex}
+    .mobile-nav a{text-decoration:none;color:var(--gray-700);font-size:.88rem;font-weight:500;padding:6px 0}
+    .mobile-nav .btn{background:var(--orange);color:#fff;padding:8px 16px;border-radius:50px;text-align:center;margin-top:4px}
+
+    .breadcrumb{background:#fff;padding:14px 0;border-bottom:1px solid var(--gray-200);font-size:.82rem}
+    .breadcrumb a{color:var(--gray-700);text-decoration:none}
+    .breadcrumb a:hover{color:var(--blue)}
+    .breadcrumb span{color:var(--gray-500);margin:0 6px}
+
+    .detail-wrap{display:flex;gap:40px;padding:32px 0 40px;align-items:flex-start}
+    .detail-wrap .image{width:380px;flex-shrink:0;background:var(--gray-100);border-radius:var(--radius);height:300px;display:flex;align-items:center;justify-content:center;font-size:4rem;color:var(--gray-500);border:1px solid var(--gray-200);overflow:hidden;position:relative;cursor:zoom-in}
+    .detail-wrap .image img{width:100%;height:100%;object-fit:cover;transition:transform .3s}
+    .detail-wrap .image:hover img{transform:scale(1.05)}
+    .detail-wrap .image .tags{position:absolute;top:10px;left:10px;display:flex;gap:5px;flex-wrap:wrap}
+    .detail-wrap .image .tags span{padding:3px 10px;border-radius:50px;font-size:.7rem;font-weight:600}
+    .detail-wrap .image .tags .ft{background:#fef3c7;color:#92400e}
+    .detail-wrap .image .tags .bs{background:#dbeafe;color:#1e40af}
+    .detail-wrap .info{flex:1}
+    .detail-wrap .info .cat{font-size:.7rem;font-weight:600;color:var(--blue);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
+    .detail-wrap .info h1{font-size:clamp(1.2rem,2vw,1.6rem);font-weight:700;margin-bottom:6px}
+    .detail-wrap .info .sku-badge{display:inline-block;background:var(--gray-100);padding:4px 12px;border-radius:50px;font-size:.76rem;font-weight:600;color:var(--gray-700);margin-bottom:12px}
+    .detail-wrap .info .price-row{display:flex;align-items:baseline;gap:8px;margin-bottom:12px}
+    .detail-wrap .info .price-row .price{font-size:1.4rem;font-weight:800;color:var(--orange)}
+    .detail-wrap .info .price-row .unit{font-size:.88rem;color:var(--gray-500);font-weight:500}
+    .detail-wrap .info .desc{font-size:.88rem;color:var(--gray-700);line-height:1.7;margin-bottom:20px;max-width:600px}
+    .detail-wrap .info .meta{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:24px;max-width:440px}
+    .detail-wrap .info .meta .m-item{padding:10px 14px;background:#fff;border:1px solid var(--gray-200);border-radius:6px;display:flex;align-items:center;gap:10px}
+    .detail-wrap .info .meta .m-item i{font-size:1rem;color:var(--blue-light);width:18px;text-align:center}
+    .detail-wrap .info .meta .m-item .label{font-size:.7rem;font-weight:600;color:var(--gray-500);text-transform:uppercase}
+    .detail-wrap .info .meta .m-item .value{font-size:.84rem;font-weight:600;color:var(--gray-900);margin-top:1px}
+    .detail-wrap .info .actions{display:flex;gap:10px;flex-wrap:wrap}
+
+    .btn{display:inline-flex;align-items:center;gap:7px;padding:9px 22px;border-radius:50px;font-weight:600;font-size:.84rem;cursor:pointer;transition:background .2s;border:none;text-decoration:none;font-family:inherit}
+    .btn-primary{background:var(--gradient);color:#fff}
+    .btn-primary:hover{filter:brightness(1.1);transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,.15)}
+    .btn-outline{background:#fff;color:var(--blue);border:2px solid var(--blue)}
+    .btn-outline:hover{background:var(--blue-lighter)}
+    .btn-whatsapp{background:#25D366;color:#fff}
+    .btn-whatsapp:hover{background:#1da851;color:#fff}
+
+    #related{padding:0 0 40px}
+    #related h2{font-size:1.1rem;font-weight:700;margin-bottom:16px}
+    .related-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+    .rel-card{
+      background:#fff;border:1px solid var(--gray-200);border-radius:var(--radius);overflow:hidden;display:block;text-decoration:none;color:inherit;
+      transition:all .2s;
+    }
+    .rel-card:hover{box-shadow:0 4px 16px rgba(0,0,0,.08);border-color:var(--blue-light);transform:translateY(-2px)}
+    .rel-card .img-wrap{height:100px;display:flex;align-items:center;justify-content:center;background:var(--gray-100);font-size:2rem;color:var(--gray-500);overflow:hidden}
+    .rel-card .img-wrap img{width:100%;height:100%;object-fit:cover}
+    .rel-card .body{padding:10px 12px 12px}
+    .rel-card .body h4{font-size:.82rem;font-weight:600;margin-bottom:3px;line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+    .rel-card .body .sku{font-size:.7rem;color:var(--gray-500);margin-bottom:2px}
+    .rel-card .body .r-price{font-size:.82rem;font-weight:700;color:var(--orange)}
+
+    .not-found{text-align:center;padding:80px 20px}
+    .not-found i{font-size:3.5rem;color:var(--gray-500);margin-bottom:14px;display:block}
+    .not-found h2{font-size:1.3rem;font-weight:700;margin-bottom:6px}
+    .not-found p{color:var(--gray-700);font-size:.88rem;margin-bottom:16px}
+
+    #contact{background:var(--blue);color:#fff;padding:24px 0}
+    #contact .container{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
+    #contact h2{font-size:1rem;font-weight:700}
+    #contact p{font-size:.82rem;color:rgba(255,255,255,.7)}
+    #contact .btn{background:var(--orange);color:#fff;padding:9px 24px;border-radius:50px;font-weight:600;font-size:.84rem;text-decoration:none;transition:background .2s}
+    #contact .btn:hover{background:#e07c2e}
+
+    footer{background:var(--gray-900);color:rgba(255,255,255,.6);padding:36px 0 0;font-size:.82rem}
+    footer .container{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:30px}
+    footer h4{color:#fff;font-size:.9rem;font-weight:700;margin-bottom:12px}
+    footer ul{list-style:none}
+    footer ul li{margin-bottom:6px}
+    footer ul a{color:rgba(255,255,255,.5);text-decoration:none;transition:color .2s}
+    footer ul a:hover{color:#fff}
+    footer .brand img{height:36px;width:auto;margin-bottom:10px}
+    footer .brand p{line-height:1.6;margin-bottom:10px}
+    footer .social{display:flex;gap:8px}
+    footer .social a{width:32px;height:32px;border-radius:6px;background:rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.5);text-decoration:none;transition:all .2s}
+    footer .social a:hover{background:var(--blue);color:#fff}
+    footer .copy{grid-column:1/-1;text-align:center;padding:18px 0;border-top:1px solid rgba(255,255,255,.06);margin-top:10px;font-size:.75rem}
+
+    @media(max-width:900px){
+      .detail-wrap{flex-direction:column}
+      .detail-wrap .image{width:100%;height:240px}
+      .related-grid{grid-template-columns:1fr 1fr}
+    }
+    @media(max-width:768px){
+      header nav{display:none}
+      .menu-toggle{display:block}
+      .related-grid{grid-template-columns:1fr 1fr}
+      footer .container{grid-template-columns:1fr}
+    }
+    @media(max-width:640px){
+      .detail-wrap .info .meta{grid-template-columns:1fr}
+      .related-grid{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+
+<div class="top-bar">
+  <div class="container">
+    <div class="left">
+      <a href="mailto:support@adorn.ae"><i class="far fa-envelope"></i> support@adorn.ae</a>
+      <a href="tel:+97143381499"><i class="fas fa-phone"></i> +971 43 381499</a>
+    </div>
+    <div class="right">
+      <a href="admin.html" class="admin-link"><i class="fas fa-shield-alt"></i> Login</a>
+      <a href="https://www.linkedin.com/company/adorn-information-technology-systems-llc/" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+    </div>
+  </div>
+</div>
+
+<header>
+  <div class="container">
+    <a href="index.html" class="logo"><img src="https://adorn.ae/wp-content/uploads/2026/04/Adorn_Logo_Print_RGB-01.jpg" alt="ADORN"></a>
+    <div class="search-bar">
+      <input type="text" placeholder="Search products..." id="searchInput" onkeydown="if(event.key==='Enter')searchProd()">
+      <button onclick="searchProd()"><i class="fas fa-search"></i></button>
+    </div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="products.html" class="active">Products</a>
+      <a href="index.html#about">About</a>
+      <a href="index.html#contact">Contact</a>
+      <a href="index.html#contact" class="btn">Get Quote</a>
+    </nav>
+    <button class="menu-toggle" onclick="toggleMenu()"><i class="fas fa-bars"></i></button>
+  </div>
+  <div class="mobile-nav" id="mobileNav">
+    <a href="index.html" onclick="toggleMenu()">Home</a>
+    <a href="products.html" onclick="toggleMenu()">Products</a>
+    <a href="index.html#about" onclick="toggleMenu()">About</a>
+    <a href="index.html#contact" onclick="toggleMenu()">Contact</a>
+    <a href="index.html#contact" class="btn" onclick="toggleMenu()">Get Quote</a>
+  </div>
+</header>
+
+<div class="breadcrumb">
+  <div class="container">
+    <a href="products.html">Our Products</a><span>›</span><span id="bcCat"></span>
+  </div>
+</div>
+
+<section id="productDetail">
+  <div class="container">
+    <div class="detail-wrap" id="detailWrap">
+      <div class="image" id="prodIcon">
+        <i class="fas fa-box"></i>
+        <div class="tags" id="prodTags"></div>
+      </div>
+      <div class="info">
+        <div class="cat" id="prodCategory"></div>
+        <h1 id="prodName"></h1>
+        <div class="sku-badge" id="prodSku"></div>
+        <div class="price-row" id="priceRow" style="display:none">
+          <span class="price" id="prodPrice"></span>
+          <span class="unit" id="prodUnit"></span>
+        </div>
+        <p class="desc" id="prodDesc"></p>
+        <div class="meta">
+          <div class="m-item"><i class="fas fa-tag"></i><div><div class="label">Category</div><div class="value" id="metaCat"></div></div></div>
+          <div class="m-item"><i class="fas fa-barcode"></i><div><div class="label">SKU</div><div class="value" id="metaSku"></div></div></div>
+          <div class="m-item"><i class="fas fa-check-circle"></i><div><div class="label">Availability</div><div class="value">In Stock</div></div></div>
+          <div class="m-item"><i class="fas fa-shield-alt"></i><div><div class="label">Warranty</div><div class="value">1 Year</div></div></div>
+          <div class="m-item" id="moqRow" style="display:none"><i class="fas fa-shopping-cart"></i><div><div class="label">MOQ</div><div class="value" id="prodMoq"></div></div></div>
+        </div>
+        <div class="actions">
+          <a href="index.html#contact" class="btn btn-primary"><i class="fas fa-paper-plane"></i> Request Quote</a>
+          <a id="whatsappBtn" target="_blank" class="btn btn-whatsapp"><i class="fab fa-whatsapp"></i> Enquire on WhatsApp</a>
+          <a href="products.html?cat=" id="catLink" class="btn btn-outline"><i class="fas fa-arrow-left"></i> All in Category</a>
+        </div>
+      </div>
+    </div>
+    <div id="notFound" class="not-found" style="display:none">
+      <i class="fas fa-box-open"></i>
+      <h2>Product Not Found</h2>
+      <p>The product you are looking for does not exist or may have been removed.</p>
+      <a href="products.html" class="btn btn-primary">Browse Products</a>
+    </div>
+  </div>
+</section>
+
+<section id="related">
+  <div class="container">
+    <h2>Related Products</h2>
+    <div class="related-grid" id="relatedGrid"></div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="container">
+    <div>
+      <h2>Need a different product?</h2>
+      <p>Contact us for custom quotes and bulk pricing.</p>
+    </div>
+    <a href="mailto:support@adorn.ae" class="btn"><i class="far fa-envelope"></i> Email Us</a>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="brand">
+      <img src="https://adorn.ae/wp-content/uploads/2026/04/Adorn_Logo_Print_RGB-01.jpg" alt="ADORN">
+      <p>Adorn Information Technology Systems LLC — your trusted partner for structured cabling, networking, and security products in the UAE.</p>
+      <div class="social">
+        <a href="https://www.linkedin.com/company/adorn-information-technology-systems-llc/" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+      </div>
+    </div>
+    <div>
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="products.html">All Products</a></li>
+        <li><a href="index.html#about">About Us</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Categories</h4>
+      <ul>
+        <li><a href="products.html">CAT6 Cables</a></li>
+        <li><a href="products.html">Fiber Optics</a></li>
+        <li><a href="products.html">Surveillance</a></li>
+        <li><a href="products.html">Access Control</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Contact</h4>
+      <ul>
+        <li>Office 1405, Mazaya BB1<br>JLT, Dubai, UAE</li>
+        <li><a href="tel:+97143381499">+971 43 381499</a></li>
+        <li><a href="mailto:support@adorn.ae">support@adorn.ae</a></li>
+      </ul>
+    </div>
+    <div class="copy">Powered by ADORN.AE &copy; 2026. All rights reserved.</div>
+  </div>
+</footer>
+
+<script>
+  function toggleMenu(){document.getElementById('mobileNav').classList.toggle('open')}
+  function searchProd(){const q=document.getElementById('searchInput').value.trim();if(q)window.location.href='products.html?q='+encodeURIComponent(q)}
+
+  let products = [
+    { name: 'CAT6 UTP Cable 4 Pair', cat: 'cat6-cables', desc: 'Solid bare copper 23 AWG, LSZH jacket, TIA/EIA-568-C.2.', sku: 'AD-C6-UTP-4P', img: 'https://s.alicdn.com/@sc04/kf/Hcee796c237e24b958521faf8afb06c16F/Cat5e-Utp-24awg-Cable-Utp-Cat-5e.jpg?hasNWGrade=1' },
+    { name: 'CAT6 F/UTP Cable', cat: 'cat6-cables', desc: 'Foil screened 23 AWG solid copper, ideal for high-noise environments.', sku: 'AD-C6-FUTP' },
+    { name: 'CAT6 External Cable', cat: 'cat6-cables', desc: 'Weather-resistant black jacket, gel-filled for moisture protection.', sku: 'AD-C6-EXT' },
+    { name: 'CAT6 CMR Riser Cable', cat: 'cat6-cables', desc: 'CMR-rated for vertical runs between floors, solid copper 23 AWG.', sku: 'AD-C6-CMR' },
+    { name: 'CAT6 Plenum Cable', cat: 'cat6-cables', desc: 'CMP-rated low-smoke plenum cable for air-handling spaces.', sku: 'AD-C6-PLEN' },
+    { name: 'CAT6 1m Patch Cord', cat: 'cat6-cables', desc: 'Molded boot UTP, 24 AWG stranded, T568B wired, 1 meter.', sku: 'AD-6P-1M' },
+    { name: 'CAT6 2m Patch Cord', cat: 'cat6-cables', desc: 'Molded snagless boot, 2 meter, 24 AWG stranded, T568B.', sku: 'AD-6P-2M' },
+    { name: 'CAT6 3m Patch Cord', cat: 'cat6-cables', desc: 'High-performance 3m patch cord, 50-micron gold-plated contacts.', sku: 'AD-6P-3M' },
+    { name: 'CAT6 5m Patch Cord', cat: 'cat6-cables', desc: '5 meter molded patch cord with color-coded boots available.', sku: 'AD-6P-5M' },
+    { name: 'CAT6 10m Patch Cord', cat: 'cat6-cables', desc: '10 meter heavy-duty patch cord with strain relief boot.', sku: 'AD-6P-10M' },
+    { name: 'RJ45 Cat6 Connector', cat: 'cat6-cables', desc: '3-piece shielded RJ45 plug, 50-micron gold, for 23 AWG solid.', sku: 'AD-RJ45-C6' },
+    { name: 'RJ45 Cat5e Connector', cat: 'cat6-cables', desc: '2-piece unshielded RJ45 plug, gold-plated contacts, 24 AWG.', sku: 'AD-RJ45-C5E' },
+    { name: 'RJ45 Pass-Through Connector', cat: 'cat6-cables', desc: 'EZ pass-through design for faster termination, 50-micron gold.', sku: 'AD-RJ45-PT' },
+    { name: 'RJ45 Shielded Connector', cat: 'cat6-cables', desc: 'Fully shielded metal body RJ45 plug for FTP/STP cables.', sku: 'AD-RJ45-SH' },
+    { name: 'CAT6 Patch Panel 24-Port', cat: 'cat6-cables', desc: '1U 24-port CAT6 unshielded patch panel, 110 IDC, T568A/B.', sku: 'AD-PP-24-C6' },
+    { name: 'CAT6 Patch Panel 48-Port', cat: 'cat6-cables', desc: '1U 48-port CAT6 unshielded angled patch panel with bar.', sku: 'AD-PP-48-C6' },
+    { name: 'Wall Mount Cabinet 6U', cat: 'racks-cabinets', desc: '6U swing-wall cabinet, 19-inch, lockable hinged glass door.', sku: 'AD-WM-6U' },
+    { name: 'Wall Mount Cabinet 9U', cat: 'racks-cabinets', desc: '9U wall-mount enclosure, 19-inch, ventilated steel door.', sku: 'AD-WM-9U' },
+    { name: 'Wall Mount Cabinet 12U', cat: 'racks-cabinets', desc: '12U wall-mount cabinet, 600x450mm, removable side panels.', sku: 'AD-WM-12U' },
+    { name: 'Floor Standing Cabinet 15U', cat: 'racks-cabinets', desc: '15U floor-standing cabinet, 600x600mm, tempered glass door.', sku: 'AD-FC-15U' },
+    { name: 'Open Frame Relay Rack 12U', cat: 'racks-cabinets', desc: '12U 2-post open frame relay rack, adjustable mounting depth.', sku: 'AD-OF-12U' },
+    { name: 'SM OS2 Fiber Cable 1m', cat: 'fiber-cables', desc: 'Single-mode OS2 LC-LC duplex patch cord, 1m, LSZH jacket.', sku: 'AD-FO-SM-1M' },
+    { name: 'SM OS2 Fiber Cable 3m', cat: 'fiber-cables', desc: 'Single-mode OS2 LC-LC duplex, 3m, low-insertion-loss.', sku: 'AD-FO-SM-3M' },
+    { name: 'SM OS2 Fiber Cable 5m', cat: 'fiber-cables', desc: 'Single-mode OS2 LC-LC duplex, 5m, 9/125um, yellow jacket.', sku: 'AD-FO-SM-5M' },
+    { name: 'MM OM3 Fiber Cable 2m', cat: 'fiber-cables', desc: 'Multimode OM3 LC-LC duplex, 50/125um, 2m, aqua jacket.', sku: 'AD-FO-OM3-2M' },
+    { name: 'MM OM4 Fiber Cable 5m', cat: 'fiber-cables', desc: 'Multimode OM4 LC-LC duplex, 5m, high-bandwidth 4700MHz-km.', sku: 'AD-FO-OM4-5M' },
+    { name: 'Armored Fiber Cable 10m', cat: 'fiber-cables', desc: 'Single-mode armored OS2, LC-LC, 10m, steel-reinforced jacket.', sku: 'AD-FO-ARM-10M' },
+    { name: 'SC-SC Fiber Patch Cord 2m', cat: 'fiber-cables', desc: 'Single-mode SC-SC simplex, 2m, 9/125um, low insertion loss.', sku: 'AD-FO-SC-2M' },
+    { name: 'LC Fiber Coupler', cat: 'fiber-accessories', desc: 'LC duplex fiber adapter, ceramic alignment sleeve, SM/MM.', sku: 'AD-FA-LC' },
+    { name: 'SC Fiber Coupler', cat: 'fiber-accessories', desc: 'SC simplex fiber adapter, zirconia ceramic alignment sleeve.', sku: 'AD-FA-SC' },
+    { name: 'FC Fiber Coupler', cat: 'fiber-accessories', desc: 'FC single-mode fiber adapter, metal sleeve, precision alignment.', sku: 'AD-FA-FC' },
+    { name: 'Fiber Patch Panel 1U 24-Port', cat: 'fiber-accessories', desc: '1U 24-port LC duplex fiber patch panel with slide-out tray.', sku: 'AD-FP-1U-24' },
+    { name: 'Fiber Patch Panel 2U 48-Port', cat: 'fiber-accessories', desc: '2U 48-port LC duplex patch panel, splice tray included.', sku: 'AD-FP-2U-48' },
+    { name: 'Fiber Splice Tray 12-Fiber', cat: 'fiber-accessories', desc: '12-fiber heat shrink splice tray, fits standard ODF panels.', sku: 'AD-FST-12' },
+    { name: 'Fiber Cleaning Kit', cat: 'fiber-accessories', desc: 'Includes click-cleaner pen, lint-free wipes, ferrule cleaner.', sku: 'AD-FCK-1' },
+    { name: 'Single Gang Face Plate', cat: 'faceplates', desc: '1-port single gang face plate, white, with snap-on shutter.', sku: 'AD-FP-1G' },
+    { name: 'Dual Gang Face Plate', cat: 'faceplates', desc: '2-port dual gang face plate, white, UK standard 86x86mm.', sku: 'AD-FP-2G' },
+    { name: '4-Port Face Plate', cat: 'faceplates', desc: '4-port single gang face plate, angled, with labeling window.', sku: 'AD-FP-4P' },
+    { name: '6-Port Face Plate', cat: 'faceplates', desc: '6-port single gang face plate, flush mount, white.', sku: 'AD-FP-6P' },
+    { name: 'Back Box 35mm', cat: 'faceplates', desc: 'Single gang back box, 35mm depth, with screw holes.', sku: 'AD-BB-35' },
+    { name: 'Back Box 50mm', cat: 'faceplates', desc: 'Single gang back box, 50mm depth, UK standard flush mount.', sku: 'AD-BB-50' },
+    { name: 'Back Box 25mm', cat: 'faceplates', desc: 'Shallow single gang back box, 25mm depth, for drywall.', sku: 'AD-BB-25' },
+    { name: 'CAT6 Keystone Jack', cat: 'keystone-jacks', desc: 'CAT6 tool-less keystone jack, 110/Krone IDC, T568A/B.', sku: 'AD-KJ-C6' },
+    { name: 'CAT6 Shielded Keystone Jack', cat: 'keystone-jacks', desc: 'CAT6 STP shielded keystone jack, metal housing, grounded.', sku: 'AD-KJ-C6S' },
+    { name: 'CAT5e Keystone Jack', cat: 'keystone-jacks', desc: 'CAT5e tool-less keystone jack, 110 punch-down, universal.', sku: 'AD-KJ-C5E' },
+    { name: 'CAT6A Keystone Jack', cat: 'keystone-jacks', desc: 'CAT6A shielded keystone jack, 10GB capable, tool-less.', sku: 'AD-KJ-C6A' },
+    { name: 'Keystone Dust Cap (50-pack)', cat: 'keystone-jacks', desc: 'Transparent dust caps for keystone jacks, 50-pack.', sku: 'AD-KJ-DC50' },
+    { name: 'Keystone Blank Insert (20-pack)', cat: 'keystone-jacks', desc: 'Blank keystone inserts to fill unused ports, 20-pack.', sku: 'AD-KJ-BL20' },
+    { name: 'Blank Keystone Plate 1U', cat: 'keystone-jacks', desc: '1U blank keystone plate, holds 6 keystone jacks, metal.', sku: 'AD-BP-1U' },
+    { name: 'Server Rack 24U', cat: 'network-cabinets', desc: 'Floor-standing 24U server rack, 800x800mm, perforated doors.', sku: 'AD-RK-24U' },
+    { name: 'Server Rack 42U', cat: 'network-cabinets', desc: '42U data center rack, 800x1000mm, side panels and PDU ready.', sku: 'AD-RK-42U' },
+    { name: 'Server Rack 48U', cat: 'network-cabinets', desc: '48U high-density server rack, 800x1100mm, cable access top.', sku: 'AD-RK-48U' },
+    { name: 'Network Cabinet 18U', cat: 'network-cabinets', desc: '18U network cabinet, 600x600mm, tempered glass door, lockable.', sku: 'AD-NC-18U' },
+    { name: 'Open Frame Rack 18U', cat: 'network-cabinets', desc: '18U 2-post open frame relay rack, adjustable depth.', sku: 'AD-OF-18U' },
+    { name: 'Server Rack Shelf 1U', cat: 'network-cabinets', desc: '1U fixed shelf for server rack, 50kg capacity, ventilated.', sku: 'AD-SH-1U' },
+    { name: 'Server Rack Shelf 2U Sliding', cat: 'network-cabinets', desc: '2U sliding keyboard shelf with mouse pad, 19-inch.', sku: 'AD-SH-2U-SL' },
+    { name: 'Cable Manager 1U', cat: 'cable-mgmt', desc: '1U horizontal cable manager with D-rings, 19-inch rack mount.', sku: 'AD-CM-1U' },
+    { name: 'Cable Manager 2U', cat: 'cable-mgmt', desc: '2U horizontal cable manager with hinged front cover door.', sku: 'AD-CM-2U' },
+    { name: 'Finger Duct 1U', cat: 'cable-mgmt', desc: '1U metal finger duct cable manager, 4 fingers, 19-inch.', sku: 'AD-FD-1U' },
+    { name: 'Vertical Cable Manager 5U', cat: 'cable-mgmt', desc: '5U vertical cable manager with D-rings, mounts between racks.', sku: 'AD-CM-5U-V' },
+    { name: 'Velcro Cable Ties 10m', cat: 'cable-mgmt', desc: 'Reusable hook-and-loop velcro ties, 10m roll, black.', sku: 'AD-VEL-10M' },
+    { name: 'Cable Label Kit 100-Pack', cat: 'cable-mgmt', desc: 'Pre-printed flag-style wrap-around cable labels, 100-pack.', sku: 'AD-LBL-100' },
+    { name: 'Cable Ties Nylon 200mm (100pk)', cat: 'cable-mgmt', desc: '200x4.8mm nylon cable ties, UV resistant, 100-pack.', sku: 'AD-CT-200-100' },
+    { name: 'Crimp Tool RJ45', cat: 'tools', desc: 'Professional 8P8C RJ45 crimp tool with ratchet mechanism.', sku: 'AD-TL-CRIMP' },
+    { name: 'Cable Stripper', cat: 'tools', desc: 'Adjustable CAT6/CAT5e cable stripper with replaceable blade.', sku: 'AD-TL-STRIP' },
+    { name: 'Punch Down Tool 110/Krone', cat: 'tools', desc: 'Impact punch-down tool with 110 and Krone blades, spring-loaded.', sku: 'AD-TL-PD110' },
+    { name: 'RJ45 RJ11 Tester', cat: 'tools', desc: 'Multi-function network cable tester for RJ45/RJ11/BNC/USB.', sku: 'AD-TL-TEST' },
+    { name: 'Professional Cable Tester', cat: 'tools', desc: 'Advanced LCD cable tester with remote unit, checks wiring map.', sku: 'AD-TL-PRO' },
+    { name: 'Fiber Optic Visual Fault Locator', cat: 'tools', desc: '10mW VFL pen, 650nm red laser for fiber continuity testing.', sku: 'AD-TL-VFL' },
+    { name: 'Fiber Optic Power Meter', cat: 'tools', desc: 'Optical power meter -70~+10dBm, 7 calibrated wavelengths.', sku: 'AD-TL-PM' },
+    { name: 'LSA Punch Down Tool', cat: 'tools', desc: 'Professional LSA-PLUS punch-down tool with fork blade.', sku: 'AD-TL-LSA' },
+    { name: 'IP Camera 2MP Outdoor', cat: 'surveillance', desc: '2MP outdoor bullet IP camera, IR night vision, IP67, PoE.', sku: 'AD-CAM-2MP-B' },
+    { name: 'IP Camera 5MP Dome', cat: 'surveillance', desc: '5MP indoor dome IP camera, 2.8mm lens, PoE, ONVIF.', sku: 'AD-CAM-5MP-D' },
+    { name: 'IP Camera 8MP PTZ', cat: 'surveillance', desc: '8MP 4K PTZ camera, 25x optical zoom, auto-tracking, PoE+.', sku: 'AD-CAM-8MP-PTZ' },
+    { name: 'NVR 8-Channel 4K', cat: 'surveillance', desc: '8-channel NVR, 4K recording, H.265+, 1 HDD bay up to 10TB.', sku: 'AD-NVR-8' },
+    { name: 'NVR 16-Channel 4K', cat: 'surveillance', desc: '16-channel NVR, 4K PoE, H.265+, 2 HDD bays up to 20TB.', sku: 'AD-NVR-16' },
+    { name: 'PoE Switch 8-Port', cat: 'surveillance', desc: '8-port Gigabit PoE+ switch, 100W budget, plug-and-play.', sku: 'AD-SW-POE-8' },
+    { name: 'PoE Injector 30W', cat: 'surveillance', desc: 'Gigabit PoE injector, 30W, IEEE 802.3af/at, compact metal.', sku: 'AD-POE-30W' },
+    { name: 'IP Door Lock RFID', cat: 'access-control', desc: 'RFID IP door lock, card/PIN/app, 180kg magnetic lock.', sku: 'AD-AC-DL-RFID' },
+    { name: 'Biometric Fingerprint Reader', cat: 'access-control', desc: 'IP65 biometric reader, 2000 fingerprints, TCP/IP.', sku: 'AD-AC-BIO' },
+    { name: 'Access Control Panel 2-Door', cat: 'access-control', desc: '2-door access control panel, TCP/IP, 50,000 card users.', sku: 'AD-AC-PNL-2' },
+    { name: 'RFID Key Fob (10-pack)', cat: 'access-control', desc: '125kHz EM4100 RFID key fobs, waterproof, 10-pack.', sku: 'AD-AC-FOB-10' },
+    { name: 'Magnetic Lock 280kg', cat: 'access-control', desc: '280kg single door magnetic lock, 12VDC, with mounting kit.', sku: 'AD-AC-ML-280' },
+    { name: 'Exit Button', cat: 'access-control', desc: 'Momentary push-to-exit button, stainless steel, weatherproof.', sku: 'AD-AC-EXIT' },
+    { name: 'Access Control PSU', cat: 'access-control', desc: '12VDC 5A power supply unit with battery backup.', sku: 'AD-AC-PSU' },
+    { name: 'Video Doorbell IP', cat: 'intercom', desc: '2MP IP video doorbell, two-way audio, IR, RFID, PoE.', sku: 'AD-AC-DB-2MP' },
+    { name: 'Audio Intercom Station', cat: 'intercom', desc: 'Weatherproof audio intercom, hands-free, SIP compatible.', sku: 'AD-AC-INT-A' },
+    { name: 'Video Intercom Kit 7"', cat: 'intercom', desc: '7-inch TFT video intercom kit with monitor and outdoor unit.', sku: 'AD-AC-VIK-7' },
+    { name: 'Video Intercom Kit 10"', cat: 'intercom', desc: '10-inch touchscreen video intercom kit, PoE, SD recording.', sku: 'AD-AC-VIK-10' },
+    { name: '2-Wire Audio Intercom', cat: 'intercom', desc: '2-wire analog audio intercom for small buildings, easy install.', sku: 'AD-AC-INT-2W' },
+    { name: 'PIR Motion Sensor', cat: 'intrusion-alarm', desc: 'Digital PIR motion sensor, 12m range, pet immune.', sku: 'AD-IA-PIR' },
+    { name: 'Dual Tech Motion Sensor', cat: 'intrusion-alarm', desc: 'PIR + microwave dual tech, false-alarm immune, 15m.', sku: 'AD-IA-DT' },
+    { name: 'Door/Window Contact', cat: 'intrusion-alarm', desc: 'Magnetic reed switch contact sensor, NC/NO, 50mm gap.', sku: 'AD-IA-DW' },
+    { name: 'Glass Break Detector', cat: 'intrusion-alarm', desc: 'Acoustic glass break detector, 8m range, 360-degree.', sku: 'AD-IA-GB' },
+    { name: 'Intrusion Alarm Panel 8-Zone', cat: 'intrusion-alarm', desc: '8-zone alarm panel, LCD keypad, SMS/GSM ready.', sku: 'AD-IA-PNL-8' },
+    { name: 'Outdoor Siren Strobe', cat: 'intrusion-alarm', desc: 'IP65 outdoor siren with strobe, 110dB, tamper protected.', sku: 'AD-IA-SRN' },
+    { name: 'Smoke Detector', cat: 'safety-solutions', desc: 'Photoelectric smoke detector, 12-24VDC, relay output.', sku: 'AD-IA-SMK' },
+    { name: 'Gas Leak Detector', cat: 'safety-solutions', desc: 'Natural gas/LPG detector, audible alarm, automatic shutoff.', sku: 'AD-IA-GAS' },
+    { name: 'Fire Alarm Panel 2-Zone', cat: 'safety-solutions', desc: '2-zone conventional fire alarm panel, 24VDC, battery backup.', sku: 'AD-SF-FAP-2' },
+    { name: 'Heat Detector', cat: 'safety-solutions', desc: 'Fixed temperature heat detector, 57C, for kitchens/garages.', sku: 'AD-SF-HEAT' },
+    { name: 'CO Detector', cat: 'safety-solutions', desc: 'Carbon monoxide alarm, electrochemical sensor, 10-year life.', sku: 'AD-SF-CO' },
+    { name: 'Emergency Exit Light', cat: 'safety-solutions', desc: 'LED emergency exit sign, 3-hour battery backup, IP40.', sku: 'AD-SF-EXIT' },
+    { name: 'Emergency Stop Button', cat: 'safety-solutions', desc: 'Mushroom head emergency stop, twist-to-release, IP65.', sku: 'AD-SF-ESTOP' },
+  ];
+
+  try { const d = localStorage.getItem('adorn_products'); if (d) { const p = JSON.parse(d); if (p.length) products = p; } } catch(e) {}
+
+  let catNames = {}, icons = {};
+  try {
+    const d = localStorage.getItem('adorn_categories');
+    if (d) {
+      const cats = JSON.parse(d);
+      if (cats.length) {
+        cats.forEach(c => { catNames[c.id] = c.label; icons[c.id] = c.icon || 'fas fa-box'; });
+      }
+    }
+  } catch(e) {}
+  if (!Object.keys(catNames).length) {
+    catNames = {
+      'cat6-cables': 'CAT6 Cables', 'racks-cabinets': 'Racks & Cabinets', 'fiber-cables': 'Fiber Optic Cables',
+      'fiber-accessories': 'Fiber Accessories', 'faceplates': 'Face Plates, Back Boxes & Patch Panels',
+      'keystone-jacks': 'Keystone Jacks', 'network-cabinets': 'Network Cabinets & Server Racks',
+      'cable-mgmt': 'Cable Management Solutions', 'tools': 'Tools & Testing Equipments',
+      'surveillance': 'Surveillance Solutions', 'access-control': 'Access Control Solutions',
+      'intercom': 'Intercom Solutions', 'intrusion-alarm': 'Intrusion Alarm', 'safety-solutions': 'Safety Solutions'
+    };
+    icons = {
+      'cat6-cables': 'fas fa-cable-car', 'racks-cabinets': 'fas fa-th', 'fiber-cables': 'fas fa-lightbulb',
+      'fiber-accessories': 'fas fa-puzzle-piece', 'faceplates': 'fas fa-th-large', 'keystone-jacks': 'fas fa-plug',
+      'network-cabinets': 'fas fa-server', 'cable-mgmt': 'fas fa-tools', 'tools': 'fas fa-screwdriver-wrench',
+      'surveillance': 'fas fa-video', 'access-control': 'fas fa-lock', 'intercom': 'fas fa-phone',
+      'intrusion-alarm': 'fas fa-bell', 'safety-solutions': 'fas fa-shield-alt'
+    };
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    const params = new URLSearchParams(window.location.search);
+    const sku = params.get('sku');
+    if (!sku) { showNotFound(); return; }
+
+    const product = products.find(p => p.sku === sku);
+    if (!product) { showNotFound(); return; }
+
+    const catLabel = catNames[product.cat] || product.cat;
+    const catIcon = icons[product.cat] || 'fas fa-box';
+
+    document.getElementById('prodIcon').innerHTML = (product.img ? '<img src="' + product.img + '" alt="' + product.name + '">' : '<i class="' + catIcon + '"></i>') + '<div class="tags" id="prodTags"></div>';
+    document.getElementById('prodCategory').textContent = catLabel;
+    document.getElementById('prodName').textContent = product.name;
+    document.getElementById('prodSku').textContent = 'SKU: ' + product.sku;
+    document.getElementById('prodDesc').textContent = product.desc;
+    document.getElementById('metaCat').textContent = catLabel;
+    document.getElementById('metaSku').textContent = product.sku;
+    document.getElementById('bcCat').textContent = catLabel;
+      document.getElementById('catLink').href = 'products.html?cat=' + product.cat;
+      document.getElementById('whatsappBtn').href = 'https://wa.me/97143381499?text=' + encodeURIComponent('Hi, I am interested in ' + product.name + ' (SKU: ' + product.sku + '). Please send me a quote.');
+
+    let tagsHtml = '';
+    if (product.tags) {
+      if (product.tags.includes('featured')) tagsHtml += '<span class="ft">Featured</span>';
+      if (product.tags.includes('bestseller')) tagsHtml += '<span class="bs">Best Seller</span>';
+    }
+    document.getElementById('prodTags').innerHTML = tagsHtml;
+
+    if (product.price) {
+      document.getElementById('priceRow').style.display = 'flex';
+      document.getElementById('prodPrice').textContent = product.price;
+      document.getElementById('prodUnit').textContent = product.unit || '';
+    }
+
+    const related = products.filter(p => p.cat === product.cat && p.sku !== product.sku).slice(0, 4);
+    const rGrid = document.getElementById('relatedGrid');
+    if (related.length === 0) {
+      document.getElementById('related').style.display = 'none';
+    } else {
+      rGrid.innerHTML = related.map(p => `
+        <a href="product-detail.html?sku=${p.sku}" class="rel-card">
+          <div class="img-wrap">${p.img ? '<img src="' + p.img + '" alt="' + p.name + '">' : '<i class="' + (icons[p.cat] || 'fas fa-box') + '"></i>'}</div>
+          <div class="body">
+            <h4>${p.name}</h4>
+            <div class="sku">${p.sku}</div>
+            ${p.price ? '<div class="r-price">' + p.price + ' ' + (p.unit || '') + '</div>' : ''}
+          </div>
+        </a>
+      `).join('');
+    }
+  });
+
+  function showNotFound() {
+    document.getElementById('detailWrap').style.display = 'none';
+    document.getElementById('related').style.display = 'none';
+    document.getElementById('notFound').style.display = 'block';
+  }
+</script>
+</body>
+</html>
