@@ -1,7 +1,6 @@
 node_modules/
 server/uploads/*
 !server/uploads/.gitkeep
-client/build/
 server/adorn.db
 server/adorn.db-shm
 server/adorn.db-wal
