@@ -1,0 +1,51 @@
+.top-bar{background:var(--purple);color:rgba(255,255,255,0.85);font-size:.75rem;padding:6px 0}
+.top-bar-inner{display:flex;gap:20px;justify-content:space-between}
+.tb-left,.tb-right{display:flex;align-items:center;gap:16px}
+.top-bar-inner span{display:flex;align-items:center;gap:4px}
+
+.header{background:#fff;border-bottom:1px solid var(--gray-200);padding:12px 0;position:sticky;top:0;z-index:100}
+.header-inner{display:flex;align-items:center;gap:16px}
+.logo{flex-shrink:0}
+.logo img{height:38px;width:auto}
+.search-bar{flex:1;display:flex;max-width:500px;margin:0 auto}
+.search-bar input{
+  flex:1;padding:8px 14px;border:1.5px solid var(--gray-200);border-radius:6px 0 0 6px;
+  font-size:.85rem;font-family:inherit;outline:none
+}
+.search-bar input:focus{border-color:var(--orange)}
+.search-bar button{
+  padding:8px 16px;background:var(--orange);color:#fff;border:none;border-radius:0 6px 6px 0;
+  cursor:pointer;font-size:.9rem
+}
+.search-bar button:hover{background:#e8892e}
+.admin-btn{flex-shrink:0;font-size:.78rem;padding:6px 14px}
+.header-nav{display:flex;align-items:center;gap:4px;flex-shrink:0}
+.hn-link{
+  padding:6px 14px;font-size:.78rem;font-weight:600;color:var(--gray-600);
+  border-radius:6px;transition:.2s;white-space:nowrap
+}
+.hn-link:hover{background:var(--gray-100);color:var(--purple)}
+.hamburger{display:none;background:none;border:none;font-size:1.3rem;color:var(--gray-700);cursor:pointer}
+
+.cat-nav{background:var(--gray-50);border-bottom:1px solid var(--gray-200);position:sticky;top:63px;z-index:99}
+.cat-nav-inner{display:flex;gap:4px;overflow-x:auto;padding:8px 0;-webkit-overflow-scrolling:touch}
+.cat-nav-inner::-webkit-scrollbar{display:none}
+.cat-link{
+  white-space:nowrap;padding:6px 14px;font-size:.78rem;font-weight:500;color:var(--gray-600);
+  border-radius:50px;display:flex;align-items:center;gap:6px;transition:.2s
+}
+.cat-link:hover,.cat-link.active{background:var(--purple);color:#fff}
+.cat-link i{font-size:.85rem}
+.all-link{background:var(--gray-100);font-weight:600}
+
+@media(max-width:768px){
+  .top-bar-inner{flex-direction:column;align-items:center;font-size:.7rem;gap:6px}
+  .tb-left,.tb-right{justify-content:center}
+  .header-nav{display:none}
+  .admin-btn span{display:none}
+  .hamburger{display:block}
+  .cat-nav{display:none}
+  .cat-nav.open{display:block}
+  .cat-nav-inner{flex-direction:column;overflow-x:visible;padding:8px}
+
+}

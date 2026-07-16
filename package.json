@@ -1,19 +1,14 @@
 {
   "name": "adorn",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "private": true,
   "scripts": {
-    "start": "node server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "concurrently \"npm --prefix server start\" \"cmd /c set NODE_OPTIONS=--no-deprecation && npm --prefix client start\"",
+    "build": "npm --prefix client run build",
+    "seed": "node server/seed.js",
+    "start": "node --no-deprecation server/index.js"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "commonjs",
-  "dependencies": {
-    "better-sqlite3": "^12.11.1",
-    "cors": "^2.8.6",
-    "express": "^5.2.1"
+  "devDependencies": {
+    "concurrently": "^8.2.0"
   }
 }

@@ -1,0 +1,1177 @@
+{
+  "products": [
+    {
+      "sku": "ADFPC006-5mt",
+      "name": "Simplex fiber patch cord  LC/APC-LC/APC, 5 Meter",
+      "cat": null,
+      "desc": "Simplex fiber patch cord  LC/APC-LC/APC, 5 Meter",
+      "price": "",
+      "unit": "",
+      "img": "uploads/1784195469892-b6bh.png",
+      "tags": [
+        "featured"
+      ],
+      "created_at": "2026-07-16T07:37:27.882Z"
+    },
+    {
+      "sku": "ADFPC006-3mt",
+      "name": "Simplex fiber patch cord  LC/APC-LC/APC, 3 Meter",
+      "cat": null,
+      "desc": "Simplex fiber patch cord  LC/APC-LC/APC, 3 Meter",
+      "price": "",
+      "unit": "",
+      "img": "",
+      "tags": [
+        "featured"
+      ],
+      "created_at": "2026-07-16T07:37:27.697Z"
+    },
+    {
+      "sku": "ADFPC006-2mt",
+      "name": "Simplex fiber patch cord  LC/APC-LC/APC, 2 Meter",
+      "cat": null,
+      "desc": "Simplex fiber patch cord  LC/APC-LC/APC, 2 Meter",
+      "price": "",
+      "unit": "",
+      "img": "",
+      "tags": [
+        "featured"
+      ],
+      "created_at": "2026-07-16T07:37:27.538Z"
+    },
+    {
+      "sku": "ADFPC006-1mt",
+      "name": "Simplex fiber patch cord  LC/APC-LC/APC, 1 Meter",
+      "cat": null,
+      "desc": "Simplex fiber patch cord  LC/APC-LC/APC, 1 Meter",
+      "price": "",
+      "unit": "",
+      "img": "",
+      "tags": [
+        "featured"
+      ],
+      "created_at": "2026-07-16T07:37:27.219Z"
+    },
+    {
+      "sku": "ADFPC005-5mt",
+      "name": "Simplex fiber patch cord  SC/APC-LC/APC, 5 Meter",
+      "cat": null,
+      "desc": "Simplex fiber patch cord  SC/APC-LC/APC, 5 Meter",
+      "price": "",
+      "unit": "",
+      "img": "",
+      "tags": [
+        "featured"
+      ],
+      "created_at": "2026-07-16T07:37:27.050Z"
+    },
+    {
+      "sku": "ADFPC005-3mt",
+      "name": "Simplex fiber patch cord  SC/APC-LC/APC, 3 Meter",
+      "cat": null,
+      "desc": "Simplex fiber patch cord  SC/APC-LC/APC, 3 Meter",
+      "price": "",
+      "unit": "",
+      "img": "",
+      "tags": [
+        "featured"
+      ],
+      "created_at": "2026-07-16T07:37:26.891Z"
+    },
+    {
+      "sku": "ADFPC005-2mt",
+      "name": "Simplex fiber patch cord  SC/APC-LC/APC, 2 Meter",
+      "cat": null,
+      "desc": "Simplex fiber patch cord  SC/APC-LC/APC, 2 Meter",
+      "price": "",
+      "unit": "",
+      "img": "",
+      "tags": [
+        "featured"
+      ],
+      "created_at": "2026-07-16T07:37:26.572Z"
+    },
+    {
+      "sku": "ADFPC005-1mt",
+      "name": "Simplex fiber patch cord  SC/APC-LC/APC, 1 Meter",
+      "cat": null,
+      "desc": "Simplex fiber patch cord  SC/APC-LC/APC, 1 Meter",
+      "price": "",
+      "unit": "",
+      "img": "",
+      "tags": [
+        "featured"
+      ],
+      "created_at": "2026-07-16T07:37:26.410Z"
+    },
+    {
+      "sku": "ADFPC004-5mt",
+      "name": "Simplex fiber patch cord  SC/APC-SC/APC, 5 Meter",
+      "cat": null,
+      "desc": "Simplex fiber patch cord  SC/APC-SC/APC, 5 Meter",
+      "price": "",
+      "unit": "",
+      "img": "",
+      "tags": [
+        "featured"
+      ],
+      "created_at": "2026-07-16T07:37:26.239Z"
+    },
+    {
+      "sku": "ADFPC004-3mt",
+      "name": "Simplex fiber patch cord  SC/APC-SC/APC, 3 Meter",
+      "cat": null,
+      "desc": "Simplex fiber patch cord  SC/APC-SC/APC, 3 Meter",
+      "price": "",
+      "unit": "",
+      "img": "",
+      "tags": [
+        "featured"
+      ],
+      "created_at": "2026-07-16T07:37:25.921Z"
+    },
+    {
+      "sku": "ADFPC004-2mt",
+      "name": "Simplex fiber patch cord  SC/APC-SC/APC, 2 Meter",
+      "cat": null,
+      "desc": "Simplex fiber patch cord  SC/APC-SC/APC, 2 Meter",
+      "price": "",
+      "unit": "",
+      "img": "",
+      "tags": [],
+      "created_at": "2026-07-16T07:37:25.763Z"
+    },
+    {
+      "sku": "ADFPC004-1mt",
+      "name": "Simplex fiber patch cord  SC/APC-SC/APC, 1 Meter",
+      "cat": null,
+      "desc": "Simplex fiber patch cord  SC/APC-SC/APC, 1 Meter",
+      "price": "",
+      "unit": "",
+      "img": "",
+      "tags": [],
+      "created_at": "2026-07-16T07:37:25.600Z"
+    },
+    {
+      "sku": "ADFPC003-5mt",
+      "name": "Simplex fiber patch cord  LC/UPC-LC/UPC, 5 Meter",
+      "cat": null,
+      "desc": "Simplex fiber patch cord  LC/UPC-LC/UPC, 5 Meter",
+      "price": "",
+      "unit": "",
+      "img": "",
+      "tags": [],
+      "created_at": "2026-07-16T07:37:25.279Z"
+    },
+    {
+      "sku": "ADFPC003-3mt",
+      "name": "Simplex fiber patch cord  LC/UPC-LC/UPC, 3 Meter",
+      "cat": null,
+      "desc": "Simplex fiber patch cord  LC/UPC-LC/UPC, 3 Meter",
+      "price": "",
+      "unit": "",
+      "img": "",
+      "tags": [],
+      "created_at": "2026-07-16T07:37:25.124Z"
+    },
+    {
+      "sku": "ADFPC003-2mt",
+      "name": "Simplex fiber patch cord  LC/UPC-LC/UPC, 2 Meter",
+      "cat": null,
+      "desc": "Simplex fiber patch cord  LC/UPC-LC/UPC, 2 Meter",
+      "price": "",
+      "unit": "",
+      "img": "",
+      "tags": [],
+      "created_at": "2026-07-16T07:37:24.950Z"
+    },
+    {
+      "sku": "ADFPC003-1mt",
+      "name": "Simplex fiber patch cord  LC/UPC-LC/UPC, 1 Meter",
+      "cat": null,
+      "desc": "Simplex fiber patch cord  LC/UPC-LC/UPC, 1 Meter",
+      "price": "",
+      "unit": "",
+      "img": "",
+      "tags": [],
+      "created_at": "2026-07-16T07:37:24.639Z"
+    },
+    {
+      "sku": "ADFPC002-5mt",
+      "name": "Simplex fiber patch cord  SC/UPC-LC/UPC, 5 Meter",
+      "cat": null,
+      "desc": "Simplex fiber patch cord  SC/UPC-LC/UPC, 5 Meter",
+      "price": "",
+      "unit": "",
+      "img": "",
+      "tags": [],
+      "created_at": "2026-07-16T07:37:24.490Z"
+    },
+    {
+      "sku": "ADFPC002-3mt",
+      "name": "Simplex fiber patch cord  SC/UPC-LC/UPC, 3 Meter",
+      "cat": null,
+      "desc": "Simplex fiber patch cord  SC/UPC-LC/UPC, 3 Meter",
+      "price": "",
+      "unit": "",
+      "img": "",
+      "tags": [],
+      "created_at": "2026-07-16T07:37:24.317Z"
+    },
+    {
+      "sku": "ADFPC002-2mt",
+      "name": "Simplex fiber patch cord  SC/UPC-LC/UPC, 2 Meter",
+      "cat": null,
+      "desc": "Simplex fiber patch cord  SC/UPC-LC/UPC, 2 Meter",
+      "price": "",
+      "unit": "",
+      "img": "",
+      "tags": [],
+      "created_at": "2026-07-16T07:37:23.988Z"
+    },
+    {
+      "sku": "ADFPC002-1mt",
+      "name": "Simplex fiber patch cord  SC/UPC-LC/UPC, 1 Meter",
+      "cat": null,
+      "desc": "Simplex fiber patch cord  SC/UPC-LC/UPC, 1 Meter",
+      "price": "",
+      "unit": "",
+      "img": "",
+      "tags": [],
+      "created_at": "2026-07-16T07:37:23.837Z"
+    },
+    {
+      "sku": "ADFPC001-5mt",
+      "name": "Simplex fiber patch cord SC/UPC- SC/UPC, 5 Meter",
+      "cat": null,
+      "desc": "Simplex fiber patch cord SC/UPC- SC/UPC, 5 Meter",
+      "price": "",
+      "unit": "",
+      "img": "",
+      "tags": [],
+      "created_at": "2026-07-16T07:37:23.660Z"
+    },
+    {
+      "sku": "ADFPC001-3mt",
+      "name": "Simplex fiber patch cord SC/UPC- SC/UPC, 3 Meter",
+      "cat": null,
+      "desc": "Simplex fiber patch cord SC/UPC- SC/UPC, 3 Meter",
+      "price": "",
+      "unit": "",
+      "img": "",
+      "tags": [],
+      "created_at": "2026-07-16T07:37:23.330Z"
+    },
+    {
+      "sku": "ADFPC001-2mt",
+      "name": "Simplex fiber patch cord SC/UPC- SC/UPC, 2 Meter",
+      "cat": null,
+      "desc": "Simplex fiber patch cord SC/UPC- SC/UPC, 2 Meter",
+      "price": "",
+      "unit": "",
+      "img": "",
+      "tags": [],
+      "created_at": "2026-07-16T07:37:23.202Z"
+    },
+    {
+      "sku": "ADFPC001-1mt",
+      "name": "Simplex fiber patch cord SC/UPC- SC/UPC, 1 Meter",
+      "cat": null,
+      "desc": "Simplex fiber patch cord SC/UPC- SC/UPC, 1 Meter",
+      "price": "",
+      "unit": "",
+      "img": "",
+      "tags": [],
+      "created_at": "2026-07-16T07:37:22.940Z"
+    },
+    {
+      "sku": "AD623CCABLK-OT",
+      "name": "Cat 6 23 AWG -CCA",
+      "cat": null,
+      "desc": "Cat 6 23 AWG -CCA - black colour, Color: Black",
+      "price": "",
+      "unit": "",
+      "img": "",
+      "tags": [],
+      "created_at": "2026-07-16T07:37:22.687Z"
+    },
+    {
+      "sku": "AD623BCBLK",
+      "name": "Cat 6 23 AWG - BC - Black Colour cat6 indoor UTP",
+      "cat": null,
+      "desc": "Cat 6 23 AWG - BC - Black Colour cat6 indoor UTP, Color: Black",
+      "price": "",
+      "unit": "",
+      "img": "",
+      "tags": [],
+      "created_at": "2026-07-16T07:37:22.448Z"
+    },
+    {
+      "sku": "AD623CCAGRY",
+      "name": "Cat 6 23 AWG -CCA",
+      "cat": null,
+      "desc": "Cat 6 23 AWG -CCA - Grey colour, Color: Black",
+      "price": "",
+      "unit": "",
+      "img": "",
+      "tags": [],
+      "created_at": "2026-07-16T07:37:22.305Z"
+    },
+    {
+      "sku": "ADUTPBC5M-R",
+      "name": "Cat6 UTP 7*0.16mm BC pass fluke test, 5 Meter",
+      "cat": null,
+      "desc": "Cat6 UTP 7*0.16mm BC pass fluke test, 5 Meter, Color: Red",
+      "price": "",
+      "unit": "",
+      "img": "",
+      "tags": [],
+      "created_at": "2026-07-16T07:37:22.045Z"
+    },
+    {
+      "sku": "ADUTPBC5M-Y",
+      "name": "Cat6 UTP 7*0.16mm BC pass fluke test, 5 Meter",
+      "cat": null,
+      "desc": "Cat6 UTP 7*0.16mm BC pass fluke test, 5 Meter, Color: Yellow",
+      "price": "",
+      "unit": "",
+      "img": "",
+      "tags": [],
+      "created_at": "2026-07-16T07:37:21.807Z"
+    },
+    {
+      "sku": "ADUTPBC5M-G",
+      "name": "Cat6 UTP 7*0.16mm BC pass fluke test, 5 Meter",
+      "cat": null,
+      "desc": "Cat6 UTP 7*0.16mm BC pass fluke test, 5 Meter, Color: Grey",
+      "price": "",
+      "unit": "",
+      "img": "",
+      "tags": [],
+      "created_at": "2026-07-16T07:37:21.664Z"
+    },
+    {
+      "sku": "ADUTPBC5M-B",
+      "name": "Cat6 UTP 7*0.16mm BC pass fluke test, 5 Meter",
+      "cat": null,
+      "desc": "Cat6 UTP 7*0.16mm BC pass fluke test, 5 Meter, Color: Blue",
+      "price": "",
+      "unit": "",
+      "img": "",
+      "tags": [],
+      "created_at": "2026-07-16T07:37:21.489Z"
+    },
+    {
+      "sku": "ADUTPBC5M-BLK",
+      "name": "Cat6 UTP 7*0.16mm BC pass fluke test, 5 Meter",
+      "cat": null,
+      "desc": "Cat6 UTP 7*0.16mm BC pass fluke test, 5 Meter,  Color: Black",
+      "price": "",
+      "unit": "",
+      "img": "",
+      "tags": [],
+      "created_at": "2026-07-16T07:37:21.337Z"
+    },
+    {
+      "sku": "ADUTPBC3M-R",
+      "name": "Cat6 UTP 7*0.16mm BC pass fluke test",
+      "cat": null,
+      "desc": "Cat6 UTP 7*0.16mm BC pass fluke test, 3 Meter, Color: Red",
+      "price": "",
+      "unit": "",
+      "img": "",
+      "tags": [],
+      "created_at": "2026-07-16T07:37:21.154Z"
+    },
+    {
+      "sku": "ADUTPBC3M-Y",
+      "name": "Cat6 UTP 7*0.16mm BC pass fluke test, 3 Meter",
+      "cat": null,
+      "desc": "Cat6 UTP 7*0.16mm BC pass fluke test, 3 Meter, Color: Yellow",
+      "price": "",
+      "unit": "",
+      "img": "",
+      "tags": [],
+      "created_at": "2026-07-16T07:37:21.019Z"
+    },
+    {
+      "sku": "ADUTPBC3M-G",
+      "name": "Cat6 UTP 7*0.16mm BC pass fluke test, 3 Meter",
+      "cat": null,
+      "desc": "Cat6 UTP 7*0.16mm BC pass fluke test, 3 Meter, Color: Grey",
+      "price": "",
+      "unit": "",
+      "img": "",
+      "tags": [],
+      "created_at": "2026-07-16T07:37:20.825Z"
+    },
+    {
+      "sku": "ADUTPBC3M-B",
+      "name": "Cat6 UTP 7*0.16mm BC pass fluke test, 3 Meter",
+      "cat": null,
+      "desc": "Cat6 UTP 7*0.16mm BC pass fluke test, 3 Meter, Color: Blue",
+      "price": "",
+      "unit": "",
+      "img": "",
+      "tags": [],
+      "created_at": "2026-07-16T07:37:20.701Z"
+    },
+    {
+      "sku": "ADUTPBC3M-BLK",
+      "name": "Cat6 UTP 7*0.16mm BC pass fluke test, 3 Meter",
+      "cat": null,
+      "desc": "Cat6 UTP 7*0.16mm BC pass fluke test, 3 Meter,  Color: Black",
+      "price": "",
+      "unit": "",
+      "img": "",
+      "tags": [],
+      "created_at": "2026-07-16T07:37:20.505Z"
+    },
+    {
+      "sku": "ADUTPBC2M-R",
+      "name": "Cat6 UTP 7*0.16mm BC pass fluke test, 2 Meter",
+      "cat": null,
+      "desc": "Cat6 UTP 7*0.16mm BC pass fluke test, 2 Meter, Color: Red",
+      "price": "",
+      "unit": "",
+      "img": "",
+      "tags": [],
+      "created_at": "2026-07-16T07:37:20.380Z"
+    },
+    {
+      "sku": "ADUTPBC2M-Y",
+      "name": "Cat6 UTP 7*0.16mm BC pass fluke test, 2 Meter",
+      "cat": null,
+      "desc": "Cat6 UTP 7*0.16mm BC pass fluke test, 2 Meter, Color: Yellow",
+      "price": "",
+      "unit": "",
+      "img": "",
+      "tags": [],
+      "created_at": "2026-07-16T07:37:20.187Z"
+    },
+    {
+      "sku": "ADUTPBC2M-G",
+      "name": "Cat6 UTP 7*0.16mm BC pass fluke test, 2 Meter",
+      "cat": null,
+      "desc": "Cat6 UTP 7*0.16mm BC pass fluke test, 2 Meter, Color: Grey",
+      "price": "",
+      "unit": "",
+      "img": "",
+      "tags": [],
+      "created_at": "2026-07-16T07:37:20.056Z"
+    },
+    {
+      "sku": "ADUTPBC2M-B",
+      "name": "Cat6 UTP 7*0.16mm BC pass fluke test, 2 Meter",
+      "cat": null,
+      "desc": "Cat6 UTP 7*0.16mm BC pass fluke test, 2 Meter, Color: Blue",
+      "price": "",
+      "unit": "",
+      "img": "",
+      "tags": [],
+      "created_at": "2026-07-16T07:37:19.869Z"
+    },
+    {
+      "sku": "ADUTPBC2M-BLK",
+      "name": "Cat6 UTP 7*0.16mm BC pass fluke test, 2 Meter",
+      "cat": null,
+      "desc": "Cat6 UTP 7*0.16mm BC pass fluke test, 2 Meter,  Color: Black",
+      "price": "",
+      "unit": "",
+      "img": "",
+      "tags": [],
+      "created_at": "2026-07-16T07:37:19.737Z"
+    },
+    {
+      "sku": "ADUTPBC1M-R",
+      "name": "Cat6 UTP 7*0.16mm BC pass fluke test, 1 Meter",
+      "cat": null,
+      "desc": "Cat6 UTP 7*0.16mm BC pass fluke test, 1 Meter, Color: Red",
+      "price": "",
+      "unit": "",
+      "img": "",
+      "tags": [],
+      "created_at": "2026-07-16T07:37:19.541Z"
+    },
+    {
+      "sku": "ADUTPBC1M-Y",
+      "name": "Cat6 UTP 7*0.16mm BC pass fluke test, 1 Meter",
+      "cat": null,
+      "desc": "Cat6 UTP 7*0.16mm BC pass fluke test, 1 Meter, Color: Yellow",
+      "price": "",
+      "unit": "",
+      "img": "",
+      "tags": [],
+      "created_at": "2026-07-16T07:37:19.420Z"
+    },
+    {
+      "sku": "ADUTPBC1M-G",
+      "name": "Cat6 UTP 7*0.16mm BC pass fluke test, 1 Meter",
+      "cat": null,
+      "desc": "Cat6 UTP 7*0.16mm BC pass fluke test, 1 Meter, Color: Grey",
+      "price": "",
+      "unit": "",
+      "img": "",
+      "tags": [],
+      "created_at": "2026-07-16T07:37:19.213Z"
+    },
+    {
+      "sku": "ADUTPBC1M-B",
+      "name": "Cat6 UTP 7*0.16mm BC pass fluke test, 1 Meter",
+      "cat": null,
+      "desc": "Cat6 UTP 7*0.16mm BC pass fluke test, 1 Meter, Color: Blue",
+      "price": "",
+      "unit": "",
+      "img": "",
+      "tags": [],
+      "created_at": "2026-07-16T07:37:19.101Z"
+    },
+    {
+      "sku": "ADUTPBC0.5M-R",
+      "name": "Cat6 UTP 7*0.16mm BC pass fluke test, 0.5 Meter",
+      "cat": null,
+      "desc": "Cat6 UTP 7*0.16mm BC pass fluke test, 0.5 Meter, Color: Red",
+      "price": "",
+      "unit": "",
+      "img": "",
+      "tags": [],
+      "created_at": "2026-07-16T07:37:18.891Z"
+    },
+    {
+      "sku": "ADUTPBC0.5M-Y",
+      "name": "Cat6 UTP 7*0.16mm BC pass fluke test, 0.5 Meter",
+      "cat": null,
+      "desc": "Cat6 UTP 7*0.16mm BC pass fluke test, 0.5 Meter, Color: Yellow",
+      "price": "",
+      "unit": "",
+      "img": "",
+      "tags": [],
+      "created_at": "2026-07-16T07:37:18.774Z"
+    },
+    {
+      "sku": "ADUTPBC0.5M-G",
+      "name": "Cat6 UTP 7*0.16mm BC pass fluke test, 0.5 Meter",
+      "cat": null,
+      "desc": "Cat6 UTP 7*0.16mm BC pass fluke test, 0.5 Meter, Color: Grey",
+      "price": "",
+      "unit": "",
+      "img": "",
+      "tags": [],
+      "created_at": "2026-07-16T07:37:18.575Z"
+    },
+    {
+      "sku": "ADUTPBC0.5M-B",
+      "name": "Cat6 UTP 7*0.16mm BC pass fluke test, 0.5 Meter",
+      "cat": null,
+      "desc": "Cat6 UTP 7*0.16mm BC pass fluke test, 0.5 Meter, Color: Blue",
+      "price": "",
+      "unit": "",
+      "img": "",
+      "tags": [],
+      "created_at": "2026-07-16T07:37:18.447Z"
+    },
+    {
+      "sku": "ADUTPBC0.2M-R",
+      "name": "Cat6 UTP 7*0.16mm BC pass fluke test, 0.2 Meter",
+      "cat": null,
+      "desc": "Cat6 UTP 7*0.16mm BC pass fluke test, 0.2 Meter, Color: Red",
+      "price": "",
+      "unit": "",
+      "img": "",
+      "tags": [],
+      "created_at": "2026-07-16T07:37:18.253Z"
+    },
+    {
+      "sku": "ADUTPBC0.2M-Y",
+      "name": "Cat6 UTP 7*0.16mm BC pass fluke test, 0.2 Meter",
+      "cat": null,
+      "desc": "Cat6 UTP 7*0.16mm BC pass fluke test, 0.2 Meter, Color: Yellow",
+      "price": "",
+      "unit": "",
+      "img": "",
+      "tags": [],
+      "created_at": "2026-07-16T07:37:18.120Z"
+    },
+    {
+      "sku": "ADUTPBC0.2M-G",
+      "name": "Cat6 UTP 7*0.16mm BC pass fluke test, 0.2 Meter",
+      "cat": null,
+      "desc": "Cat6 UTP 7*0.16mm BC pass fluke test, 0.2 Meter, Color: Grey",
+      "price": "",
+      "unit": "",
+      "img": "",
+      "tags": [],
+      "created_at": "2026-07-16T07:37:17.934Z"
+    },
+    {
+      "sku": "ADUTPBC0.2M-B",
+      "name": "Cat6 UTP 7*0.16mm BC pass fluke test, 0.2 Meter",
+      "cat": null,
+      "desc": "Cat6 UTP 7*0.16mm BC pass fluke test, 0.2 Meter, Color: Blue",
+      "price": "",
+      "unit": "",
+      "img": "",
+      "tags": [],
+      "created_at": "2026-07-16T07:37:17.799Z"
+    },
+    {
+      "sku": "ADUTPCA5M-R",
+      "name": "Cat6 UTP 7*0.16mm CCA pass fluke test, 5 Meter",
+      "cat": null,
+      "desc": "Cat6 UTP 7*0.16mm CCA pass fluke test, 5 Meter, Color: Red",
+      "price": "",
+      "unit": "",
+      "img": "",
+      "tags": [],
+      "created_at": "2026-07-16T07:37:17.613Z"
+    },
+    {
+      "sku": "ADUTPCA5M-Y",
+      "name": "Cat6 UTP 7*0.16mm CCA pass fluke test, 5 Meter",
+      "cat": null,
+      "desc": "Cat6 UTP 7*0.16mm CCA pass fluke test, 5 Meter, Color: Yellow",
+      "price": "",
+      "unit": "",
+      "img": "",
+      "tags": [],
+      "created_at": "2026-07-16T07:37:17.480Z"
+    },
+    {
+      "sku": "ADUTPCA5M-G",
+      "name": "Cat6 UTP 7*0.16mm CCA pass fluke test, 5 Meter",
+      "cat": null,
+      "desc": "Cat6 UTP 7*0.16mm CCA pass fluke test, 5 Meter, Color: Grey",
+      "price": "",
+      "unit": "",
+      "img": "",
+      "tags": [],
+      "created_at": "2026-07-16T07:37:17.287Z"
+    },
+    {
+      "sku": "ADUTPCA5M-B",
+      "name": "Cat6 UTP 7*0.16mm CCA pass fluke test, 5 Meter",
+      "cat": null,
+      "desc": "Cat6 UTP 7*0.16mm CCA pass fluke test, 5 Meter, Color: Blue",
+      "price": "",
+      "unit": "",
+      "img": "",
+      "tags": [],
+      "created_at": "2026-07-16T07:37:17.158Z"
+    },
+    {
+      "sku": "ADUTPCA5M-BLK",
+      "name": "Cat6 UTP 7*0.16mm CCA pass fluke test, 5 Meter",
+      "cat": null,
+      "desc": "Cat6 UTP 7*0.16mm CCA pass fluke test, 5 Meter, Color: Black",
+      "price": "",
+      "unit": "",
+      "img": "",
+      "tags": [],
+      "created_at": "2026-07-16T07:37:16.966Z"
+    },
+    {
+      "sku": "ADUTPCA3M-R",
+      "name": "Cat6 UTP 7*0.16mm CCA pass fluke test, 3 Meter",
+      "cat": null,
+      "desc": "Cat6 UTP 7*0.16mm CCA pass fluke test, 3 Meter, Color: Red",
+      "price": "",
+      "unit": "",
+      "img": "",
+      "tags": [],
+      "created_at": "2026-07-16T07:37:16.837Z"
+    },
+    {
+      "sku": "ADUTPCA3M-Y",
+      "name": "Cat6 UTP 7*0.16mm CCA pass fluke test, 3 Meter",
+      "cat": null,
+      "desc": "Cat6 UTP 7*0.16mm CCA pass fluke test, 3 Meter, Color: Yellow",
+      "price": "",
+      "unit": "",
+      "img": "",
+      "tags": [],
+      "created_at": "2026-07-16T07:37:16.640Z"
+    },
+    {
+      "sku": "ADUTPCA3M-G",
+      "name": "Cat6 UTP 7*0.16mm CCA pass fluke test, 3 Meter",
+      "cat": null,
+      "desc": "Cat6 UTP 7*0.16mm CCA pass fluke test, 3 Meter, Color: Grey",
+      "price": "",
+      "unit": "",
+      "img": "",
+      "tags": [],
+      "created_at": "2026-07-16T07:37:16.515Z"
+    },
+    {
+      "sku": "ADUTPCA3M-B",
+      "name": "Cat6 UTP 7*0.16mm CCA pass fluke test, 3 Meter",
+      "cat": null,
+      "desc": "Cat6 UTP 7*0.16mm CCA pass fluke test, 3 Meter, Color: Blue",
+      "price": "",
+      "unit": "",
+      "img": "",
+      "tags": [],
+      "created_at": "2026-07-16T07:37:16.319Z"
+    },
+    {
+      "sku": "ADUTPCA3M-BLK",
+      "name": "Cat6 UTP 7*0.16mm CCA pass fluke test, 3 Meter",
+      "cat": null,
+      "desc": "Cat6 UTP 7*0.16mm CCA pass fluke test, 3 Meter, Color: Black",
+      "price": "",
+      "unit": "",
+      "img": "",
+      "tags": [],
+      "created_at": "2026-07-16T07:37:16.196Z"
+    },
+    {
+      "sku": "ADUTPCA2M-R",
+      "name": "Cat6 UTP 7*0.16mm CCA pass fluke test, 2 Meter",
+      "cat": null,
+      "desc": "Cat6 UTP 7*0.16mm CCA pass fluke test, 2 Meter, Color: Red",
+      "price": "",
+      "unit": "",
+      "img": "",
+      "tags": [],
+      "created_at": "2026-07-16T07:37:15.998Z"
+    },
+    {
+      "sku": "ADUTPCA2M-Y",
+      "name": "Cat6 UTP 7*0.16mm CCA pass fluke test, 2 Meter",
+      "cat": null,
+      "desc": "Cat6 UTP 7*0.16mm CCA pass fluke test, 2 Meter, Color: Yellow",
+      "price": "",
+      "unit": "",
+      "img": "",
+      "tags": [],
+      "created_at": "2026-07-16T07:37:15.874Z"
+    },
+    {
+      "sku": "ADUTPCA2M-G",
+      "name": "Cat6 UTP 7*0.16mm CCA pass fluke test, 2 Meter",
+      "cat": null,
+      "desc": "Cat6 UTP 7*0.16mm CCA pass fluke test, 2 Meter, Color: Grey",
+      "price": "",
+      "unit": "",
+      "img": "",
+      "tags": [],
+      "created_at": "2026-07-16T07:37:15.679Z"
+    },
+    {
+      "sku": "ADUTPCA2M-B",
+      "name": "Cat6 UTP 7*0.16mm CCA pass fluke test, 2 Meter",
+      "cat": null,
+      "desc": "Cat6 UTP 7*0.16mm CCA pass fluke test, 2 Meter, Color: Blue",
+      "price": "",
+      "unit": "",
+      "img": "",
+      "tags": [],
+      "created_at": "2026-07-16T07:37:15.554Z"
+    },
+    {
+      "sku": "ADUTPCA2M-BLK",
+      "name": "Cat6 UTP 7*0.16mm CCA pass fluke test, 2 Meter",
+      "cat": null,
+      "desc": "Cat6 UTP 7*0.16mm CCA pass fluke test, 2 Meter, Color: Black",
+      "price": "",
+      "unit": "",
+      "img": "",
+      "tags": [],
+      "created_at": "2026-07-16T07:37:15.358Z"
+    },
+    {
+      "sku": "ADUTPCA1M-R",
+      "name": "Cat6 UTP 7*0.16mm CCA pass fluke test, 1 Meter",
+      "cat": null,
+      "desc": "Cat6 UTP 7*0.16mm CCA pass fluke test, 1 Meter, Color: Red",
+      "price": "",
+      "unit": "",
+      "img": "",
+      "tags": [],
+      "created_at": "2026-07-16T07:37:15.234Z"
+    },
+    {
+      "sku": "ADUTPCA1M-Y",
+      "name": "Cat6 UTP 7*0.16mm CCA pass fluke test, 1 Meter, Color: Yellow",
+      "cat": null,
+      "desc": "Cat6 UTP 7*0.16mm CCA pass fluke test, 1 Meter, Color: Yellow",
+      "price": "",
+      "unit": "",
+      "img": "",
+      "tags": [],
+      "created_at": "2026-07-16T07:37:15.038Z"
+    },
+    {
+      "sku": "ADUTPCA1M-G",
+      "name": "Cat6 UTP 7*0.16mm CCA pass fluke test, 1 Meter",
+      "cat": null,
+      "desc": "Cat6 UTP 7*0.16mm CCA pass fluke test, 1 Meter, Color: Grey",
+      "price": "",
+      "unit": "",
+      "img": "",
+      "tags": [],
+      "created_at": "2026-07-16T07:37:14.908Z"
+    },
+    {
+      "sku": "ADUTPCA1M-B",
+      "name": "Cat6 UTP 7*0.16mm CCA pass fluke test, 1 Meter",
+      "cat": null,
+      "desc": "Cat6 UTP 7*0.16mm CCA pass fluke test, 1 Meter, Color: Blue",
+      "price": "",
+      "unit": "",
+      "img": "",
+      "tags": [],
+      "created_at": "2026-07-16T07:37:14.708Z"
+    },
+    {
+      "sku": "ADUTPCA0.2M-R",
+      "name": "Cat6 UTP 7*0.16mm CCA pass fluke test, 0.2 Meter",
+      "cat": null,
+      "desc": "Cat6 UTP 7*0.16mm CCA pass fluke test, 0.2 Meter, Color: Red",
+      "price": "",
+      "unit": "",
+      "img": "",
+      "tags": [],
+      "created_at": "2026-07-16T07:37:14.583Z"
+    },
+    {
+      "sku": "ADUTPCA0.2M-Y",
+      "name": "Cat6 UTP 7*0.16mm CCA pass fluke test, 0.2 Meter",
+      "cat": null,
+      "desc": "Cat6 UTP 7*0.16mm CCA pass fluke test, 0.2 Meter, Color: Yellow",
+      "price": "",
+      "unit": "",
+      "img": "",
+      "tags": [],
+      "created_at": "2026-07-16T07:37:14.383Z"
+    },
+    {
+      "sku": "ADHDMI15M",
+      "name": "HDMI, OD: 8.0mm, 19+1 CCS",
+      "cat": null,
+      "desc": "HDMI, OD: 8.0mm, 19+1 CCS, connector with metal shell, supports 4K, version 2.0, Color: Black",
+      "price": "",
+      "unit": "",
+      "img": "",
+      "tags": [],
+      "created_at": "2026-07-16T07:37:14.263Z"
+    },
+    {
+      "sku": "ADHDMI10M",
+      "name": "HDMI, OD: 8.0mm, 19+1 CCS",
+      "cat": null,
+      "desc": "HDMI, OD: 8.0mm, 19+1 CCS, connector with metal shell, supports 4K, version 2.0, Color: Black",
+      "price": "",
+      "unit": "",
+      "img": "",
+      "tags": [],
+      "created_at": "2026-07-16T07:37:14.054Z"
+    },
+    {
+      "sku": "ADHDMI5M",
+      "name": "HDMI, OD: 8.0mm, 19+1 CCS",
+      "cat": null,
+      "desc": "HDMI, OD: 8.0mm, 19+1 CCS, connector with metal shell, supports 4K, version 2.0, Color: Black",
+      "price": "",
+      "unit": "",
+      "img": "",
+      "tags": [],
+      "created_at": "2026-07-16T07:37:13.939Z"
+    },
+    {
+      "sku": "ADFPDP-BLACK",
+      "name": "Face Plate - Dual -2 port Face Plate",
+      "cat": null,
+      "desc": "Face Plate - Dual -2 port Face Plate (86*86mm), Color: Black",
+      "price": "",
+      "unit": "",
+      "img": "",
+      "tags": [],
+      "created_at": "2026-07-16T07:37:13.733Z"
+    },
+    {
+      "sku": "ADFPDP-GOLD",
+      "name": "Face Plate - Dual -2 port Face Plate",
+      "cat": null,
+      "desc": "Face Plate - Dual -2 port Face Plate (86*86mm), Color: Gold",
+      "price": "",
+      "unit": "",
+      "img": "",
+      "tags": [],
+      "created_at": "2026-07-16T07:37:13.609Z"
+    },
+    {
+      "sku": "ADFPDP-SILVER",
+      "name": "Face Plate - Dual -2 port Face Plate",
+      "cat": null,
+      "desc": "Face Plate - Dual -2 port Face Plate (86*86mm), Color: Silver",
+      "price": "",
+      "unit": "",
+      "img": "",
+      "tags": [],
+      "created_at": "2026-07-16T07:37:13.415Z"
+    },
+    {
+      "sku": "ADFPSP-BLACK",
+      "name": "Face Plate - Single-1 port Face Plate",
+      "cat": null,
+      "desc": "Face Plate - Single-1 port Face Plate (86*86mm), Color: Black",
+      "price": "",
+      "unit": "",
+      "img": "",
+      "tags": [],
+      "created_at": "2026-07-16T07:37:13.286Z"
+    },
+    {
+      "sku": "ADFPSP-GOLD",
+      "name": "Face Plate - Single-1 port Face Plate",
+      "cat": null,
+      "desc": "Face Plate - Single-1 port Face Plate (86*86mm), Color: Gold",
+      "price": "",
+      "unit": "",
+      "img": "",
+      "tags": [],
+      "created_at": "2026-07-16T07:37:13.097Z"
+    },
+    {
+      "sku": "ADFPSP-SILVER",
+      "name": "Face Plate - Single-1 port Face Plate",
+      "cat": null,
+      "desc": "Face Plate - Single-1 port Face Plate (86*86mm), Color: Silver",
+      "price": "",
+      "unit": "",
+      "img": "",
+      "tags": [],
+      "created_at": "2026-07-16T07:37:12.958Z"
+    },
+    {
+      "sku": "ADFPDP-white",
+      "name": "Face Plate - Dual -2 port Face Plate",
+      "cat": null,
+      "desc": "Face Plate - Dual -2 port Face Plate (86*86mm), Color: White",
+      "price": "",
+      "unit": "",
+      "img": "",
+      "tags": [],
+      "created_at": "2026-07-16T07:37:12.774Z"
+    },
+    {
+      "sku": "ADFPSP-white",
+      "name": "Face Plate - Single-1 port Face Plate",
+      "cat": null,
+      "desc": "Face Plate - Single-1 port Face Plate (86*86mm), Color: white",
+      "price": "",
+      "unit": "",
+      "img": "",
+      "tags": [],
+      "created_at": "2026-07-16T07:37:12.637Z"
+    },
+    {
+      "sku": "AD180KS",
+      "name": "UTP-180 CAT6 Keystone",
+      "cat": null,
+      "desc": "UTP-180 CAT6 Keystone, Color: Black",
+      "price": "",
+      "unit": "",
+      "img": "",
+      "tags": [
+        "bestseller"
+      ],
+      "created_at": "2026-07-16T07:37:12.453Z"
+    },
+    {
+      "sku": "AD19INCH24P-L",
+      "name": "CAT6 19-inch 1U 24-port CAT6 Patch Panel",
+      "cat": null,
+      "desc": "CAT6 19-inch 1U 24-port CAT6 Patch Panel   loaded, Color: Black",
+      "price": "",
+      "unit": "",
+      "img": "",
+      "tags": [
+        "bestseller"
+      ],
+      "created_at": "2026-07-16T07:37:12.314Z"
+    },
+    {
+      "sku": "AD19INCH24P",
+      "name": "CAT6 19-inch 1U 24-port CAT6 Patch Panel",
+      "cat": null,
+      "desc": "CAT6 19-inch 1U 24-port CAT6 Patch Panel  unloaded ( Blank ), Color: Black",
+      "price": "",
+      "unit": "",
+      "img": "",
+      "tags": [
+        "bestseller"
+      ],
+      "created_at": "2026-07-16T07:37:12.131Z"
+    },
+    {
+      "sku": "ADRCVS42UC-800",
+      "name": "CBNT-ST-42U Vertical Standing Cabinet",
+      "cat": null,
+      "desc": "CBNT-ST-42U Vertical Standing Cabinet, 800 � 800 � 2055 mm, Color: Black",
+      "price": "",
+      "unit": "",
+      "img": "",
+      "tags": [
+        "bestseller"
+      ],
+      "created_at": "2026-07-16T07:37:11.992Z"
+    },
+    {
+      "sku": "ADRCVS42U-1200",
+      "name": "CBNT-ST-42U Vertical Standing Cabinet",
+      "cat": null,
+      "desc": "CBNT-ST-42U Vertical Standing Cabinet, 800 � 1200 � 2055 mm, Color: Black",
+      "price": "",
+      "unit": "",
+      "img": "",
+      "tags": [
+        "bestseller"
+      ],
+      "created_at": "2026-07-16T07:37:11.806Z"
+    },
+    {
+      "sku": "ADRCVS32U-1000",
+      "name": "CBNT-ST-32U Vertical Standing Cabinet",
+      "cat": null,
+      "desc": "CBNT-ST-32U Vertical Standing Cabinet, 800 � 1000 � 1610 mm, Color: Black",
+      "price": "",
+      "unit": "",
+      "img": "",
+      "tags": [
+        "bestseller"
+      ],
+      "created_at": "2026-07-16T07:37:11.657Z"
+    },
+    {
+      "sku": "ADRCWM9U-600",
+      "name": "9U wall mounted Rack",
+      "cat": null,
+      "desc": "9U wall mounted Rack (Product size: 600x600x500mm), 600 � 600 � 500mm, Color: Black",
+      "price": "",
+      "unit": "",
+      "img": "",
+      "tags": [
+        "bestseller"
+      ],
+      "created_at": "2026-07-16T07:37:11.483Z"
+    },
+    {
+      "sku": "ADRCWM9U-450",
+      "name": "CBNT-WM-9U Wall-mounted Cabinet",
+      "cat": null,
+      "desc": "CBNT-WM-9U Wall-mounted Cabinet, 600 � 450 � 500 mm, Color: Black",
+      "price": "",
+      "unit": "",
+      "img": "",
+      "tags": [
+        "bestseller"
+      ],
+      "created_at": "2026-07-16T07:37:11.326Z"
+    },
+    {
+      "sku": "ADRCWM6U-450",
+      "name": "CBNT-WM-6U Wall-mounted Cabinet",
+      "cat": null,
+      "desc": "CBNT-WM-6U Wall-mounted Cabinet, 600 � 450 � 368 mm, Color: Black",
+      "price": "",
+      "unit": "",
+      "img": "",
+      "tags": [
+        "bestseller"
+      ],
+      "created_at": "2026-07-16T07:37:11.155Z"
+    },
+    {
+      "sku": "ADRCWM4U-450",
+      "name": "CBNT-WM-4U Wall-mounted Cabinet",
+      "cat": "surveillance",
+      "desc": "CBNT-WM-4U Wall-mounted Cabinet, 600 � 450 � 280 mm, Color: Black",
+      "price": "",
+      "unit": "",
+      "img": "",
+      "tags": [
+        "bestseller"
+      ],
+      "created_at": "2026-07-16T07:37:10.999Z"
+    }
+  ],
+  "categories": [
+    {
+      "id": "access-control",
+      "label": "Access Control Solutions",
+      "icon": "fas fa-lock"
+    },
+    {
+      "id": "cat6-cables",
+      "label": "CAT6 Cables",
+      "icon": "fas fa-cable-car"
+    },
+    {
+      "id": "cable-mgmt",
+      "label": "Cable Management Solutions",
+      "icon": "fas fa-tools"
+    },
+    {
+      "id": "faceplates",
+      "label": "Face Plates, Back Boxes & Patch Panels",
+      "icon": "fas fa-th-large"
+    },
+    {
+      "id": "fiber-accessories",
+      "label": "Fiber Accessories",
+      "icon": "fas fa-puzzle-piece"
+    },
+    {
+      "id": "fiber-cables",
+      "label": "Fiber Optic Cables",
+      "icon": "fas fa-lightbulb"
+    },
+    {
+      "id": "intercom",
+      "label": "Intercom Solutions",
+      "icon": "fas fa-phone"
+    },
+    {
+      "id": "intrusion-alarm",
+      "label": "Intrusion Alarm",
+      "icon": "fas fa-bell"
+    },
+    {
+      "id": "keystone-jacks",
+      "label": "Keystone Jacks",
+      "icon": "fas fa-plug"
+    },
+    {
+      "id": "network-cabinets",
+      "label": "Network Cabinets & Server Racks",
+      "icon": "fas fa-server"
+    },
+    {
+      "id": "racks-cabinets",
+      "label": "Racks & Cabinets",
+      "icon": "fas fa-th"
+    },
+    {
+      "id": "safety-solutions",
+      "label": "Safety Solutions",
+      "icon": "fas fa-shield-alt"
+    },
+    {
+      "id": "surveillance",
+      "label": "Surveillance Solutions",
+      "icon": "fas fa-video"
+    },
+    {
+      "id": "tools",
+      "label": "Tools & Testing Equipments",
+      "icon": "fas fa-screwdriver-wrench"
+    },
+    {
+      "id": "test-cat",
+      "label": "Test Cat",
+      "icon": "fas fa-box"
+    }
+  ]
+}

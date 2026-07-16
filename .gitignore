@@ -1,3 +1,9 @@
 node_modules/
-data/
-static/
+server/uploads/*
+!server/uploads/.gitkeep
+client/build/
+server/adorn.db
+server/adorn.db-shm
+server/adorn.db-wal
+.DS_Store
+*.log
