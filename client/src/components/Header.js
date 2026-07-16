@@ -9,7 +9,15 @@ export default function Header() {
   const [cats, setCats] = useState([]);
   const [query, setQuery] = useState('');
   const [menuOpen, setMenuOpen] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    setLoggedIn(!!localStorage.getItem('adorn_admin'));
+    const handler = () => setLoggedIn(!!localStorage.getItem('adorn_admin'));
+    window.addEventListener('storage', handler);
+    return () => window.removeEventListener('storage', handler);
+  }, []);
 
   useEffect(() => {
     fetchCategories().then(setCats).catch(() => {});
@@ -53,9 +61,15 @@ export default function Header() {
             />
             <button type="submit"><i className="fas fa-search"></i></button>
           </form>
-          <Link to="/admin" className="btn btn-outline admin-btn">
-            <i className="fas fa-shield-alt"></i> Login
-          </Link>
+          {loggedIn ? (
+            <button className="btn btn-outline admin-btn" onClick={() => { localStorage.removeItem('adorn_admin'); setLoggedIn(false); window.location.href = '/'; }}>
+              <i className="fas fa-sign-out-alt"></i> Logout
+            </button>
+          ) : (
+            <Link to="/admin" className="btn btn-outline admin-btn">
+              <i className="fas fa-shield-alt"></i> Login
+            </Link>
+          )}
           <button className="hamburger" onClick={() => setMenuOpen(!menuOpen)}>
             <i className={`fas fa-${menuOpen ? 'times' : 'bars'}`}></i>
           </button>

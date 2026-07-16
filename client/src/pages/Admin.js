@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import {
   fetchProducts, fetchCategories, createProduct, updateProduct, deleteProduct,
-  createCategory, updateCategory, deleteCategory, uploadImage
+  createCategory, updateCategory, deleteCategory, uploadImage, imgUrl
 } from '../api';
 import './Admin.css';
 
@@ -39,6 +39,10 @@ export default function Admin() {
 
   const [bulkData, setBulkData] = useState('');
   const [showBulkModal, setShowBulkModal] = useState(false);
+
+  const [imgSku, setImgSku] = useState('');
+  const [imgPreview, setImgPreview] = useState(null);
+  const [imgUploading, setImgUploading] = useState(false);
 
   const showToast = useCallback((msg, type = 'success') => {
     setToast({ msg, type });
@@ -275,6 +279,22 @@ export default function Admin() {
     } catch (e) { showToast(e.message, 'error'); }
   };
 
+  const handleImgUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file || !imgSku) return;
+    setImgPreview(URL.createObjectURL(file));
+    setImgUploading(true);
+    try {
+      const res = await uploadImage(file);
+      const idx = products.findIndex(p => p.sku === imgSku);
+      if (idx >= 0) await quickUpdate(idx, { img: res.url });
+      setImgUploading(false);
+      setImgPreview(null);
+      showToast('Image uploaded for ' + imgSku);
+      setImgSku('');
+    } catch (err) { setImgUploading(false); showToast(err.message, 'error'); }
+  };
+
   const toggleTag = (tag) => {
     setPForm(prev => {
       const tags = prev.tags.includes(tag) ? prev.tags.filter(t => t !== tag) : [...prev.tags, tag];
@@ -393,6 +413,45 @@ export default function Admin() {
                   ))}
                 </tbody>
               </table>
+            </div>
+          </div>
+        )}
+
+        {tab === 'images' && (
+          <div className="tab-content">
+            <h2 className="tab-title">Product Images</h2>
+            <p className="img-upload-hint">Select a product and upload an image to assign it.</p>
+            <div className="img-upload-card">
+              <label className="img-sku-label">
+                Select Product
+                <select className="img-sku-select" value={imgSku} onChange={e => setImgSku(e.target.value)}>
+                  <option value="">-- Choose SKU --</option>
+                  {products.map(p => (
+                    <option key={p.sku} value={p.sku}>{p.sku} — {p.name}</option>
+                  ))}
+                </select>
+              </label>
+              {imgSku && (
+                <div className="img-preview-row">
+                  {products.find(p => p.sku === imgSku)?.img && (
+                    <div className="img-preview">
+                      <img src={imgUrl(products.find(p => p.sku === imgSku).img)} alt="current" />
+                      <span>Current</span>
+                    </div>
+                  )}
+                  {imgPreview && (
+                    <div className="img-preview">
+                      <img src={imgPreview} alt="new" />
+                      <span>New</span>
+                    </div>
+                  )}
+                </div>
+              )}
+              <label className="img-file-label">
+                <i className="fas fa-cloud-upload-alt"></i> Choose Image
+                <input type="file" accept="image/*" onChange={handleImgUpload} disabled={!imgSku} />
+              </label>
+              {imgUploading && <div className="img-uploading"><i className="fas fa-spinner fa-spin"></i> Uploading...</div>}
             </div>
           </div>
         )}

@@ -40,25 +40,6 @@ export default function Footer() {
             ADORN is a leading UAE-based provider of structured cabling, security surveillance, networking infrastructure, and access control solutions. We supply high-quality products suitable for commercial, industrial, and residential projects across the region.
           </p>
 
-          <div className="about-stats">
-            <div className="about-stat">
-              <span className="as-num">65+</span>
-              <span className="as-label">Products</span>
-            </div>
-            <div className="about-stat">
-              <span className="as-num">14</span>
-              <span className="as-label">Categories</span>
-            </div>
-            <div className="about-stat">
-              <span className="as-num">10+</span>
-              <span className="as-label">Years Exp.</span>
-            </div>
-            <div className="about-stat">
-              <span className="as-num">500+</span>
-              <span className="as-label">Clients</span>
-            </div>
-          </div>
-
           <div className="about-tags">
             <span className="atag"><i className="fas fa-shield-alt"></i> Trusted Supplier</span>
             <span className="atag"><i className="fas fa-trophy"></i> Premium Quality</span>
@@ -82,6 +63,10 @@ export default function Footer() {
             <a href="#!" aria-label="YouTube" className="social-link">
               <i className="fab fa-youtube"></i>
               <span className="social-label">YouTube</span>
+            </a>
+            <a href="https://wa.me/971526387275" aria-label="WhatsApp" className="social-link" target="_blank" rel="noopener noreferrer">
+              <i className="fab fa-whatsapp"></i>
+              <span className="social-label">WhatsApp</span>
             </a>
           </div>
         </div>

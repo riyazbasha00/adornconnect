@@ -30,21 +30,11 @@ export default function Home() {
     return c ? c.icon : 'fas fa-box';
   };
 
-  const scrollTo = (id) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
-  };
-
   return (
     <>
       <section className="hero">
         <div className="hero-bg" style={{ backgroundImage: `url(${BANNER})` }}></div>
         <div className="hero-overlay"></div>
-        <div className="hero-orbs">
-          <div className="hero-orb hero-orb-1"></div>
-          <div className="hero-orb hero-orb-2"></div>
-          <div className="hero-orb hero-orb-3"></div>
-        </div>
-        <div className="hero-grid"></div>
         <div className="container hero-content">
           <div className="hero-badge">
             <span className="hero-badge-dot"></span>
@@ -61,29 +51,14 @@ export default function Home() {
             <Link to="/products" className="hero-btn hero-btn-primary">
               <i className="fas fa-th-large"></i> Browse All Products
             </Link>
-            <a href="#contact" className="hero-btn hero-btn-outline" onClick={(e) => { e.preventDefault(); scrollTo('contact'); }}>
-              <i className="fas fa-envelope"></i> Get a Quote
+            <a href="https://wa.me/971526387275" className="hero-btn hero-btn-outline" target="_blank" rel="noopener noreferrer">
+              <i className="fab fa-whatsapp"></i> Get a Quote
             </a>
           </div>
           <div className="hero-stats">
             <div className="hero-stat">
-              <span className="hs-num">65+</span>
-              <span className="hs-label">Products</span>
-            </div>
-            <div className="hero-stat-divider"></div>
-            <div className="hero-stat">
-              <span className="hs-num">14</span>
-              <span className="hs-label">Categories</span>
-            </div>
-            <div className="hero-stat-divider"></div>
-            <div className="hero-stat">
-              <span className="hs-num">10+</span>
-              <span className="hs-label">Years Exp.</span>
-            </div>
-            <div className="hero-stat-divider"></div>
-            <div className="hero-stat">
-              <span className="hs-num">500+</span>
-              <span className="hs-label">Clients</span>
+              <span className="hs-num">15+</span>
+              <span className="hs-label">Years Experience</span>
             </div>
           </div>
         </div>
