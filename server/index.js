@@ -2,6 +2,7 @@ process.noDeprecation = true;
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
+const fs = require('fs');
 
 const productsRouter = require('./routes/products');
 const categoriesRouter = require('./routes/categories');
@@ -22,7 +23,13 @@ app.use('/api/products', productsRouter);
 app.use('/api/categories', categoriesRouter);
 app.use('/api/upload', uploadRouter);
 
-app.use(express.static(path.join(__dirname, '..', 'client', 'build'), {
+const buildDir = [
+  path.join(__dirname, '..', 'client', 'build'),
+  path.join(process.cwd(), 'client', 'build'),
+  path.join(__dirname, 'client', 'build'),
+].find(p => { try { return fs.statSync(p).isDirectory(); } catch { return false; } }) || path.join(__dirname, '..', 'client', 'build');
+
+app.use(express.static(buildDir, {
   maxAge: 0, etag: false, lastModified: false,
   setHeaders: (res, p) => {
     if (p.endsWith('.html')) res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
@@ -31,7 +38,7 @@ app.use(express.static(path.join(__dirname, '..', 'client', 'build'), {
 app.get('*', (req, res) => {
   if (req.path.startsWith('/api/') || req.path.startsWith('/uploads/')) return;
   res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
-  res.sendFile(path.join(__dirname, '..', 'client', 'build', 'index.html'));
+  res.sendFile(path.join(buildDir, 'index.html'));
 });
 
 app.use((err, req, res, next) => {
