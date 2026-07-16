@@ -6,7 +6,7 @@
     "dev": "concurrently \"npm --prefix server start\" \"cmd /c set NODE_OPTIONS=--no-deprecation && npm --prefix client start\"",
     "build": "npm --prefix client run build",
     "seed": "node server/seed.js",
-    "start": "node --no-deprecation server/index.js"
+    "start": "node --no-deprecation index.js"
   },
   "devDependencies": {
     "concurrently": "^8.2.0"
