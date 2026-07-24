@@ -4,7 +4,7 @@ import { fetchProducts, fetchCategories, fetchBanner } from '../api';
 import ProductCard from '../components/ProductCard';
 import './Home.css';
 
-const DEFAULT_BANNER = 'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?q=80&w=1920&auto=format&fit=crop';
+const DEFAULT_BANNER = '';
 
 export default function Home() {
   const [featured, setFeatured] = useState([]);
@@ -25,8 +25,8 @@ export default function Home() {
 
   return (
     <>
-      <section className="hero">
-        <div className="hero-bg" style={{ backgroundImage: `url(${banner})` }}></div>
+      <section className="hero" style={banner ? {} : { background: '#f5f5f5' }}>
+        {banner && <div className="hero-bg" style={{ backgroundImage: `url(${banner})` }}></div>}
         <div className="container hero-content">
           <div className="hero-badge">
             <span className="hero-badge-dot"></span>
