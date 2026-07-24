@@ -1,17 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { fetchProducts, fetchCategories } from '../api';
+import { fetchProducts, fetchCategories, fetchBanner } from '../api';
 import ProductCard from '../components/ProductCard';
 import './Home.css';
 
-const BANNER = 'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?q=80&w=1920&auto=format&fit=crop';
+const DEFAULT_BANNER = 'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?q=80&w=1920&auto=format&fit=crop';
 
 export default function Home() {
   const [featured, setFeatured] = useState([]);
   const [bestselling, setBestselling] = useState([]);
   const [cats, setCats] = useState([]);
+  const [banner, setBanner] = useState(DEFAULT_BANNER);
 
   useEffect(() => {
+    fetchBanner().then(b => { if (b && b.image) setBanner(b.image); }).catch(() => {});
     Promise.all([fetchProducts(), fetchCategories()]).then(([products, categories]) => {
       setCats(categories);
       const catMap = {};
@@ -33,7 +35,7 @@ export default function Home() {
   return (
     <>
       <section className="hero">
-        <div className="hero-bg" style={{ backgroundImage: `url(${BANNER})` }}></div>
+        <div className="hero-bg" style={{ backgroundImage: `url(${banner})` }}></div>
         <div className="hero-overlay"></div>
         <div className="container hero-content">
           <div className="hero-badge">

@@ -7,6 +7,7 @@ const fs = require('fs');
 const productsRouter = require('./routes/products');
 const categoriesRouter = require('./routes/categories');
 const uploadRouter = require('./routes/upload');
+const { getBanner, updateBanner } = require('./db');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -22,6 +23,14 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use('/api/products', productsRouter);
 app.use('/api/categories', categoriesRouter);
 app.use('/api/upload', uploadRouter);
+
+app.get('/api/banner', (req, res) => {
+  res.json(getBanner());
+});
+app.put('/api/banner', (req, res) => {
+  const banner = updateBanner(req.body);
+  res.json(banner);
+});
 
 const buildDir = [
   path.join(__dirname, '..', 'client', 'build'),

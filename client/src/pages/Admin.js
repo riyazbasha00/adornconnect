@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import {
   fetchProducts, fetchCategories, createProduct, updateProduct, deleteProduct,
-  createCategory, updateCategory, deleteCategory, uploadImage, imgUrl
+  createCategory, updateCategory, deleteCategory, uploadImage, imgUrl,
+  fetchBanner, updateBanner as apiUpdateBanner
 } from '../api';
 import './Admin.css';
 
@@ -44,6 +45,9 @@ export default function Admin() {
   const [imgPreview, setImgPreview] = useState(null);
   const [imgUploading, setImgUploading] = useState(false);
 
+  const [bannerImg, setBannerImg] = useState('');
+  const [bannerLoading, setBannerLoading] = useState(false);
+
   const showToast = useCallback((msg, type = 'success') => {
     setToast({ msg, type });
     setTimeout(() => setToast(null), 3000);
@@ -56,9 +60,10 @@ export default function Admin() {
 
   const loadData = useCallback(async () => {
     try {
-      const [prods, cats] = await Promise.all([fetchProducts(), fetchCategories()]);
+      const [prods, cats, banner] = await Promise.all([fetchProducts(), fetchCategories(), fetchBanner()]);
       setProducts(prods);
       setCategories(cats);
+      if (banner && banner.image) setBannerImg(banner.image);
     } catch { setProducts([]); setCategories([]); }
   }, []);
 
@@ -302,6 +307,19 @@ export default function Admin() {
     });
   };
 
+  const handleBannerUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    setBannerLoading(true);
+    try {
+      const res = await uploadImage(file);
+      await apiUpdateBanner({ image: res.url });
+      setBannerImg(res.url);
+      showToast('Banner image updated');
+    } catch (err) { showToast(err.message, 'error'); }
+    setBannerLoading(false);
+  };
+
   if (!loggedIn) {
     return (
       <div className="login-screen">
@@ -329,6 +347,7 @@ export default function Admin() {
         <a href="#!" className={tab === 'products' ? 'active' : ''} onClick={() => setTab('products')}><i className="fas fa-box"></i> Products</a>
         <a href="#!" className={tab === 'categories' ? 'active' : ''} onClick={() => setTab('categories')}><i className="fas fa-list"></i> Categories</a>
         <a href="#!" className={tab === 'images' ? 'active' : ''} onClick={() => setTab('images')}><i className="fas fa-images"></i> Images</a>
+        <a href="#!" className={tab === 'banner' ? 'active' : ''} onClick={() => setTab('banner')}><i className="fas fa-image"></i> Banner</a>
       </aside>
 
       <main className="admin-main">
@@ -452,6 +471,26 @@ export default function Admin() {
                 <input type="file" accept="image/*" onChange={handleImgUpload} disabled={!imgSku} />
               </label>
               {imgUploading && <div className="img-uploading"><i className="fas fa-spinner fa-spin"></i> Uploading...</div>}
+            </div>
+          </div>
+        )}
+
+        {tab === 'banner' && (
+          <div className="tab-content">
+            <h2 className="tab-title">Hero Banner</h2>
+            <p className="img-upload-hint">Upload a background image for the home page hero section.</p>
+            <div className="img-upload-card">
+              {bannerImg && (
+                <div className="img-preview" style={{ width: '100%', maxWidth: 600, marginBottom: 16 }}>
+                  <img src={bannerImg} alt="Current banner" style={{ width: '100%', borderRadius: 8, objectFit: 'cover', maxHeight: 300 }} />
+                  <span>Current Banner</span>
+                </div>
+              )}
+              <label className="img-file-label">
+                <i className="fas fa-cloud-upload-alt"></i> Upload New Banner
+                <input type="file" accept="image/*" onChange={handleBannerUpload} />
+              </label>
+              {bannerLoading && <div className="img-uploading"><i className="fas fa-spinner fa-spin"></i> Uploading...</div>}
             </div>
           </div>
         )}

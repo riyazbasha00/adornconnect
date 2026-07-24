@@ -11,6 +11,7 @@ function load() {
     data = JSON.parse(raw);
     if (!data.products) data.products = [];
     if (!data.categories) data.categories = [];
+    if (!data.banner) data.banner = { image: '' };
   }
   return data;
 }
@@ -84,7 +85,19 @@ function deleteCategory(id) {
   return true;
 }
 
+function getBanner() {
+  return load().banner || { image: '' };
+}
+
+function updateBanner(updates) {
+  const d = load();
+  d.banner = { ...d.banner, ...updates };
+  save();
+  return d.banner;
+}
+
 module.exports = {
   getProducts, getProduct, addProduct, updateProduct, deleteProduct,
   getCategories, getCategory, addCategory, updateCategory, deleteCategory,
+  getBanner, updateBanner,
 };

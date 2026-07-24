@@ -77,3 +77,15 @@ export async function uploadImage(file) {
   formData.append('image', file);
   return api(`${BASE}/upload`, { method: 'POST', body: formData });
 }
+
+export async function fetchBanner() {
+  return api(`${BASE}/banner`);
+}
+
+export async function updateBanner(data) {
+  return api(`${BASE}/banner`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data),
+  });
+}
