@@ -8,7 +8,8 @@
   pointer-events:none
 }
 .hero-bg{
-  position:absolute;inset:0;background-size:cover;background-position:center
+  position:absolute;inset:0;background-size:cover;background-position:center;
+  image-rendering:-webkit-optimize-contrast;image-rendering:auto
 }
 .hero-content{position:relative;z-index:2;color:#1a1a2e;max-width:700px;padding:50px 0 40px 40px;margin:0}
 

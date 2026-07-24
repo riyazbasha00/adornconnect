@@ -18,7 +18,9 @@
   cursor:pointer;font-size:.9rem
 }
 .search-bar button:hover{background:#e8892e}
+.mobile-search-btn{display:none;background:none;border:none;font-size:1.1rem;color:var(--gray-700);cursor:pointer;padding:6px}
 .admin-btn{flex-shrink:0;font-size:.78rem;padding:6px 14px}
+.admin-btn-text{}
 .header-nav{display:flex;align-items:center;gap:4px;flex-shrink:0}
 .hn-link{
   padding:6px 14px;font-size:.78rem;font-weight:600;color:var(--gray-600);
@@ -38,14 +40,42 @@
 .cat-link i{font-size:.85rem}
 .all-link{background:var(--gray-100);font-weight:600}
 
+.mobile-search-overlay{
+  position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:200;
+  display:flex;align-items:flex-start;justify-content:center;padding-top:70px;
+  -webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)
+}
+.mobile-search-box{
+  background:#fff;border-radius:12px;width:calc(100% - 32px);max-width:420px;
+  display:flex;align-items:center;padding:6px 6px 6px 16px;
+  box-shadow:0 8px 32px rgba(0,0,0,0.18)
+}
+.mobile-search-box form{display:flex;flex:1;align-items:center}
+.mobile-search-box input{
+  flex:1;border:none;outline:none;font-size:.95rem;font-family:inherit;padding:10px 8px;
+  background:transparent
+}
+.mobile-search-box form button{
+  padding:10px 16px;background:var(--orange);color:#fff;border:none;border-radius:8px;
+  cursor:pointer;font-size:.9rem;flex-shrink:0
+}
+.mobile-search-close{
+  background:none;border:none;font-size:1.1rem;color:var(--gray-500);
+  cursor:pointer;padding:8px 4px 8px 12px;flex-shrink:0
+}
+
 @media(max-width:768px){
   .top-bar-inner{flex-direction:column;align-items:center;font-size:.7rem;gap:6px}
   .tb-left,.tb-right{justify-content:center}
+  .header-inner{gap:10px;padding:0 4px}
+  .search-bar{display:none}
+  .mobile-search-btn{display:flex}
   .header-nav{display:none}
-  .admin-btn span{display:none}
-  .hamburger{display:block}
+  .admin-btn{padding:6px 8px}
+  .admin-btn-text{display:none}
+  .admin-btn i{margin:0}
+  .hamburger{display:block;font-size:1.2rem;padding:6px}
   .cat-nav{display:none}
   .cat-nav.open{display:block}
   .cat-nav-inner{flex-direction:column;overflow-x:visible;padding:8px}
-
 }

@@ -10,6 +10,8 @@ export default function Header() {
   const [query, setQuery] = useState('');
   const [menuOpen, setMenuOpen] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
+  const [showMobileSearch, setShowMobileSearch] = useState(false);
+  const [mobileQuery, setMobileQuery] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -61,13 +63,16 @@ export default function Header() {
             />
             <button type="submit"><i className="fas fa-search"></i></button>
           </form>
+          <button className="mobile-search-btn" onClick={() => setShowMobileSearch(true)}>
+            <i className="fas fa-search"></i>
+          </button>
           {loggedIn ? (
             <button className="btn btn-outline admin-btn" onClick={() => { localStorage.removeItem('adorn_admin'); setLoggedIn(false); window.location.href = '/'; }}>
-              <i className="fas fa-sign-out-alt"></i> Logout
+              <i className="fas fa-sign-out-alt"></i> <span className="admin-btn-text">Logout</span>
             </button>
           ) : (
             <Link to="/admin" className="btn btn-outline admin-btn">
-              <i className="fas fa-shield-alt"></i> Login
+              <i className="fas fa-shield-alt"></i> <span className="admin-btn-text">Login</span>
             </Link>
           )}
           <button className="hamburger" onClick={() => setMenuOpen(!menuOpen)}>
@@ -75,6 +80,18 @@ export default function Header() {
           </button>
         </div>
       </header>
+
+      {showMobileSearch && (
+        <div className="mobile-search-overlay" onClick={() => { setShowMobileSearch(false); setMobileQuery(''); }}>
+          <div className="mobile-search-box" onClick={e => e.stopPropagation()}>
+            <form onSubmit={e => { e.preventDefault(); if (mobileQuery.trim()) { navigate('/products?q=' + encodeURIComponent(mobileQuery.trim())); setShowMobileSearch(false); setMobileQuery(''); } }}>
+              <input autoFocus type="text" placeholder="Search products..." value={mobileQuery} onChange={e => setMobileQuery(e.target.value)} />
+              <button type="submit"><i className="fas fa-search"></i></button>
+            </form>
+            <button className="mobile-search-close" onClick={() => { setShowMobileSearch(false); setMobileQuery(''); }}><i className="fas fa-times"></i></button>
+          </div>
+        </div>
+      )}
 
       <nav className={`cat-nav ${menuOpen ? 'open' : ''}`}>
         <div className="container cat-nav-inner">
