@@ -27,11 +27,6 @@ export default function Products() {
     fetchProducts(opts).then(setProducts).catch(() => setProducts([]));
   }, [activeCat, search]);
 
-  const catIcon = (id) => {
-    const c = cats.find(x => x.id === id);
-    return c ? c.icon : '';
-  };
-
   const countInCat = (catId) => products.filter(p => p.cat === catId).length;
 
   return (
@@ -61,7 +56,7 @@ export default function Products() {
               className={`filter-cat ${activeCat === c.id ? 'active' : ''}`}
               onClick={() => setActiveCat(c.id)}
             >
-              <>{c.icon && <i className={c.icon}></i>} {c.label}</>
+              {c.label}
               <span className="cat-count">{countInCat(c.id)}</span>
             </button>
           ))}
@@ -85,7 +80,7 @@ export default function Products() {
         ) : (
           <div className="prod-grid">
             {products.map(p => (
-              <ProductCard key={p.sku} product={p} icon={catIcon(p.cat)} />
+              <ProductCard key={p.sku} product={p} />
             ))}
           </div>
         )}

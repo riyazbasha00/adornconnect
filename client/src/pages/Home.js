@@ -9,15 +9,11 @@ const DEFAULT_BANNER = 'https://images.unsplash.com/photo-1512453979798-5ea266f8
 export default function Home() {
   const [featured, setFeatured] = useState([]);
   const [bestselling, setBestselling] = useState([]);
-  const [cats, setCats] = useState([]);
   const [banner, setBanner] = useState(DEFAULT_BANNER);
 
   useEffect(() => {
     fetchBanner().then(b => { if (b && b.image) setBanner(b.image); }).catch(() => {});
-    Promise.all([fetchProducts(), fetchCategories()]).then(([products, categories]) => {
-      setCats(categories);
-      const catMap = {};
-      categories.forEach(c => { catMap[c.id] = c; });
+    Promise.all([fetchProducts(), fetchCategories()]).then(([products]) => {
 
       const f = products.filter(p => p.tags && p.tags.includes('featured'));
       const b = products.filter(p => p.tags && p.tags.includes('bestseller'));
@@ -26,11 +22,6 @@ export default function Home() {
       setBestselling(b);
     }).catch(() => {});
   }, []);
-
-  const catIcon = (id) => {
-    const c = cats.find(x => x.id === id);
-    return c ? c.icon : '';
-  };
 
   return (
     <>
@@ -70,7 +61,7 @@ export default function Home() {
           <h2 className="section-title"><i className="fas fa-star"></i> Featured Products</h2>
           <div className="prod-grid">
             {featured.map(p => (
-              <ProductCard key={p.sku} product={p} icon={catIcon(p.cat)} />
+              <ProductCard key={p.sku} product={p} />
             ))}
           </div>
         </section>
@@ -81,7 +72,7 @@ export default function Home() {
           <h2 className="section-title"><i className="fas fa-fire"></i> Best Selling</h2>
           <div className="prod-grid">
             {bestselling.map(p => (
-              <ProductCard key={p.sku} product={p} icon={catIcon(p.cat)} />
+              <ProductCard key={p.sku} product={p} />
             ))}
           </div>
         </section>

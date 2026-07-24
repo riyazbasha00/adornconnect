@@ -8,7 +8,6 @@ export default function ProductDetail() {
   const [product, setProduct] = useState(null);
   const [related, setRelated] = useState([]);
   const [catNames, setCatNames] = useState({});
-  const [icons, setIcons] = useState({});
   const [notFound, setNotFound] = useState(false);
 
   const sku = params.get('sku');
@@ -17,10 +16,9 @@ export default function ProductDetail() {
     if (!sku) { setNotFound(true); return; }
 
     Promise.all([fetchProducts(), fetchCategories()]).then(([products, cats]) => {
-      const cn = {}, ic = {};
-      cats.forEach(c => { cn[c.id] = c.label; ic[c.id] = c.icon || ''; });
+      const cn = {};
+      cats.forEach(c => { cn[c.id] = c.label; });
       setCatNames(cn);
-      setIcons(ic);
 
       const p = products.find(x => x.sku === sku);
       if (!p) { setNotFound(true); return; }
@@ -47,7 +45,6 @@ export default function ProductDetail() {
   }
 
   const catLabel = catNames[product.cat] || product.cat;
-  const catIcon = icons[product.cat] || 'fas fa-box';
   const tags = product.tags || [];
   const whatsappMsg = `Hi, I am interested in ${product.name} (SKU: ${product.sku}). Please send me a quote.`;
 
@@ -62,7 +59,7 @@ export default function ProductDetail() {
           {product.img ? (
             <img src={imgUrl(product.img)} alt={product.name} />
           ) : (
-            <i className={catIcon}></i>
+            <i className="fas fa-box"></i>
           )}
           <div className="detail-tags">
             {tags.includes('featured') && <span className="tag tag-featured">Featured</span>}
@@ -71,7 +68,7 @@ export default function ProductDetail() {
         </div>
 
         <div className="detail-info">
-          <div className="detail-cat"><i className={catIcon}></i> {catLabel}</div>
+          <div className="detail-cat">{catLabel}</div>
           <div className="detail-sku">SKU: {product.sku}</div>
           <h1 className="detail-name">{product.name}</h1>
           {product.price && (

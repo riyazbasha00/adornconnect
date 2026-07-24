@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { imgUrl } from '../api';
 import './ProductCard.css';
 
-export default function ProductCard({ product, icon }) {
+export default function ProductCard({ product }) {
   const tags = product.tags || [];
 
   return (
@@ -12,7 +12,7 @@ export default function ProductCard({ product, icon }) {
         {product.img ? (
           <img src={imgUrl(product.img)} alt={product.name} />
         ) : (
-          icon ? <i className={icon}></i> : <i className="fas fa-box"></i>
+          <i className="fas fa-box"></i>
         )}
         {tags.length > 0 && (
           <div className="prod-card-tags">
