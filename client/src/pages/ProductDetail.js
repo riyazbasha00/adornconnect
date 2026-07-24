@@ -18,7 +18,7 @@ export default function ProductDetail() {
 
     Promise.all([fetchProducts(), fetchCategories()]).then(([products, cats]) => {
       const cn = {}, ic = {};
-      cats.forEach(c => { cn[c.id] = c.label; ic[c.id] = c.icon || 'fas fa-box'; });
+      cats.forEach(c => { cn[c.id] = c.label; ic[c.id] = c.icon || ''; });
       setCatNames(cn);
       setIcons(ic);
 

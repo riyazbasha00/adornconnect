@@ -29,7 +29,7 @@ export default function Home() {
 
   const catIcon = (id) => {
     const c = cats.find(x => x.id === id);
-    return c ? c.icon : 'fas fa-box';
+    return c ? c.icon : '';
   };
 
   return (

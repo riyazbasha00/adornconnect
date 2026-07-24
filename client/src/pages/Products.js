@@ -29,7 +29,7 @@ export default function Products() {
 
   const catIcon = (id) => {
     const c = cats.find(x => x.id === id);
-    return c ? c.icon : 'fas fa-box';
+    return c ? c.icon : '';
   };
 
   const countInCat = (catId) => products.filter(p => p.cat === catId).length;

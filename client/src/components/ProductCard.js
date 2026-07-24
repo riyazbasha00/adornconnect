@@ -12,7 +12,7 @@ export default function ProductCard({ product, icon }) {
         {product.img ? (
           <img src={imgUrl(product.img)} alt={product.name} />
         ) : (
-          <i className={icon || 'fas fa-box'}></i>
+          icon ? <i className={icon}></i> : <i className="fas fa-box"></i>
         )}
         {tags.length > 0 && (
           <div className="prod-card-tags">
