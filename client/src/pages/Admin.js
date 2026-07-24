@@ -10,7 +10,7 @@ const LOGIN_KEY = 'adorn_admin';
 const DEFAULT_PASS = 'admin123';
 
 const ICON_SUGGESTIONS = [
-  'fas fa-cable-car', 'fas fa-plug', 'fas fa-link', 'fas fa-th-large', 'fas fa-th',
+  '', 'fas fa-cable-car', 'fas fa-plug', 'fas fa-link', 'fas fa-th-large', 'fas fa-th',
   'fas fa-server', 'fas fa-lightbulb', 'fas fa-tools', 'fas fa-screwdriver-wrench',
   'fas fa-video', 'fas fa-lock', 'fas fa-phone', 'fas fa-bell', 'fas fa-shield-alt',
   'fas fa-puzzle-piece', 'fas fa-box', 'fas fa-wifi', 'fas fa-satellite-dish',
@@ -423,7 +423,7 @@ export default function Admin() {
                     <tr key={c.id}>
                       <td><code>{c.id}</code></td>
                       <td>{c.label}</td>
-                      <td><i className={c.icon}></i> {c.icon}</td>
+                      <td>{c.icon ? <><i className={c.icon}></i> {c.icon}</> : <span style={{color:'var(--gray-500)'}}>—</span>}</td>
                       <td className="actions-col">
                         <button className="btn-sm edit" onClick={() => openEditCategory(i)}><i className="fas fa-edit"></i></button>
                         <button className="btn-sm delete" onClick={() => removeCategory(i)}><i className="fas fa-trash"></i></button>
@@ -564,8 +564,8 @@ export default function Admin() {
               <label className="full">Icon
                 <div className="icon-picker">
                   {ICON_SUGGESTIONS.map(ic => (
-                    <button key={ic} className={`icon-opt ${cForm.icon === ic ? 'active' : ''}`} onClick={() => setCForm({ ...cForm, icon: ic })} title={ic}>
-                      <i className={ic}></i>
+                    <button key={ic || 'none'} className={`icon-opt ${cForm.icon === ic ? 'active' : ''}`} onClick={() => setCForm({ ...cForm, icon: ic })} title={ic || 'No icon'}>
+                      {ic ? <i className={ic}></i> : <span style={{fontSize:'.7rem',color:'var(--gray-500)'}}>None</span>}
                     </button>
                   ))}
                 </div>

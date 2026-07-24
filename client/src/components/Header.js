@@ -105,7 +105,7 @@ export default function Header() {
               className="cat-link"
               onClick={() => setMenuOpen(false)}
             >
-              <i className={c.icon || 'fas fa-box'}></i> {c.label}
+              <>{c.icon && <i className={c.icon}></i>} {c.label}</>
             </Link>
           ))}
         </div>

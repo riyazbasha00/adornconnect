@@ -61,7 +61,7 @@ export default function Products() {
               className={`filter-cat ${activeCat === c.id ? 'active' : ''}`}
               onClick={() => setActiveCat(c.id)}
             >
-              <i className={c.icon || 'fas fa-box'}></i> {c.label}
+              <>{c.icon && <i className={c.icon}></i>} {c.label}</>
               <span className="cat-count">{countInCat(c.id)}</span>
             </button>
           ))}
