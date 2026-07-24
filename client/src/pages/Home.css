@@ -133,12 +133,13 @@
 .btn-wa:hover{background:#1da952;border-color:#1da952}
 
 @media(max-width:768px){
-  .hero{min-height:300px}
-  .hero-content{padding:40px 0 30px}
-  .hero-content h1{font-size:1.4rem}
-  .hero-content p{font-size:.82rem}
-  .hero-search{max-width:100%}
-  .hero-stats{gap:10px;padding:14px 16px;flex-wrap:wrap;justify-content:center}
+  .hero{min-height:260px}
+  .hero-content{padding:28px 0 24px;padding-left:0}
+  .hero-content h1{font-size:1.3rem;line-height:1.25}
+  .hero-content p{font-size:.8rem;margin-bottom:14px}
+  .hero-btns{flex-direction:column;gap:8px}
+  .hero-btn{justify-content:center;padding:11px 20px;font-size:.82rem}
+  .hero-stats{gap:10px;padding:10px 14px;flex-wrap:wrap;justify-content:center}
   .hero-stat-divider{display:none}
 
   .about-contact{grid-template-columns:1fr}

@@ -1101,7 +1101,7 @@
     {
       "id": "access-control",
       "label": "Access Control Solutions",
-      "icon": "fas fa-lock"
+      "icon": "fas fa-box"
     },
     {
       "id": "cat6-cables",
@@ -1116,7 +1116,7 @@
     {
       "id": "faceplates",
       "label": "Face Plates, Back Boxes & Patch Panels",
-      "icon": "fas fa-th-large"
+      "icon": "fas fa-box"
     },
     {
       "id": "fiber-accessories",
