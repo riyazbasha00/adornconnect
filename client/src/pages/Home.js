@@ -36,7 +36,6 @@ export default function Home() {
     <>
       <section className="hero">
         <div className="hero-bg" style={{ backgroundImage: `url(${banner})` }}></div>
-        <div className="hero-overlay"></div>
         <div className="container hero-content">
           <div className="hero-badge">
             <span className="hero-badge-dot"></span>

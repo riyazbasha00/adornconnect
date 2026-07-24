@@ -1173,5 +1173,8 @@
       "label": "Test Cat",
       "icon": "fas fa-box"
     }
-  ]
+  ],
+  "banner": {
+    "image": "uploads/1784891140494-5kg0.png"
+  }
 }

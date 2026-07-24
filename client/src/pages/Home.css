@@ -1,22 +1,16 @@
 /* --- Hero Banner --- */
 .hero{
-  position:relative;min-height:360px;display:flex;align-items:center;overflow:hidden;
-  background:var(--purple)
+  position:relative;min-height:360px;display:flex;align-items:center;overflow:hidden
 }
 .hero::after{
   content:'';position:absolute;inset:0;
-  background:linear-gradient(180deg, rgba(255,255,255,0.08) 0%, transparent 40%, rgba(0,0,0,0.1) 100%);
+  background:linear-gradient(180deg, rgba(0,0,0,0.3) 0%, transparent 50%, rgba(0,0,0,0.4) 100%);
   pointer-events:none
 }
 .hero-bg{
-  position:absolute;inset:0;background-size:cover;background-position:center;
-  opacity:0.1
+  position:absolute;inset:0;background-size:cover;background-position:center
 }
-.hero-overlay{
-  position:absolute;inset:0;
-  background:linear-gradient(135deg, rgba(50,33,96,0.92) 0%, rgba(80,50,150,0.85) 100%)
-}
-.hero-content{position:relative;z-index:2;color:#fff;max-width:700px;padding:50px 0 40px}
+.hero-content{position:relative;z-index:2;color:#fff;max-width:700px;padding:50px 0 40px;margin-left:0}
 
 .hero-badge{
   display:inline-flex;align-items:center;gap:6px;font-size:.7rem;font-weight:700;
