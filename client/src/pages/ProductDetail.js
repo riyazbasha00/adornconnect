@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { fetchProducts, fetchCategories, imgUrl } from '../api';
+import { ProductSEO } from '../components/SEO';
 import './ProductDetail.css';
 
 export default function ProductDetail() {
@@ -50,6 +51,7 @@ export default function ProductDetail() {
 
   return (
     <div className="container detail-page">
+      <ProductSEO product={product} catName={catLabel} />
       <nav className="breadcrumb">
         <Link to="/">Home</Link> / <Link to="/products">Products</Link> / <Link to={`/products?cat=${product.cat}`}>{catLabel}</Link> / <span>{product.sku}</span>
       </nav>

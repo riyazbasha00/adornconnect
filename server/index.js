@@ -7,7 +7,7 @@ const fs = require('fs');
 const productsRouter = require('./routes/products');
 const categoriesRouter = require('./routes/categories');
 const uploadRouter = require('./routes/upload');
-const { getBanner, updateBanner } = require('./db');
+const { getBanner, updateBanner, getProducts, getCategories } = require('./db');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -20,6 +20,40 @@ app.use(express.json({ limit: '50mb' }));
 app.use((req, res, next) => {
   next();
 });
+
+app.get('/robots.txt', (req, res) => {
+  res.type('text/plain');
+  res.send(`User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /api/
+
+Sitemap: https://adorn.ae/sitemap.xml`);
+});
+
+app.get('/sitemap.xml', (req, res) => {
+  const SITE = 'https://adorn.ae';
+  const products = getProducts();
+  const categories = getCategories();
+
+  let xml = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>${SITE}/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
+  <url><loc>${SITE}/products</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>`;
+
+  categories.forEach(c => {
+    xml += `\n  <url><loc>${SITE}/products?cat=${encodeURIComponent(c.id)}</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>`;
+  });
+
+  products.forEach(p => {
+    xml += `\n  <url><loc>${SITE}/product?sku=${encodeURIComponent(p.sku)}</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>`;
+  });
+
+  xml += '\n</urlset>';
+  res.type('application/xml');
+  res.send(xml);
+});
+
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 app.use('/api/products', productsRouter);

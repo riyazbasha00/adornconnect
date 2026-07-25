@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { fetchProducts, fetchCategories, fetchBanner } from '../api';
 import ProductCard from '../components/ProductCard';
+import { HomeSEO } from '../components/SEO';
 import './Home.css';
 
 const DEFAULT_BANNER = '';
@@ -25,6 +26,7 @@ export default function Home() {
 
   return (
     <>
+      <HomeSEO />
       <section className="hero" style={banner ? {} : { background: '#f5f5f5' }}>
         {banner && <div className="hero-bg" style={{ backgroundImage: `url(${banner})` }}></div>}
         <div className="container hero-content">

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { fetchProducts, fetchCategories } from '../api';
 import ProductCard from '../components/ProductCard';
+import { ProductsSEO } from '../components/SEO';
 import './Products.css';
 
 export default function Products() {
@@ -31,6 +32,7 @@ export default function Products() {
 
   return (
     <div className="container products-page">
+      <ProductsSEO category={activeCat ? (cats.find(c => c.id === activeCat)?.label || '') : ''} />
       <aside className="sidebar-filter">
         <div className="filter-search">
           <i className="fas fa-search"></i>

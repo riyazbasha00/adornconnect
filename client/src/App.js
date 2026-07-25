@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+import { HelmetProvider, Helmet } from 'react-helmet-async';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Home from './pages/Home';
@@ -16,19 +17,26 @@ function ScrollTop() {
 
 function App() {
   return (
-    <BrowserRouter>
-      <ScrollTop />
-      <Header />
-      <main>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/products" element={<Products />} />
-          <Route path="/product" element={<ProductDetail />} />
-          <Route path="/admin" element={<Admin />} />
-        </Routes>
-      </main>
-      <Footer />
-    </BrowserRouter>
+    <HelmetProvider>
+      <BrowserRouter>
+        <Helmet>
+          <meta name="robots" content="index, follow" />
+          <meta name="author" content="ADORN" />
+          <meta name="keywords" content="structured cabling, network cables, Cat6, Cat6A, fiber optic, CCTV, security cameras, NVR, DVR, access control, surveillance, networking, Dubai, UAE, ADORN" />
+        </Helmet>
+        <ScrollTop />
+        <Header />
+        <main>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/products" element={<Products />} />
+            <Route path="/product" element={<ProductDetail />} />
+            <Route path="/admin" element={<Admin />} />
+          </Routes>
+        </main>
+        <Footer />
+      </BrowserRouter>
+    </HelmetProvider>
   );
 }
 
