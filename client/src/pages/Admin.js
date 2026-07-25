@@ -479,6 +479,7 @@ export default function Admin() {
           <div className="tab-content">
             <h2 className="tab-title">Hero Banner</h2>
             <p className="img-upload-hint">Upload a background image for the home page hero section.</p>
+            <p className="img-upload-hint" style={{color:'var(--orange)',fontWeight:600,marginBottom:16}}>Recommended size: 1920 x 600 px (JPG/PNG, max 2MB)</p>
             <div className="img-upload-card">
               {bannerImg && (
                 <div className="img-preview" style={{ width: '100%', maxWidth: 600, marginBottom: 16 }}>
