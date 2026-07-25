@@ -1101,7 +1101,8 @@
     {
       "id": "access-control",
       "label": "Access Control",
-      "icon": "fas fa-box"
+      "icon": "fas fa-box",
+      "enabled": true
     },
     {
       "id": "cat6-cables",
@@ -1171,7 +1172,8 @@
     {
       "id": "test-cat",
       "label": "test",
-      "icon": "fas fa-box"
+      "icon": "fas fa-box",
+      "enabled": false
     }
   ],
   "banner": {

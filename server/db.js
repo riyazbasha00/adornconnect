@@ -53,11 +53,13 @@ function deleteProduct(sku) {
 }
 
 function getCategories() {
-  return load().categories;
+  return load().categories.map(c => ({ ...c, enabled: c.enabled !== false }));
 }
 
 function getCategory(id) {
-  return load().categories.find(c => c.id === id) || null;
+  const c = load().categories.find(c => c.id === id) || null;
+  if (c && c.enabled === undefined) c.enabled = true;
+  return c;
 }
 
 function addCategory(c) {
