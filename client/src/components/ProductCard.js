@@ -10,7 +10,7 @@ export default function ProductCard({ product }) {
     <Link to={`/product?sku=${encodeURIComponent(product.sku)}`} className="prod-card">
       <div className="prod-card-img">
         {product.img ? (
-          <img src={imgUrl(product.img)} alt={product.name} />
+          <img src={imgUrl(product.img)} alt={product.name} loading="lazy" />
         ) : (
           <i className="fas fa-box"></i>
         )}
