@@ -41,6 +41,7 @@
   font-size:.85rem;font-family:inherit;outline:none
 }
 .hero-search input::placeholder{color:rgba(50,33,96,.35)}
+.hero-search-btn i{color:#fff}
 .hero-search-btn{
   width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;
   background:#6D3BFF;color:#fff;font-size:.75rem;transition:.25s
