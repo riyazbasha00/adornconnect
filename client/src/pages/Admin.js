@@ -367,7 +367,7 @@ export default function Admin() {
   const prodCount = products.length;
   const catCount = categories.length;
   const featuredCount = products.filter(p => p.tags && p.tags.includes('featured')).length;
-  const bestSellingCount = products.filter(p => p.tags && p.tags.includes('bestselling')).length;
+  const bestSellingCount = products.filter(p => p.tags && p.tags.includes('bestseller')).length;
 
   return (
     <div className="admin-layout">
