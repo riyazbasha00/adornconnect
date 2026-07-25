@@ -20,11 +20,11 @@
   backdrop-filter:blur(10px);margin-bottom:14px
 }
 .hero-badge-dot{
-  width:6px;height:6px;border-radius:50%;background:var(--orange)
+  width:6px;height:6px;border-radius:50%;background:#6D3BFF
 }
 
 .hero-content h1{font-size:2.1rem;font-weight:900;line-height:1.2;margin-bottom:10px;letter-spacing:-.5px}
-.hero-hl{color:var(--orange)}
+.hero-hl{color:#6D3BFF}
 .hero-desc-desktop{font-size:.88rem;opacity:0.65;color:#1a1a2e;line-height:1.6;margin-bottom:20px;max-width:560px}
 .hero-desc-mobile{display:none;font-size:.88rem;opacity:0.65;color:#1a1a2e;line-height:1.6;margin-bottom:20px;max-width:560px}
 
@@ -43,9 +43,9 @@
 .hero-search input::placeholder{color:rgba(50,33,96,.35)}
 .hero-search-btn{
   width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;
-  background:var(--orange);color:#fff;font-size:.75rem;transition:.25s
+  background:#6D3BFF;color:#fff;font-size:.75rem;transition:.25s
 }
-.hero-search-btn:hover{background:#e8892e;transform:scale(1.05)}
+.hero-search-btn:hover{background:#5a2ee0;transform:scale(1.05)}
 
 .hero-btns{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:28px}
 .hero-btn{
@@ -53,9 +53,9 @@
   font-size:.85rem;font-weight:600;font-family:inherit;cursor:pointer;transition:.3s
 }
 .hero-btn-primary{
-  background:var(--orange);color:#fff;border:1.5px solid var(--orange)
+  background:#6D3BFF;color:#fff;border:1.5px solid #6D3BFF
 }
-.hero-btn-primary:hover{background:#e8892e;border-color:#e8892e;transform:translateY(-2px);box-shadow:0 8px 24px rgba(255,154,61,.3)}
+.hero-btn-primary:hover{background:#5a2ee0;border-color:#5a2ee0;transform:translateY(-2px);box-shadow:0 8px 24px rgba(109,59,255,.3)}
 .hero-btn-outline{
   background:rgba(50,33,96,0.06);color:#322160;border:1.5px solid rgba(50,33,96,.2);
   backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)
