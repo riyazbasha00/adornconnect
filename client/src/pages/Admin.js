@@ -9,17 +9,8 @@ import './Admin.css';
 const LOGIN_KEY = 'adorn_admin';
 const DEFAULT_PASS = 'admin123';
 
-const ICON_SUGGESTIONS = [
-  '', 'fas fa-cable-car', 'fas fa-plug', 'fas fa-link', 'fas fa-th-large', 'fas fa-th',
-  'fas fa-server', 'fas fa-lightbulb', 'fas fa-tools', 'fas fa-screwdriver-wrench',
-  'fas fa-video', 'fas fa-lock', 'fas fa-phone', 'fas fa-bell', 'fas fa-shield-alt',
-  'fas fa-puzzle-piece', 'fas fa-box', 'fas fa-wifi', 'fas fa-satellite-dish',
-  'fas fa-network-wired', 'fas fa-microchip', 'fas fa-bolt', 'fas fa-camera',
-  'fas fa-door-open', 'fas fa-key', 'fas fa-fire-extinguisher', 'fas fa-fan',
-];
-
 const emptyProduct = { sku: '', name: '', cat: '', desc: '', price: '', unit: '', img: '', tags: [] };
-const emptyCategory = { id: '', label: '', icon: 'fas fa-box' };
+const emptyCategory = { id: '', label: '', enabled: true };
 
 export default function Admin() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -60,7 +51,7 @@ export default function Admin() {
 
   const loadData = useCallback(async () => {
     try {
-      const [prods, cats, banner] = await Promise.all([fetchProducts(), fetchCategories(), fetchBanner()]);
+      const [prods, cats, banner] = await Promise.all([fetchProducts(), fetchCategories(true), fetchBanner()]);
       setProducts(prods);
       setCategories(cats);
       if (banner && banner.image) setBannerImg(banner.image);
@@ -277,6 +268,14 @@ export default function Admin() {
     } catch (e) { showToast(e.message, 'error'); }
   };
 
+  const quickUpdateCategory = async (idx, updates) => {
+    const c = categories[idx];
+    try {
+      await updateCategory(c.id, { ...c, ...updates });
+      await loadData();
+    } catch (e) { showToast(e.message, 'error'); }
+  };
+
   const handleUpload = async (file) => {
     try {
       const res = await uploadImage(file);
@@ -417,13 +416,17 @@ export default function Admin() {
             </div>
             <div className="table-wrap">
               <table className="admin-table">
-                <thead><tr><th>ID</th><th>Label</th><th>Icon</th><th>Actions</th></tr></thead>
+                <thead><tr><th>ID</th><th>Label</th><th>Status</th><th>Actions</th></tr></thead>
                 <tbody>
                   {categories.map((c, i) => (
                     <tr key={c.id}>
                       <td><code>{c.id}</code></td>
                       <td>{c.label}</td>
-                      <td>{c.icon ? <><i className={c.icon}></i> {c.icon}</> : <span style={{color:'var(--gray-500)'}}>—</span>}</td>
+                      <td>
+                        <button className={`tag-btn-sm ${c.enabled !== false ? 'on' : ''}`} onClick={() => quickUpdateCategory(i, { enabled: c.enabled === false ? true : false })}>
+                          {c.enabled !== false ? 'Enabled' : 'Disabled'}
+                        </button>
+                      </td>
                       <td className="actions-col">
                         <button className="btn-sm edit" onClick={() => openEditCategory(i)}><i className="fas fa-edit"></i></button>
                         <button className="btn-sm delete" onClick={() => removeCategory(i)}><i className="fas fa-trash"></i></button>
@@ -562,15 +565,6 @@ export default function Admin() {
             <div className="modal-grid">
               <label>ID <input value={cForm.id} onChange={e => setCForm({ ...cForm, id: e.target.value })} placeholder="e.g. cat6-cables" disabled={catEditIdx >= 0} /></label>
               <label>Label <input value={cForm.label} onChange={e => setCForm({ ...cForm, label: e.target.value })} placeholder="Category name" /></label>
-              <label className="full">Icon
-                <div className="icon-picker">
-                  {ICON_SUGGESTIONS.map(ic => (
-                    <button key={ic || 'none'} className={`icon-opt ${cForm.icon === ic ? 'active' : ''}`} onClick={() => setCForm({ ...cForm, icon: ic })} title={ic || 'No icon'}>
-                      {ic ? <i className={ic}></i> : <span style={{fontSize:'.7rem',color:'var(--gray-500)'}}>None</span>}
-                    </button>
-                  ))}
-                </div>
-              </label>
             </div>
             <div className="modal-actions">
               <button className="btn btn-outline" onClick={() => setShowCModal(false)}>Cancel</button>

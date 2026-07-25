@@ -48,8 +48,8 @@ export async function deleteProduct(sku) {
   return api(`${BASE}/products?sku=${encodeURIComponent(sku)}`, { method: 'DELETE' });
 }
 
-export async function fetchCategories() {
-  return api(`${BASE}/categories`);
+export async function fetchCategories(all = false) {
+  return api(`${BASE}/categories${all ? '?all=true' : ''}`);
 }
 
 export async function createCategory(data) {

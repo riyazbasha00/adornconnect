@@ -9,12 +9,14 @@ router.get('/', (req, res) => {
     if (!c) return res.status(404).json({ error: 'not found' });
     return res.json(c);
   }
-  res.json(db.getCategories());
+  const cats = db.getCategories();
+  if (req.query.all === 'true') return res.json(cats);
+  res.json(cats.filter(c => c.enabled !== false));
 });
 
 router.post('/', (req, res) => {
   console.log('CATEGORIES POST handler called, body:', JSON.stringify(req.body));
-  const { id, label, icon } = req.body;
+  const { id, label, icon, enabled } = req.body;
   if (!id || !label) {
     console.log('Missing id or label');
     return res.status(400).json({ error: 'id and label required' });
@@ -27,7 +29,7 @@ router.post('/', (req, res) => {
   }
 
   try {
-    db.addCategory({ id, label, icon: icon || 'fas fa-box' });
+    db.addCategory({ id, label, icon: icon || '', enabled: enabled !== false });
     console.log('Category created:', id);
     res.status(201).json({ success: true });
   } catch (e) {
@@ -42,8 +44,12 @@ router.put('/', (req, res) => {
 
   if (!db.getCategory(id)) return res.status(404).json({ error: 'not found' });
 
-  const { label, icon } = req.body;
-  db.updateCategory(id, { label: label || '', icon: icon || 'fas fa-box' });
+  const { label, icon, enabled } = req.body;
+  const updates = {};
+  if (label !== undefined) updates.label = label;
+  if (icon !== undefined) updates.icon = icon;
+  if (enabled !== undefined) updates.enabled = enabled;
+  db.updateCategory(id, updates);
   res.json({ success: true });
 });
 
