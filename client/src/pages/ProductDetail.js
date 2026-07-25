@@ -93,7 +93,7 @@ export default function ProductDetail() {
             {related.map(p => (
               <Link key={p.sku} to={`/product?sku=${encodeURIComponent(p.sku)}`} className="rel-card">
                 <div className="rel-img">
-                  {p.img ? <img src={imgUrl(p.img)} alt={p.name} /> : <i className={icons[p.cat] || 'fas fa-box'}></i>}
+                  {p.img ? <img src={imgUrl(p.img)} alt={p.name} /> : <i className="fas fa-box"></i>}
                 </div>
                 <div className="rel-body">
                   <h4>{p.name}</h4>

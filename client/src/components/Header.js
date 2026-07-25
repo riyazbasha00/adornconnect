@@ -63,21 +63,23 @@ export default function Header() {
             />
             <button type="submit"><i className="fas fa-search"></i></button>
           </form>
-          <button className="mobile-search-btn" onClick={() => setShowMobileSearch(true)}>
-            <i className="fas fa-search"></i>
-          </button>
-          {loggedIn ? (
-            <button className="btn btn-outline admin-btn" onClick={() => { localStorage.removeItem('adorn_admin'); setLoggedIn(false); window.location.href = '/'; }}>
-              <i className="fas fa-sign-out-alt"></i> <span className="admin-btn-text">Logout</span>
+          <div className="header-actions">
+            <button className="mobile-search-btn" onClick={() => setShowMobileSearch(true)}>
+              <i className="fas fa-search"></i>
             </button>
-          ) : (
-            <Link to="/admin" className="btn btn-outline admin-btn">
-              <i className="fas fa-shield-alt"></i> <span className="admin-btn-text">Login</span>
-            </Link>
-          )}
-          <button className="hamburger" onClick={() => setMenuOpen(!menuOpen)}>
-            <i className={`fas fa-${menuOpen ? 'times' : 'bars'}`}></i>
-          </button>
+            {loggedIn ? (
+              <button className="btn btn-outline admin-btn" onClick={() => { localStorage.removeItem('adorn_admin'); setLoggedIn(false); window.location.href = '/'; }}>
+                <i className="fas fa-sign-out-alt"></i> <span className="admin-btn-text">Logout</span>
+              </button>
+            ) : (
+              <Link to="/admin" className="btn btn-outline admin-btn">
+                <i className="fas fa-shield-alt"></i> <span className="admin-btn-text">Login</span>
+              </Link>
+            )}
+            <button className="hamburger" onClick={() => setMenuOpen(!menuOpen)}>
+              <i className={`fas fa-${menuOpen ? 'times' : 'bars'}`}></i>
+            </button>
+          </div>
         </div>
       </header>
 
