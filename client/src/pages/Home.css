@@ -1,10 +1,10 @@
 /* --- Hero Banner --- */
 .hero{
-  position:relative;min-height:360px;display:flex;align-items:center;overflow:hidden
+  position:relative;min-height:380px;display:flex;align-items:center;overflow:hidden
 }
 .hero::after{
   content:'';position:absolute;inset:0;
-  background:linear-gradient(180deg, rgba(0,0,0,0.3) 0%, transparent 50%, rgba(0,0,0,0.4) 100%);
+  background:linear-gradient(180deg, rgba(0,0,0,0.25) 0%, transparent 40%, rgba(0,0,0,0.35) 100%);
   pointer-events:none
 }
 .hero-bg{
@@ -25,7 +25,8 @@
 
 .hero-content h1{font-size:2.1rem;font-weight:900;line-height:1.2;margin-bottom:10px;letter-spacing:-.5px}
 .hero-hl{color:var(--orange)}
-.hero-content p{font-size:.88rem;opacity:0.65;color:#1a1a2e;line-height:1.6;margin-bottom:20px;max-width:560px}
+.hero-desc-desktop{font-size:.88rem;opacity:0.65;color:#1a1a2e;line-height:1.6;margin-bottom:20px;max-width:560px}
+.hero-desc-mobile{display:none;font-size:.88rem;opacity:0.65;color:#1a1a2e;line-height:1.6;margin-bottom:20px;max-width:560px}
 
 .hero-search{
   display:flex;align-items:center;background:rgba(50,33,96,0.06);
@@ -133,14 +134,18 @@
 .btn-wa:hover{background:#1da952;border-color:#1da952}
 
 @media(max-width:768px){
-  .hero{min-height:260px}
-  .hero-content{padding:28px 0 24px;padding-left:0}
-  .hero-content h1{font-size:1.3rem;line-height:1.25}
-  .hero-content p{font-size:.8rem;margin-bottom:14px}
-  .hero-btns{flex-direction:column;gap:8px}
-  .hero-btn{justify-content:center;padding:11px 20px;font-size:.82rem}
-  .hero-stats{gap:10px;padding:10px 14px;flex-wrap:wrap;justify-content:center}
-  .hero-stat-divider{display:none}
+  .hero{min-height:320px}
+  .hero-content{padding:32px 16px 28px;padding-left:16px}
+  .hero-badge{font-size:.6rem;padding:4px 10px;gap:4px;margin-bottom:10px}
+  .hero-content h1{font-size:1.5rem;font-weight:800;line-height:1.2;margin-bottom:8px}
+  .hero-desc-desktop{display:none}
+  .hero-desc-mobile{display:block;font-size:.82rem;line-height:1.5;margin-bottom:16px;opacity:.6}
+  .hero-search{display:none}
+  .hero-btns{flex-direction:column;gap:8px;margin-bottom:16px}
+  .hero-btn{justify-content:center;padding:12px 20px;font-size:.85rem;border-radius:10px}
+  .hero-stats{gap:10px;padding:10px 16px;justify-content:center}
+  .hs-num{font-size:.95rem}
+  .hs-label{font-size:.6rem}
 
   .about-contact{grid-template-columns:1fr}
   .about-bridge{padding:40px 0}

@@ -33,7 +33,8 @@ export default function Home() {
             Premium Manufacturer & Supplier
           </div>
           <h1>Structured Cabling &amp; <span className="hero-hl">Security</span> Solutions</h1>
-          <p>Premium networking infrastructure, surveillance, and access control products for commercial, industrial, and residential projects across the UAE.</p>
+          <p className="hero-desc-desktop">Premium networking infrastructure, surveillance, and access control products for commercial, industrial, and residential projects across the UAE.</p>
+          <p className="hero-desc-mobile">Premium networking, surveillance &amp; access control products across the UAE.</p>
           <div className="hero-search">
             <i className="fas fa-search"></i>
             <input type="text" placeholder="Search products..." onKeyDown={e => { if (e.key === 'Enter' && e.target.value.trim()) window.location.href = '/products?search=' + encodeURIComponent(e.target.value.trim()); }} />
