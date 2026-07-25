@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import {
   fetchProducts, fetchCategories, createProduct, updateProduct, deleteProduct,
-  createCategory, updateCategory, deleteCategory, uploadImage, imgUrl,
+  createCategory, updateCategory, deleteCategory, uploadImage, uploadBulkImages, imgUrl,
   fetchBanner, updateBanner as apiUpdateBanner
 } from '../api';
 import './Admin.css';
@@ -38,6 +38,9 @@ export default function Admin() {
 
   const [bannerImg, setBannerImg] = useState('');
   const [bannerLoading, setBannerLoading] = useState(false);
+
+  const [bulkImgUploading, setBulkImgUploading] = useState(false);
+  const [bulkImgProgress, setBulkImgProgress] = useState(null);
 
   const showToast = useCallback((msg, type = 'success') => {
     setToast({ msg, type });
@@ -300,6 +303,33 @@ export default function Admin() {
     } catch (err) { setImgUploading(false); showToast(err.message, 'error'); }
   };
 
+  const handleBulkImgUpload = async (e) => {
+    const files = Array.from(e.target.files);
+    if (!files.length) return;
+    setBulkImgUploading(true);
+    setBulkImgProgress({ total: files.length, done: 0, matched: 0, skipped: 0, errors: [] });
+    try {
+      const results = await uploadBulkImages(files);
+      let matched = 0, skipped = 0, errors = [];
+      for (const r of results) {
+        const p = products.find(p => p.sku === r.sku);
+        if (p) {
+          try { await updateProduct(r.sku, { ...p, img: r.url }); matched++; }
+          catch (err) { errors.push(r.sku + ': ' + err.message); }
+        } else { skipped++; }
+        setBulkImgProgress(prev => prev ? { ...prev, done: prev.done + 1, matched, skipped, errors } : prev);
+      }
+      setBulkImgUploading(false);
+      setBulkImgProgress(prev => prev ? { ...prev, done: results.length } : prev);
+      await loadData();
+      showToast(`Done: ${matched} matched, ${skipped} skipped` + (errors.length ? `, ${errors.length} errors` : ''));
+    } catch (err) {
+      setBulkImgUploading(false);
+      showToast('Bulk upload failed: ' + err.message, 'error');
+    }
+    e.target.value = '';
+  };
+
   const toggleTag = (tag) => {
     setPForm(prev => {
       const tags = prev.tags.includes(tag) ? prev.tags.filter(t => t !== tag) : [...prev.tags, tag];
@@ -443,39 +473,68 @@ export default function Admin() {
 
         {tab === 'images' && (
           <div className="tab-content">
-            <h2 className="tab-title">Product Images</h2>
-            <p className="img-upload-hint">Select a product and upload an image to assign it.</p>
-            <div className="img-upload-card">
-              <label className="img-sku-label">
-                Select Product
-                <select className="img-sku-select" value={imgSku} onChange={e => setImgSku(e.target.value)}>
-                  <option value="">-- Choose SKU --</option>
-                  {products.map(p => (
-                    <option key={p.sku} value={p.sku}>{p.sku} — {p.name}</option>
-                  ))}
-                </select>
+            <div className="tab-header">
+              <h2 className="tab-title">Product Images</h2>
+            </div>
+
+            <div className="img-section">
+              <h3 className="img-section-title"><i className="fas fa-layer-group"></i> Bulk Upload</h3>
+              <p className="img-upload-hint">Upload multiple images at once. Each filename (without extension) must match a product SKU. For example: <code>CAMBO-CAM.jpg</code> assigns to SKU <code>CAMBO-CAM</code>.</p>
+              <label className="img-file-label bulk-label">
+                <i className="fas fa-cloud-upload-alt"></i> Choose Images
+                <input type="file" accept="image/*" multiple onChange={handleBulkImgUpload} disabled={bulkImgUploading} />
               </label>
-              {imgSku && (
-                <div className="img-preview-row">
-                  {products.find(p => p.sku === imgSku)?.img && (
-                    <div className="img-preview">
-                      <img src={imgUrl(products.find(p => p.sku === imgSku).img)} alt="current" />
-                      <span>Current</span>
-                    </div>
-                  )}
-                  {imgPreview && (
-                    <div className="img-preview">
-                      <img src={imgPreview} alt="new" />
-                      <span>New</span>
-                    </div>
-                  )}
+              {bulkImgUploading && (
+                <div className="bulk-progress">
+                  <div className="bulk-spinner"><i className="fas fa-spinner fa-spin"></i> Uploading {bulkImgProgress?.done || 0} of {bulkImgProgress?.total || 0}...</div>
                 </div>
               )}
-              <label className="img-file-label">
-                <i className="fas fa-cloud-upload-alt"></i> Choose Image
-                <input type="file" accept="image/*" onChange={handleImgUpload} disabled={!imgSku} />
-              </label>
-              {imgUploading && <div className="img-uploading"><i className="fas fa-spinner fa-spin"></i> Uploading...</div>}
+              {bulkImgProgress && !bulkImgUploading && (
+                <div className="bulk-results">
+                  <span className="bulk-ok"><i className="fas fa-check-circle"></i> {bulkImgProgress.matched} matched</span>
+                  <span className="bulk-skip"><i className="fas fa-minus-circle"></i> {bulkImgProgress.skipped} skipped</span>
+                  {bulkImgProgress.errors.length > 0 && <span className="bulk-err"><i className="fas fa-exclamation-circle"></i> {bulkImgProgress.errors.length} errors</span>}
+                </div>
+              )}
+            </div>
+
+            <div className="img-divider"></div>
+
+            <div className="img-section">
+              <h3 className="img-section-title"><i className="fas fa-image"></i> Single Upload</h3>
+              <p className="img-upload-hint">Select a product and upload an image to assign it.</p>
+              <div className="img-upload-card">
+                <label className="img-sku-label">
+                  Select Product
+                  <select className="img-sku-select" value={imgSku} onChange={e => setImgSku(e.target.value)}>
+                    <option value="">-- Choose SKU --</option>
+                    {products.map(p => (
+                      <option key={p.sku} value={p.sku}>{p.sku} — {p.name}</option>
+                    ))}
+                  </select>
+                </label>
+                {imgSku && (
+                  <div className="img-preview-row">
+                    {products.find(p => p.sku === imgSku)?.img && (
+                      <div className="img-preview">
+                        <img src={imgUrl(products.find(p => p.sku === imgSku).img)} alt="current" />
+                        <span>Current</span>
+                      </div>
+                    )}
+                    {imgPreview && (
+                      <div className="img-preview">
+                        <img src={imgPreview} alt="new" />
+                        <span>New</span>
+                      </div>
+                    )}
+                  </div>
+                )}
+                <label className="img-file-label">
+                  <i className="fas fa-cloud-upload-alt"></i> Choose Image
+                  <input type="file" accept="image/*" onChange={handleImgUpload} disabled={!imgSku} />
+                </label>
+                {imgUploading && <div className="img-uploading"><i className="fas fa-spinner fa-spin"></i> Uploading...</div>}
+              </div>
             </div>
           </div>
         )}

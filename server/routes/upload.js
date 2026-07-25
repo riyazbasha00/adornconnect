@@ -27,4 +27,13 @@ router.post('/', upload.single('image'), (req, res) => {
   res.json({ url: 'uploads/' + req.file.filename });
 });
 
+router.post('/bulk', upload.array('images', 100), (req, res) => {
+  if (!req.files || !req.files.length) return res.status(400).json({ error: 'No files uploaded' });
+  const results = req.files.map(f => {
+    const sku = path.basename(f.originalname, path.extname(f.originalname)).trim();
+    return { sku, url: 'uploads/' + f.filename };
+  });
+  res.json(results);
+});
+
 module.exports = router;

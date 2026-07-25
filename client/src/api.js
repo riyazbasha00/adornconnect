@@ -78,6 +78,12 @@ export async function uploadImage(file) {
   return api(`${BASE}/upload`, { method: 'POST', body: formData });
 }
 
+export async function uploadBulkImages(files) {
+  const formData = new FormData();
+  for (const f of files) formData.append('images', f);
+  return api(`${BASE}/upload/bulk`, { method: 'POST', body: formData });
+}
+
 export async function fetchBanner() {
   return api(`${BASE}/banner`);
 }
