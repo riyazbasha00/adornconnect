@@ -24,9 +24,9 @@
 .admin-user-wrap{position:relative;flex-shrink:0}
 .admin-user-btn{
   width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;
-  background:var(--purple);color:#fff;border:none;cursor:pointer;font-size:.9rem;transition:.2s
+  background:var(--orange);color:#fff;border:none;cursor:pointer;font-size:.9rem;transition:.2s
 }
-.admin-user-btn:hover{background:#5a2ee0;transform:scale(1.05)}
+.admin-user-btn:hover{background:#e8892e;transform:scale(1.05)}
 .admin-dropdown{
   position:absolute;top:calc(100% + 6px);right:0;min-width:160px;
   background:#fff;border:1px solid var(--gray-200);border-radius:8px;
