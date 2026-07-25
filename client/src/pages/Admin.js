@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import {
   fetchProducts, fetchCategories, createProduct, updateProduct, deleteProduct,
-  createCategory, updateCategory, deleteCategory, uploadImage, uploadBulkImages, imgUrl,
+  createCategory, updateCategory, deleteCategory, uploadImage, imgUrl,
   fetchBanner, updateBanner as apiUpdateBanner
 } from '../api';
 import './Admin.css';
@@ -308,25 +308,26 @@ export default function Admin() {
     if (!files.length) return;
     setBulkImgUploading(true);
     setBulkImgProgress({ total: files.length, done: 0, matched: 0, skipped: 0, errors: [] });
-    try {
-      const results = await uploadBulkImages(files);
-      let matched = 0, skipped = 0, errors = [];
-      for (const r of results) {
-        const p = products.find(p => p.sku === r.sku);
-        if (p) {
-          try { await updateProduct(r.sku, { ...p, img: r.url }); matched++; }
-          catch (err) { errors.push(r.sku + ': ' + err.message); }
-        } else { skipped++; }
-        setBulkImgProgress(prev => prev ? { ...prev, done: prev.done + 1, matched, skipped, errors } : prev);
+    let matched = 0, skipped = 0, errors = [];
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+      const sku = file.name.replace(/\.[^.]+$/, '').trim();
+      const p = products.find(p => p.sku === sku);
+      if (!p) {
+        skipped++;
+        setBulkImgProgress(prev => prev ? { ...prev, done: i + 1, matched, skipped, errors } : prev);
+        continue;
       }
-      setBulkImgUploading(false);
-      setBulkImgProgress(prev => prev ? { ...prev, done: results.length } : prev);
-      await loadData();
-      showToast(`Done: ${matched} matched, ${skipped} skipped` + (errors.length ? `, ${errors.length} errors` : ''));
-    } catch (err) {
-      setBulkImgUploading(false);
-      showToast('Bulk upload failed: ' + err.message, 'error');
+      try {
+        const res = await uploadImage(file);
+        await updateProduct(sku, { ...p, img: res.url });
+        matched++;
+      } catch (err) { errors.push(sku + ': ' + err.message); }
+      setBulkImgProgress(prev => prev ? { ...prev, done: i + 1, matched, skipped, errors } : prev);
     }
+    setBulkImgUploading(false);
+    await loadData();
+    showToast(`Done: ${matched} matched, ${skipped} skipped` + (errors.length ? `, ${errors.length} errors` : ''));
     e.target.value = '';
   };
 
