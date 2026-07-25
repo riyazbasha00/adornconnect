@@ -268,10 +268,11 @@ export default function Admin() {
     } catch (e) { showToast(e.message, 'error'); }
   };
 
-  const quickUpdateCategory = async (idx, updates) => {
+  const toggleCategory = async (idx) => {
     const c = categories[idx];
+    const newValue = c.enabled === false ? true : false;
     try {
-      await updateCategory(c.id, updates);
+      await updateCategory(c.id, { enabled: newValue });
       await loadData();
     } catch (e) { showToast(e.message, 'error'); }
   };
@@ -423,9 +424,10 @@ export default function Admin() {
                       <td><code>{c.id}</code></td>
                       <td>{c.label}</td>
                       <td>
-                        <button className={`tag-btn-sm ${c.enabled !== false ? 'on' : ''}`} onClick={() => quickUpdateCategory(i, { enabled: c.enabled === false ? true : false })}>
-                          {c.enabled !== false ? 'Enabled' : 'Disabled'}
-                        </button>
+                        <label className="toggle-switch">
+                          <input type="checkbox" checked={c.enabled !== false} onChange={() => toggleCategory(i)} />
+                          <span className="toggle-slider"></span>
+                        </label>
                       </td>
                       <td className="actions-col">
                         <button className="btn-sm edit" onClick={() => openEditCategory(i)}><i className="fas fa-edit"></i></button>

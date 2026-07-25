@@ -1100,7 +1100,7 @@
   "categories": [
     {
       "id": "access-control",
-      "label": "",
+      "label": "Access Control",
       "icon": "fas fa-box"
     },
     {
@@ -1145,8 +1145,8 @@
     },
     {
       "id": "network-cabinets",
-      "label": "Network Cabinets & Server Racks",
-      "icon": "fas fa-server"
+      "label": "Network Cabinets",
+      "icon": "fas fa-box"
     },
     {
       "id": "racks-cabinets",
@@ -1170,7 +1170,7 @@
     },
     {
       "id": "test-cat",
-      "label": "Test Cat",
+      "label": "test",
       "icon": "fas fa-box"
     }
   ],
