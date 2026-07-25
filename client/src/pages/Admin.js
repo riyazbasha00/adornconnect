@@ -367,6 +367,7 @@ export default function Admin() {
   const prodCount = products.length;
   const catCount = categories.length;
   const featuredCount = products.filter(p => p.tags && p.tags.includes('featured')).length;
+  const bestSellingCount = products.filter(p => p.tags && p.tags.includes('bestselling')).length;
 
   return (
     <div className="admin-layout">
@@ -389,6 +390,7 @@ export default function Admin() {
               <div className="dash-card"><i className="fas fa-box"></i><strong>{prodCount}</strong><span>Products</span></div>
               <div className="dash-card"><i className="fas fa-list"></i><strong>{catCount}</strong><span>Categories</span></div>
               <div className="dash-card"><i className="fas fa-star"></i><strong>{featuredCount}</strong><span>Featured</span></div>
+              <div className="dash-card"><i className="fas fa-fire"></i><strong>{bestSellingCount}</strong><span>Best Selling</span></div>
             </div>
           </div>
         )}
