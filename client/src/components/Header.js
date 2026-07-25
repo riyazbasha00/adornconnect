@@ -12,6 +12,7 @@ export default function Header() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [showMobileSearch, setShowMobileSearch] = useState(false);
   const [mobileQuery, setMobileQuery] = useState('');
+  const [showUserMenu, setShowUserMenu] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -24,6 +25,12 @@ export default function Header() {
   useEffect(() => {
     fetchCategories().then(setCats).catch(() => {});
   }, []);
+
+  useEffect(() => {
+    const close = () => setShowUserMenu(false);
+    if (showUserMenu) document.addEventListener('click', close);
+    return () => document.removeEventListener('click', close);
+  }, [showUserMenu]);
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -68,9 +75,21 @@ export default function Header() {
               <i className="fas fa-search"></i>
             </button>
             {loggedIn ? (
-              <button className="btn btn-outline admin-btn" onClick={() => { localStorage.removeItem('adorn_admin'); setLoggedIn(false); window.location.href = '/'; }}>
-                <i className="fas fa-sign-out-alt"></i> <span className="admin-btn-text">Logout</span>
-              </button>
+              <div className="admin-user-wrap">
+                <button className="admin-user-btn" onClick={(e) => { e.stopPropagation(); setShowUserMenu(!showUserMenu); }}>
+                  <i className="fas fa-user-shield"></i>
+                </button>
+                {showUserMenu && (
+                  <div className="admin-dropdown">
+                    <Link to="/admin" className="admin-dropdown-item" onClick={() => setShowUserMenu(false)}>
+                      <i className="fas fa-tachometer-alt"></i> Admin Panel
+                    </Link>
+                    <button className="admin-dropdown-item logout" onClick={() => { localStorage.removeItem('adorn_admin'); setLoggedIn(false); setShowUserMenu(false); window.location.href = '/'; }}>
+                      <i className="fas fa-sign-out-alt"></i> Logout
+                    </button>
+                  </div>
+                )}
+              </div>
             ) : (
               <Link to="/admin" className="btn btn-outline admin-btn">
                 <i className="fas fa-shield-alt"></i> <span className="admin-btn-text">Login</span>
