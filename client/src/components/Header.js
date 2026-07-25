@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { fetchCategories } from '../api';
 import './Header.css';
 
@@ -14,6 +14,7 @@ export default function Header() {
   const [mobileQuery, setMobileQuery] = useState('');
   const [showUserMenu, setShowUserMenu] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     setLoggedIn(!!localStorage.getItem('adorn_admin'));
@@ -24,7 +25,7 @@ export default function Header() {
 
   useEffect(() => {
     fetchCategories().then(setCats).catch(() => {});
-  }, []);
+  }, [location.pathname]);
 
   useEffect(() => {
     const close = () => setShowUserMenu(false);
