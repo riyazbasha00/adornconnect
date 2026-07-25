@@ -12,10 +12,12 @@ const { getBanner, updateBanner } = require('./db');
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+const uploadsDir = path.join(__dirname, '..', 'uploads');
+if (!fs.existsSync(uploadsDir)) fs.mkdirSync(uploadsDir, { recursive: true });
+
 app.use(cors());
-app.use(express.json());
+app.use(express.json({ limit: '50mb' }));
 app.use((req, res, next) => {
-  console.log(req.method, req.url, req.method === 'POST' ? JSON.stringify(req.body) : '');
   next();
 });
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
