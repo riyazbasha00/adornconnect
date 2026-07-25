@@ -271,7 +271,7 @@ export default function Admin() {
   const quickUpdateCategory = async (idx, updates) => {
     const c = categories[idx];
     try {
-      await updateCategory(c.id, { ...c, ...updates });
+      await updateCategory(c.id, updates);
       await loadData();
     } catch (e) { showToast(e.message, 'error'); }
   };
