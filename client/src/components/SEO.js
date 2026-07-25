@@ -1,7 +1,7 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 
-const SITE = 'https://adorn.ae';
+const SITE = 'https://adornconnect.com';
 const BRAND = 'ADORN';
 const DEFAULT_DESC = 'Premium structured cabling, security surveillance, networking infrastructure, and access control solutions in Dubai, UAE. ADORN — your trusted supplier for commercial, industrial, and residential projects.';
 
@@ -94,7 +94,7 @@ export function ProductSEO({ product, catName }) {
       availability: 'https://schema.org/InStock',
       seller: { '@type': 'Organization', name: BRAND },
     } : undefined,
-    image: product.img ? `https://adorn.ae/${product.img.replace(/^\//, '')}` : undefined,
+    image: product.img ? `https://adornconnect.com/${product.img.replace(/^\//, '')}` : undefined,
   };
 
   return (
@@ -103,7 +103,7 @@ export function ProductSEO({ product, catName }) {
       description={desc}
       url={`/product?sku=${encodeURIComponent(product.sku)}`}
       type="product"
-      image={product.img ? `https://adorn.ae/${product.img.replace(/^\//, '')}` : undefined}
+      image={product.img ? `https://adornconnect.com/${product.img.replace(/^\//, '')}` : undefined}
       jsonLd={jsonLd}
     />
   );

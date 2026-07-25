@@ -28,11 +28,11 @@ Allow: /
 Disallow: /admin
 Disallow: /api/
 
-Sitemap: https://adorn.ae/sitemap.xml`);
+Sitemap: https://adornconnect.com/sitemap.xml`);
 });
 
 app.get('/sitemap.xml', (req, res) => {
-  const SITE = 'https://adorn.ae';
+  const SITE = 'https://adornconnect.com';
   const products = getProducts();
   const categories = getCategories();
 
