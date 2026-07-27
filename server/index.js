@@ -23,31 +23,30 @@ app.use(cors());
 app.use(express.json({ limit: '50mb' }));
 
 try {
-  const sharp = require('sharp');
+  const sharpMod = require('sharp');
   const upDir = path.join(__dirname, 'uploads');
   const dataFile = path.join(__dirname, '..', 'data.json');
   if (fs.existsSync(upDir)) {
     const files = fs.readdirSync(upDir).filter(f => /\.(jpg|jpeg|png|gif|bmp|tiff)$/i.test(f));
     if (files.length) {
       console.log(`Converting ${files.length} images to WebP...`);
+      let dataText = fs.existsSync(dataFile) ? fs.readFileSync(dataFile, 'utf-8') : '';
       (async () => {
-        let dataText = fs.existsSync(dataFile) ? fs.readFileSync(dataFile, 'utf-8') : '';
         for (const f of files) {
-          const fp = path.join(upDir, f);
-          const wp = fp.replace(/\.[^.]+$/, '.webp');
           try {
-            await sharp(fp).webp({ quality: 80 }).toFile(wp);
+            const fp = path.join(upDir, f);
+            const wp = fp.replace(/\.[^.]+$/, '.webp');
+            await sharpMod(fp).webp({ quality: 80 }).toFile(wp);
             fs.unlinkSync(fp);
             dataText = dataText.split(f).join(path.basename(wp));
-            console.log(`  ${f} -> ${path.basename(wp)}`);
-          } catch (e) { console.log(`  skip ${f}: ${e.message}`); }
+          } catch {}
         }
         if (fs.existsSync(dataFile) && dataText) fs.writeFileSync(dataFile, dataText);
         console.log('Image conversion done');
       })();
     }
   }
-} catch {}
+} catch (e) { console.log('WebP conversion skipped:', e.message); }
 
 app.get('/robots.txt', (req, res) => {
   res.type('text/plain');
