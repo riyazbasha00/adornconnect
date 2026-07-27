@@ -59,7 +59,7 @@ export default function ProductDetail() {
       <div className="detail-wrap">
         <div className="detail-img">
           {product.img ? (
-            <img src={imgUrl(product.img)} alt={product.name} loading="lazy" />
+            <img src={imgUrl(product.img)} alt={product.name} loading="lazy" width="500" height="500" />
           ) : (
             <i className="fas fa-box"></i>
           )}
@@ -95,7 +95,7 @@ export default function ProductDetail() {
             {related.map(p => (
               <Link key={p.sku} to={`/product?sku=${encodeURIComponent(p.sku)}`} className="rel-card">
                 <div className="rel-img">
-                  {p.img ? <img src={imgUrl(p.img)} alt={p.name} loading="lazy" /> : <i className="fas fa-box"></i>}
+                  {p.img ? <img src={imgUrl(p.img)} alt={p.name} loading="lazy" width="200" height="200" /> : <i className="fas fa-box"></i>}
                 </div>
                 <div className="rel-body">
                   <h4>{p.name}</h4>

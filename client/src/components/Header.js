@@ -55,7 +55,7 @@ export default function Header() {
       <header className="header">
         <div className="container header-inner">
           <Link to="/" className="logo">
-            <img src={LOGO} alt="ADORN — Structured Cabling & Security Solutions Dubai" />
+            <img src={LOGO} alt="ADORN — Structured Cabling & Security Solutions Dubai" width="140" height="40" />
           </Link>
           <nav className="header-nav">
             <Link to="/" className="hn-link" onClick={() => { setMenuOpen(false); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>Home</Link>
