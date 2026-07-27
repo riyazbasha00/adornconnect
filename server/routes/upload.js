@@ -3,6 +3,7 @@ const router = express.Router();
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
+
 let sharp;
 try { sharp = require('sharp'); } catch {}
 
@@ -12,7 +13,8 @@ if (!fs.existsSync(uploadsDir)) fs.mkdirSync(uploadsDir, { recursive: true });
 const storage = multer.diskStorage({
   destination: uploadsDir,
   filename(req, file, cb) {
-    cb(null, Date.now() + '-' + Math.random().toString(36).slice(2, 6) + '.webp');
+    const ext = sharp ? '.webp' : path.extname(file.originalname).toLowerCase();
+    cb(null, Date.now() + '-' + Math.random().toString(36).slice(2, 6) + ext);
   }
 });
 
