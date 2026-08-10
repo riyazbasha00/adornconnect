@@ -9,8 +9,38 @@
 }
 .hero-bg{
   position:absolute;inset:0;background-size:cover;background-position:center;
-  image-rendering:-webkit-optimize-contrast;image-rendering:auto
+  image-rendering:-webkit-optimize-contrast;image-rendering:auto;
+  opacity:0;transition:opacity .8s ease
 }
+.hero-bg.active{opacity:1}
+
+.hero-arrow{
+  position:absolute;top:50%;transform:translateY(-50%);z-index:5;
+  width:40px;height:40px;border-radius:50%;border:1px solid rgba(255,255,255,.35);
+  background:rgba(0,0,0,.25);color:#fff;font-size:.8rem;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;transition:.25s;
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)
+}
+.hero-arrow:hover{background:rgba(109,59,255,.85);border-color:transparent}
+.hero-arrow-prev{left:16px}
+.hero-arrow-next{right:16px}
+.hero-dots{
+  position:absolute;bottom:20px;left:50%;transform:translateX(-50%);z-index:5;
+  display:flex;gap:8px;align-items:center
+}
+.hero-dot{
+  width:9px;height:9px;border-radius:50%;border:none;cursor:pointer;
+  background:rgba(255,255,255,.5);padding:0;transition:.25s
+}
+.hero-dot.active{background:#6D3BFF;width:22px;border-radius:50px}
+
+@media(max-width:768px){
+  .hero-arrow{width:32px;height:32px;font-size:.7rem}
+  .hero-arrow-prev{left:8px}
+  .hero-arrow-next{right:8px}
+  .hero-dots{bottom:12px}
+}
+
 .hero-content{position:relative;z-index:2;color:#1a1a2e;max-width:700px;padding:50px 0 40px 40px;margin:0}
 
 .hero-badge{

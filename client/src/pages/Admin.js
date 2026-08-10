@@ -36,7 +36,7 @@ export default function Admin() {
   const [imgPreview, setImgPreview] = useState(null);
   const [imgUploading, setImgUploading] = useState(false);
 
-  const [bannerImg, setBannerImg] = useState('');
+  const [bannerSlides, setBannerSlides] = useState([]);
   const [bannerLoading, setBannerLoading] = useState(false);
 
   const [bulkImgUploading, setBulkImgUploading] = useState(false);
@@ -57,7 +57,7 @@ export default function Admin() {
       const [prods, cats, banner] = await Promise.all([fetchProducts(), fetchCategories(true), fetchBanner()]);
       setProducts(prods);
       setCategories(cats);
-      if (banner && banner.image) setBannerImg(banner.image);
+      if (banner && Array.isArray(banner.images)) setBannerSlides(banner.images);
     } catch { setProducts([]); setCategories([]); }
   }, []);
 
@@ -344,11 +344,33 @@ export default function Admin() {
     setBannerLoading(true);
     try {
       const res = await uploadImage(file);
-      await apiUpdateBanner({ image: res.url });
-      setBannerImg(res.url);
-      showToast('Banner image updated');
+      const next = [...bannerSlides, res.url];
+      await apiUpdateBanner({ images: next });
+      setBannerSlides(next);
+      showToast('Banner slide added');
     } catch (err) { showToast(err.message, 'error'); }
     setBannerLoading(false);
+    e.target.value = '';
+  };
+
+  const removeBannerSlide = async (idx) => {
+    const next = bannerSlides.filter((_, i) => i !== idx);
+    try {
+      await apiUpdateBanner({ images: next });
+      setBannerSlides(next);
+      showToast('Banner slide removed');
+    } catch (err) { showToast(err.message, 'error'); }
+  };
+
+  const moveBannerSlide = async (idx, dir) => {
+    const next = [...bannerSlides];
+    const to = idx + dir;
+    if (to < 0 || to >= next.length) return;
+    [next[idx], next[to]] = [next[to], next[idx]];
+    try {
+      await apiUpdateBanner({ images: next });
+      setBannerSlides(next);
+    } catch (err) { showToast(err.message, 'error'); }
   };
 
   if (!loggedIn) {
@@ -545,18 +567,29 @@ export default function Admin() {
 
         {tab === 'banner' && (
           <div className="tab-content">
-            <h2 className="tab-title">Hero Banner</h2>
-            <p className="img-upload-hint">Upload a background image for the home page hero section.</p>
-            <p className="img-upload-hint" style={{color:'var(--orange)',fontWeight:600,marginBottom:16}}>Recommended size: 1920 x 600 px (JPG/PNG, max 2MB)</p>
+            <h2 className="tab-title">Hero Banner Carousel</h2>
+            <p className="img-upload-hint">Upload multiple banner images — they'll rotate automatically in the hero section. Upload in the order you want them to appear.</p>
+            <p className="img-upload-hint" style={{color:'var(--orange)',fontWeight:600,marginBottom:16}}>Recommended size: 1920 x 600 px (JPG/PNG, max 2MB each)</p>
+
+            {bannerSlides.length > 0 && (
+              <div className="banner-slides-list">
+                {bannerSlides.map((img, i) => (
+                  <div className="banner-slide-item" key={i}>
+                    <span className="banner-slide-num">{i + 1}</span>
+                    <img src={imgUrl(img)} alt={`Banner slide ${i + 1}`} />
+                    <div className="banner-slide-actions">
+                      <button className="btn btn-outline" onClick={() => moveBannerSlide(i, -1)} disabled={i === 0} aria-label="Move up"><i className="fas fa-chevron-up"></i></button>
+                      <button className="btn btn-outline" onClick={() => moveBannerSlide(i, 1)} disabled={i === bannerSlides.length - 1} aria-label="Move down"><i className="fas fa-chevron-down"></i></button>
+                      <button className="btn btn-danger" onClick={() => removeBannerSlide(i)}><i className="fas fa-trash"></i></button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+
             <div className="img-upload-card">
-              {bannerImg && (
-                <div className="img-preview" style={{ width: '100%', maxWidth: 600, marginBottom: 16 }}>
-                  <img src={bannerImg} alt="Current banner" style={{ width: '100%', borderRadius: 8, objectFit: 'cover', maxHeight: 300 }} />
-                  <span>Current Banner</span>
-                </div>
-              )}
               <label className="img-file-label">
-                <i className="fas fa-cloud-upload-alt"></i> Upload New Banner
+                <i className="fas fa-cloud-upload-alt"></i> Add Banner Slide
                 <input type="file" accept="image/*" onChange={handleBannerUpload} />
               </label>
               {bannerLoading && <div className="img-uploading"><i className="fas fa-spinner fa-spin"></i> Uploading...</div>}

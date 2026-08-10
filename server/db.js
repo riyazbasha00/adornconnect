@@ -11,7 +11,7 @@ function load() {
     data = JSON.parse(raw);
     if (!data.products) data.products = [];
     if (!data.categories) data.categories = [];
-    if (!data.banner) data.banner = { image: '' };
+    if (!data.banner) data.banner = { images: [] };
   }
   return data;
 }
@@ -88,12 +88,19 @@ function deleteCategory(id) {
 }
 
 function getBanner() {
-  return load().banner || { image: '' };
+  const b = load().banner || {};
+  if (Array.isArray(b.images)) return { images: b.images };
+  return { images: b.image ? [b.image] : [] };
 }
 
 function updateBanner(updates) {
   const d = load();
-  d.banner = { ...d.banner, ...updates };
+  const current = getBanner();
+  if (Array.isArray(updates.images)) {
+    d.banner = { images: updates.images };
+  } else {
+    d.banner = { ...current, ...updates };
+  }
   save();
   return d.banner;
 }

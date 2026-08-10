@@ -76,6 +76,20 @@
 .img-file-label input{display:none}
 .img-file-label[disabled]{opacity:.5;cursor:not-allowed}
 .img-uploading{font-size:.82rem;color:var(--orange);margin-top:10px}
+.banner-slides-list{display:flex;flex-direction:column;gap:12px;margin-bottom:20px;max-width:600px}
+.banner-slide-item{
+  display:flex;align-items:center;gap:14px;background:#fff;
+  border:1px solid var(--gray-200);border-radius:var(--radius);padding:10px 14px
+}
+.banner-slide-item img{width:120px;height:70px;object-fit:cover;border-radius:6px;border:1px solid var(--gray-200);flex-shrink:0}
+.banner-slide-num{
+  width:26px;height:26px;flex-shrink:0;display:flex;align-items:center;justify-content:center;
+  background:var(--purple);color:#fff;font-size:.75rem;font-weight:700;border-radius:50%
+}
+.banner-slide-actions{display:flex;gap:6px;margin-left:auto}
+.banner-slide-actions .btn{padding:7px 10px;font-size:.75rem}
+.btn-danger{background:#dc2626;color:#fff;border:1.5px solid #dc2626}
+.btn-danger:hover{background:#b91c1c;border-color:#b91c1c}
 .bulk-hint{font-size:.78rem;color:var(--gray-500);margin-bottom:12px;line-height:1.5}
 .bulk-hint code{background:var(--gray-100);padding:1px 5px;border-radius:3px;font-size:.72rem}
 .bulk-file-row{display:flex;align-items:center;gap:12px;margin-bottom:10px}

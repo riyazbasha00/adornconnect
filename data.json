@@ -1177,6 +1177,9 @@
     }
   ],
   "banner": {
-    "image": "uploads/1784891140494-5kg0.png"
+    "images": [
+      "uploads/1786351498283-f1c4.png",
+      "uploads/1784891140494-5kg0.png"
+    ]
   }
 }
