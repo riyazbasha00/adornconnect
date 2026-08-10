@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { fetchProducts, fetchCategories, fetchBanner, imgUrl } from '../api';
 import ProductCard from '../components/ProductCard';
+import About from '../components/About';
 import { HomeSEO } from '../components/SEO';
 import './Home.css';
 
@@ -110,6 +111,8 @@ export default function Home() {
         </section>
       )}
 
+      <About />
+
       <section className="about-bridge" id="contact">
         <div className="container">
           <div className="ab-head">
@@ -118,17 +121,6 @@ export default function Home() {
             <p>Reach out for product inquiries, project consultations, or technical support.</p>
           </div>
           <div className="about-contact">
-            <div className="about-card">
-              <div className="ac-icon"><i className="fas fa-building"></i></div>
-              <h3>About ADORN</h3>
-              <p>ADORN is a leading UAE-based provider of structured cabling, security surveillance, networking infrastructure, and access control solutions. We supply high-quality products suitable for commercial, industrial, and residential projects across the region.</p>
-              <div className="ac-features">
-                <span><i className="fas fa-check-circle"></i> Premium quality products</span>
-                <span><i className="fas fa-check-circle"></i> Competitive trade pricing</span>
-                <span><i className="fas fa-check-circle"></i> Fast UAE-wide delivery</span>
-                <span><i className="fas fa-check-circle"></i> Dedicated technical support</span>
-              </div>
-            </div>
             <div className="contact-card">
               <div className="ac-icon"><i className="fas fa-headset"></i></div>
               <h3>Get In Touch</h3>
