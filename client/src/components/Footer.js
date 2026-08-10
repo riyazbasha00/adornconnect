@@ -76,7 +76,7 @@ export default function Footer() {
           <nav>
             <Link to="/">Home</Link>
             <Link to="/products">Products</Link>
-            <Link to="/admin">Admin</Link>
+            <Link to="/#contact">About</Link>
           </nav>
         </div>
 
@@ -104,6 +104,8 @@ export default function Footer() {
             <span><i className="fas fa-map-marker-alt"></i> Dubai, UAE</span>
           </div>
           <div className="fb-links">
+            <Link to="/admin" className="admin-link" aria-label="Admin access">Admin</Link>
+            <span className="fb-dot">&middot;</span>
             <a href="#!">Privacy</a>
             <span className="fb-dot">&middot;</span>
             <a href="#!">Terms</a>

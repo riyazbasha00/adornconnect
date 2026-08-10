@@ -9,29 +9,14 @@ export default function Header() {
   const [cats, setCats] = useState([]);
   const [query, setQuery] = useState('');
   const [menuOpen, setMenuOpen] = useState(false);
-  const [loggedIn, setLoggedIn] = useState(false);
   const [showMobileSearch, setShowMobileSearch] = useState(false);
   const [mobileQuery, setMobileQuery] = useState('');
-  const [showUserMenu, setShowUserMenu] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
 
   useEffect(() => {
-    setLoggedIn(!!localStorage.getItem('adorn_admin'));
-    const handler = () => setLoggedIn(!!localStorage.getItem('adorn_admin'));
-    window.addEventListener('storage', handler);
-    return () => window.removeEventListener('storage', handler);
-  }, []);
-
-  useEffect(() => {
     fetchCategories().then(setCats).catch(() => {});
   }, [location.pathname]);
-
-  useEffect(() => {
-    const close = () => setShowUserMenu(false);
-    if (showUserMenu) document.addEventListener('click', close);
-    return () => document.removeEventListener('click', close);
-  }, [showUserMenu]);
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -75,27 +60,6 @@ export default function Header() {
             <button className="mobile-search-btn" onClick={() => setShowMobileSearch(true)}>
               <i className="fas fa-search"></i>
             </button>
-            {loggedIn ? (
-              <div className="admin-user-wrap">
-                <button className="admin-user-btn" onClick={(e) => { e.stopPropagation(); setShowUserMenu(!showUserMenu); }}>
-                  <i className="fas fa-user-shield"></i>
-                </button>
-                {showUserMenu && (
-                  <div className="admin-dropdown">
-                    <Link to="/admin" className="admin-dropdown-item" onClick={() => setShowUserMenu(false)}>
-                      <i className="fas fa-tachometer-alt"></i> Admin Panel
-                    </Link>
-                    <button className="admin-dropdown-item logout" onClick={() => { localStorage.removeItem('adorn_admin'); setLoggedIn(false); setShowUserMenu(false); window.location.href = '/'; }}>
-                      <i className="fas fa-sign-out-alt"></i> Logout
-                    </button>
-                  </div>
-                )}
-              </div>
-            ) : (
-              <Link to="/admin" className="btn btn-outline admin-btn">
-                <i className="fas fa-shield-alt"></i> <span className="admin-btn-text">Login</span>
-              </Link>
-            )}
             <button className="hamburger" onClick={() => setMenuOpen(!menuOpen)}>
               <i className={`fas fa-${menuOpen ? 'times' : 'bars'}`}></i>
             </button>

@@ -380,6 +380,7 @@ export default function Admin() {
         <a href="#!" className={tab === 'categories' ? 'active' : ''} onClick={() => setTab('categories')}><i className="fas fa-list"></i> Categories</a>
         <a href="#!" className={tab === 'images' ? 'active' : ''} onClick={() => setTab('images')}><i className="fas fa-images"></i> Images</a>
         <a href="#!" className={tab === 'banner' ? 'active' : ''} onClick={() => setTab('banner')}><i className="fas fa-image"></i> Banner</a>
+        <a href="#!" className="logout-link" onClick={() => { localStorage.removeItem('adorn_admin'); window.location.href = '/'; }}><i className="fas fa-sign-out-alt"></i> Logout</a>
       </aside>
 
       <main className="admin-main">

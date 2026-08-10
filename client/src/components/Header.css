@@ -19,27 +19,6 @@
 }
 .search-bar button:hover{background:#e8892e}
 .mobile-search-btn{display:none;background:none;border:none;font-size:1.1rem;color:var(--gray-700);cursor:pointer;padding:6px}
-.admin-btn{flex-shrink:0;font-size:.78rem;padding:6px 14px}
-.admin-btn-text{}
-.admin-user-wrap{position:relative;flex-shrink:0}
-.admin-user-btn{
-  width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;
-  background:var(--orange);color:#fff;border:none;cursor:pointer;font-size:.9rem;transition:.2s
-}
-.admin-user-btn:hover{background:#e8892e;transform:scale(1.05)}
-.admin-dropdown{
-  position:absolute;top:calc(100% + 6px);right:0;min-width:160px;
-  background:#fff;border:1px solid var(--gray-200);border-radius:8px;
-  box-shadow:0 8px 24px rgba(0,0,0,0.12);z-index:101;overflow:hidden
-}
-.admin-dropdown-item{
-  display:flex;align-items:center;gap:8px;padding:10px 16px;font-size:.82rem;
-  color:var(--gray-700);text-decoration:none;border:none;background:none;width:100%;
-  cursor:pointer;font-family:inherit;text-align:left;transition:.15s
-}
-.admin-dropdown-item:hover{background:var(--gray-50);color:var(--purple)}
-.admin-dropdown-item.logout:hover{background:#fef2f2;color:#dc2626}
-.admin-dropdown-item i{width:16px;text-align:center;font-size:.8rem}
 .header-nav{display:flex;align-items:center;gap:4px;flex-shrink:0}
 .hn-link{
   padding:6px 14px;font-size:.78rem;font-weight:600;color:var(--gray-600);
@@ -91,9 +70,6 @@
   .search-bar{display:none}
   .mobile-search-btn{display:flex}
   .header-nav{display:none}
-  .admin-user-btn{width:32px;height:32px;font-size:.8rem}
-  .admin-btn{padding:6px 8px}
-  .admin-btn .admin-btn-text{display:none}
   .hamburger{display:block;font-size:1.2rem;padding:6px}
   .header-actions{display:flex;align-items:center;gap:6px;margin-left:auto}
   .cat-nav{display:none}
