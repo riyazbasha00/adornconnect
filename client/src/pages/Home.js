@@ -71,11 +71,6 @@ export default function Home() {
           <h1>Structured Cabling &amp; <span className="hero-hl">Security</span> Solutions</h1>
           <p className="hero-desc-desktop">Premium networking infrastructure, surveillance, and access control products for commercial, industrial, and residential projects across the UAE.</p>
           <p className="hero-desc-mobile">Premium networking, surveillance &amp; access control products across the UAE.</p>
-          <div className="hero-search">
-            <i className="fas fa-search"></i>
-            <input type="text" placeholder="Search products..." onKeyDown={e => { if (e.key === 'Enter' && e.target.value.trim()) window.location.href = '/products?search=' + encodeURIComponent(e.target.value.trim()); }} />
-            <Link to="/products" className="hero-search-btn"><i className="fas fa-arrow-right"></i></Link>
-          </div>
           <div className="hero-btns">
             <Link to="/products" className="hero-btn hero-btn-primary">
               <i className="fas fa-th-large"></i> Browse All Products
