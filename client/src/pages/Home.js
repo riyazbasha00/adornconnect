@@ -68,7 +68,7 @@ export default function Home() {
             <span className="hero-badge-dot"></span>
             Premium Manufacturer & Supplier
           </div>
-          <h1>Structured Cabling &amp; <span className="hero-hl">Security</span> Solutions</h1>
+          <h1>Structured Cabling &amp;<br /> <span className="hero-hl">Security</span> Solutions</h1>
           <p className="hero-desc-desktop">Premium networking infrastructure, surveillance, and access control products for commercial, industrial, and residential projects across the UAE.</p>
           <p className="hero-desc-mobile">Premium networking, surveillance &amp; access control products across the UAE.</p>
           <div className="hero-btns">
