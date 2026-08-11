@@ -45,7 +45,7 @@ export default function Header() {
           <nav className="header-nav">
             <Link to="/" className="hn-link" onClick={() => { setMenuOpen(false); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>Home</Link>
             <Link to="/products" className="hn-link" onClick={() => setMenuOpen(false)}>Products</Link>
-            <a href="/#contact" className="hn-link" onClick={() => setMenuOpen(false)}>About</a>
+            <Link to="/about" className="hn-link" onClick={() => { setMenuOpen(false); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>About</Link>
           </nav>
           <form className="search-bar" onSubmit={handleSearch}>
             <input

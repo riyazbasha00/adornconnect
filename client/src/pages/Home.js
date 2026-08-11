@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { fetchProducts, fetchCategories, fetchBanner, imgUrl } from '../api';
 import ProductCard from '../components/ProductCard';
-import About from '../components/About';
 import { HomeSEO } from '../components/SEO';
 import './Home.css';
 
@@ -110,8 +109,6 @@ export default function Home() {
           </div>
         </section>
       )}
-
-      <About />
 
       <section className="about-bridge" id="contact">
         <div className="container">
