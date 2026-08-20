@@ -1,0 +1,167 @@
+.sup-hero{
+  padding:56px 0 40px;background:var(--gradient);color:#fff;text-align:center
+}
+.sup-hero h1{font-size:2rem;font-weight:900;margin:10px 0 8px}
+.sup-hero p{font-size:.9rem;opacity:.85;max-width:500px;margin:0 auto;line-height:1.7}
+.sup-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:5px 14px;border-radius:50px;font-size:.7rem;font-weight:700;
+  background:rgba(255,255,255,.15);color:#fff;backdrop-filter:blur(8px)
+}
+
+.sup-section{padding:56px 0}
+.sup-head{text-align:center;margin-bottom:36px}
+.sup-count{
+  display:inline-block;font-size:.65rem;font-weight:700;text-transform:uppercase;
+  padding:3px 10px;border-radius:50px;background:rgba(109,59,255,.08);color:var(--purple);
+  letter-spacing:.3px;margin-bottom:10px
+}
+.sup-head h2{font-size:1.5rem;font-weight:800;color:var(--gray-900);margin-bottom:6px}
+.sup-head p{font-size:.88rem;color:var(--gray-500);line-height:1.7}
+
+/* ─── Technical Support Cards ─── */
+.sup-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:20px
+}
+.sup-card{
+  background:#fff;border:1px solid var(--gray-200);border-radius:var(--radius);
+  padding:28px 24px;text-align:center;transition:all .4s cubic-bezier(.22,1,.36,1);
+  position:relative;overflow:hidden
+}
+.sup-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:var(--gradient);transform:scaleX(0);transform-origin:left;
+  transition:transform .4s cubic-bezier(.22,1,.36,1)
+}
+.sup-card:hover{
+  transform:translateY(-6px);box-shadow:0 12px 36px rgba(50,33,96,.1);
+  border-color:rgba(109,59,255,.2)
+}
+.sup-card:hover::before{transform:scaleX(1)}
+
+.sup-card-icon{
+  width:52px;height:52px;border-radius:12px;display:flex;align-items:center;justify-content:center;
+  background:rgba(109,59,255,.06);color:var(--purple);font-size:1.3rem;margin:0 auto 14px;
+  transition:all .4s cubic-bezier(.22,1,.36,1)
+}
+.sup-card:hover .sup-card-icon{
+  background:var(--purple);color:#fff;transform:scale(1.08) rotate(-3deg);
+  box-shadow:0 6px 20px rgba(109,59,255,.3)
+}
+.sup-card h3{font-size:.9rem;font-weight:700;color:var(--gray-900);margin-bottom:6px;transition:color .3s}
+.sup-card:hover h3{color:var(--purple)}
+.sup-card p{font-size:.78rem;color:var(--gray-500);line-height:1.6}
+
+/* ─── FAQs ─── */
+.sup-faqs{background:var(--gray-50)}
+.sup-faq-list{max-width:720px;margin:0 auto;display:flex;flex-direction:column;gap:10px}
+
+.sup-faq-item{
+  background:#fff;border:1px solid var(--gray-200);border-radius:10px;overflow:hidden;
+  transition:all .3s
+}
+.sup-faq-item.open{border-color:rgba(109,59,255,.2);box-shadow:0 4px 16px rgba(50,33,96,.06)}
+
+.sup-faq-q{
+  width:100%;display:flex;align-items:center;justify-content:space-between;
+  padding:16px 20px;background:none;border:none;cursor:pointer;
+  font-size:.88rem;font-weight:600;color:var(--gray-800);font-family:inherit;text-align:left
+}
+.sup-faq-q span{flex:1;padding-right:12px}
+.sup-faq-q i{color:var(--purple);font-size:.75rem;flex-shrink:0;transition:transform .3s}
+
+.sup-faq-a{
+  max-height:0;overflow:hidden;transition:max-height .35s cubic-bezier(.22,1,.36,1),padding .35s
+}
+.sup-faq-item.open .sup-faq-a{max-height:200px;padding:0 20px 16px}
+.sup-faq-a p{font-size:.82rem;color:var(--gray-500);line-height:1.7}
+
+/* ─── Contact Cards ─── */
+.sup-contact-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px
+}
+.sup-contact-card{
+  background:#fff;border:1px solid var(--gray-200);border-radius:var(--radius);
+  padding:24px 20px;text-align:center;cursor:pointer;transition:all .4s cubic-bezier(.22,1,.36,1);
+  position:relative;overflow:hidden
+}
+.sup-contact-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:var(--gradient);transform:scaleX(0);transform-origin:left;
+  transition:transform .4s cubic-bezier(.22,1,.36,1)
+}
+.sup-contact-card:hover{
+  transform:translateY(-4px);box-shadow:0 8px 28px rgba(50,33,96,.08);
+  border-color:rgba(109,59,255,.2)
+}
+.sup-contact-card:hover::before{transform:scaleX(1)}
+
+.sup-contact-icon{
+  width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;
+  background:rgba(109,59,255,.06);color:var(--purple);font-size:1.1rem;margin:0 auto 12px;
+  transition:all .4s cubic-bezier(.22,1,.36,1)
+}
+.sup-contact-card:hover .sup-contact-icon{
+  background:var(--purple);color:#fff;transform:scale(1.08);
+  box-shadow:0 6px 20px rgba(109,59,255,.3)
+}
+.sup-contact-card h4{font-size:.85rem;font-weight:700;color:var(--gray-900);margin-bottom:4px}
+.sup-contact-card p{font-size:.75rem;color:var(--gray-500);line-height:1.5}
+
+/* ─── Contact Form ─── */
+.sup-form-section{background:var(--gray-50)}
+.sup-form-card{
+  display:grid;grid-template-columns:1fr 1fr;gap:40px;
+  background:#fff;border:1px solid var(--gray-200);border-radius:var(--radius);
+  padding:40px;overflow:hidden;position:relative
+}
+.sup-form-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--gradient)
+}
+.sup-form-left h2{font-size:1.5rem;font-weight:800;color:var(--gray-900);margin:10px 0 8px}
+.sup-form-left>p{font-size:.85rem;color:var(--gray-500);line-height:1.7;margin-bottom:24px}
+
+.sup-form-info{display:flex;flex-direction:column;gap:16px}
+.sup-info-item{
+  display:flex;align-items:center;gap:12px;
+  padding:12px 16px;background:var(--gray-50);border-radius:10px
+}
+.sup-info-item i{color:var(--purple);font-size:1rem;width:20px;text-align:center;flex-shrink:0}
+.sup-info-item strong{display:block;font-size:.82rem;font-weight:700;color:var(--gray-900)}
+.sup-info-item span{font-size:.78rem;color:var(--gray-500)}
+
+.sup-form-right{display:flex;flex-direction:column;gap:14px}
+.sup-form-right h3{font-size:1rem;font-weight:700;color:var(--gray-900);margin-bottom:2px}
+
+.sup-field{display:flex;flex-direction:column;gap:4px}
+.sup-field label{font-size:.78rem;font-weight:600;color:var(--gray-700)}
+.sup-field input,.sup-field select,.sup-field textarea{
+  padding:10px 14px;border:1.5px solid var(--gray-200);border-radius:8px;
+  font-size:.85rem;font-family:inherit;outline:none;transition:border-color .2s;
+  background:#fff;resize:vertical
+}
+.sup-field input:focus,.sup-field select:focus,.sup-field textarea:focus{border-color:var(--purple)}
+.sup-field select{cursor:pointer;color:var(--gray-700)}
+
+.sup-submit{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  padding:12px 20px;border:none;border-radius:8px;
+  background:#25D366;color:#fff;font-size:.88rem;font-weight:700;font-family:inherit;
+  cursor:pointer;transition:all .3s;margin-top:4px
+}
+.sup-submit:hover{background:#1da851;transform:translateY(-2px);box-shadow:0 6px 20px rgba(37,211,102,.3)}
+.sup-submit i{font-size:1.1rem}
+
+@media(max-width:768px){
+  .sup-hero{padding:40px 0 28px}
+  .sup-hero h1{font-size:1.5rem}
+  .sup-section{padding:40px 0}
+  .sup-grid{grid-template-columns:1fr 1fr;gap:14px}
+  .sup-card{padding:20px 16px}
+  .sup-contact-grid{grid-template-columns:1fr}
+  .sup-form-card{grid-template-columns:1fr;padding:24px;gap:28px}
+  .sup-form-left h2{font-size:1.2rem}
+}
+@media(max-width:480px){
+  .sup-grid{grid-template-columns:1fr}
+}

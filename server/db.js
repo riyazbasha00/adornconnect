@@ -105,8 +105,30 @@ function updateBanner(updates) {
   return d.banner;
 }
 
+function getDownloads() {
+  return load().downloads || [];
+}
+
+function addDownload(item) {
+  const d = load();
+  if (!d.downloads) d.downloads = [];
+  d.downloads.unshift({ id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6), ...item, created_at: new Date().toISOString() });
+  save();
+}
+
+function deleteDownload(id) {
+  const d = load();
+  if (!d.downloads) return false;
+  const len = d.downloads.length;
+  d.downloads = d.downloads.filter(dl => dl.id !== id);
+  if (d.downloads.length === len) return false;
+  save();
+  return true;
+}
+
 module.exports = {
   getProducts, getProduct, addProduct, updateProduct, deleteProduct,
   getCategories, getCategory, addCategory, updateCategory, deleteCategory,
   getBanner, updateBanner,
+  getDownloads, addDownload, deleteDownload,
 };

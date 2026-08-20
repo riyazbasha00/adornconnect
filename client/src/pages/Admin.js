@@ -2,7 +2,8 @@ import React, { useState, useEffect, useCallback } from 'react';
 import {
   fetchProducts, fetchCategories, createProduct, updateProduct, deleteProduct,
   createCategory, updateCategory, deleteCategory, uploadImage, imgUrl,
-  fetchBanner, updateBanner as apiUpdateBanner
+  fetchBanner, updateBanner as apiUpdateBanner,
+  fetchDownloads, addDownload, deleteDownload, uploadDocument
 } from '../api';
 import './Admin.css';
 
@@ -42,6 +43,11 @@ export default function Admin() {
   const [bulkImgUploading, setBulkImgUploading] = useState(false);
   const [bulkImgProgress, setBulkImgProgress] = useState(null);
 
+  const [downloads, setDownloads] = useState([]);
+  const [dlCategory, setDlCategory] = useState('product-catalogue');
+  const [dlTitle, setDlTitle] = useState('');
+  const [dlUploading, setDlUploading] = useState(false);
+
   const showToast = useCallback((msg, type = 'success') => {
     setToast({ msg, type });
     setTimeout(() => setToast(null), 3000);
@@ -54,10 +60,11 @@ export default function Admin() {
 
   const loadData = useCallback(async () => {
     try {
-      const [prods, cats, banner] = await Promise.all([fetchProducts(), fetchCategories(true), fetchBanner()]);
+      const [prods, cats, banner, dl] = await Promise.all([fetchProducts(), fetchCategories(true), fetchBanner(), fetchDownloads()]);
       setProducts(prods);
       setCategories(cats);
       if (banner && Array.isArray(banner.images)) setBannerSlides(banner.images);
+      setDownloads(dl || []);
     } catch { setProducts([]); setCategories([]); }
   }, []);
 
@@ -390,6 +397,7 @@ export default function Admin() {
   const catCount = categories.length;
   const featuredCount = products.filter(p => p.tags && p.tags.includes('featured')).length;
   const bestSellingCount = products.filter(p => p.tags && p.tags.includes('bestseller')).length;
+  const dlCount = downloads.length;
 
   return (
     <div className="admin-layout">
@@ -402,6 +410,7 @@ export default function Admin() {
         <a href="#!" className={tab === 'categories' ? 'active' : ''} onClick={() => setTab('categories')}><i className="fas fa-list"></i> Categories</a>
         <a href="#!" className={tab === 'images' ? 'active' : ''} onClick={() => setTab('images')}><i className="fas fa-images"></i> Images</a>
         <a href="#!" className={tab === 'banner' ? 'active' : ''} onClick={() => setTab('banner')}><i className="fas fa-image"></i> Banner</a>
+        <a href="#!" className={tab === 'downloads' ? 'active' : ''} onClick={() => setTab('downloads')}><i className="fas fa-download"></i> Downloads</a>
         <a href="#!" className="logout-link" onClick={() => { localStorage.removeItem('adorn_admin'); window.location.href = '/'; }}><i className="fas fa-sign-out-alt"></i> Logout</a>
       </aside>
 
@@ -414,6 +423,7 @@ export default function Admin() {
               <div className="dash-card"><i className="fas fa-list"></i><strong>{catCount}</strong><span>Categories</span></div>
               <div className="dash-card"><i className="fas fa-star"></i><strong>{featuredCount}</strong><span>Featured</span></div>
               <div className="dash-card"><i className="fas fa-fire"></i><strong>{bestSellingCount}</strong><span>Best Selling</span></div>
+              <div className="dash-card"><i className="fas fa-download"></i><strong>{dlCount}</strong><span>Downloads</span></div>
             </div>
           </div>
         )}
@@ -561,6 +571,78 @@ export default function Admin() {
                 </label>
                 {imgUploading && <div className="img-uploading"><i className="fas fa-spinner fa-spin"></i> Uploading...</div>}
               </div>
+            </div>
+          </div>
+        )}
+
+        {tab === 'downloads' && (
+          <div className="tab-content">
+            <div className="tab-header">
+              <h2 className="tab-title">Downloads</h2>
+            </div>
+            <div className="img-section">
+              <h3 className="img-section-title"><i className="fas fa-cloud-upload-alt"></i> Upload Document</h3>
+              <p className="img-upload-hint">Upload PDFs, DOCs, XLS, PPT, or ZIP files. Choose a category and give it a title.</p>
+              <div className="modal-grid" style={{ marginBottom: 16 }}>
+                <label>Category
+                  <select value={dlCategory} onChange={e => setDlCategory(e.target.value)}>
+                    <option value="product-catalogue">Product Catalogue</option>
+                    <option value="product-datasheets">Product Datasheets</option>
+                    <option value="technical-datasheets">Technical Datasheets</option>
+                    <option value="installation-guides">Installation Guides</option>
+                    <option value="product-certifications">Product Certifications</option>
+                    <option value="compliance-documents">Compliance Documents</option>
+                    <option value="brochures">Brochures</option>
+                    <option value="company-profile">Company Profile</option>
+                    <option value="marketing-resources">Marketing Resources</option>
+                  </select>
+                </label>
+                <label>Title <input value={dlTitle} onChange={e => setDlTitle(e.target.value)} placeholder="Document title" /></label>
+              </div>
+              <label className="img-file-label bulk-label">
+                <i className="fas fa-cloud-upload-alt"></i> Choose File (PDF, DOC, XLS, PPT, ZIP)
+                <input type="file" accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.zip,.rar" onChange={async (e) => {
+                  const file = e.target.files[0];
+                  if (!file) return;
+                  if (!dlTitle.trim()) { showToast('Please enter a title first', 'error'); return; }
+                  setDlUploading(true);
+                  try {
+                    const res = await uploadDocument(file);
+                    await addDownload({ title: dlTitle.trim(), category: dlCategory, fileUrl: res.url, fileName: file.name, fileSize: file.size });
+                    await loadData();
+                    setDlTitle('');
+                    showToast('Document uploaded successfully');
+                  } catch (err) { showToast(err.message, 'error'); }
+                  setDlUploading(false);
+                  e.target.value = '';
+                }} />
+              </label>
+              {dlUploading && <div className="img-uploading"><i className="fas fa-spinner fa-spin"></i> Uploading...</div>}
+            </div>
+
+            <div className="img-divider"></div>
+
+            <div className="table-wrap">
+              <table className="admin-table">
+                <thead><tr><th>Title</th><th>Category</th><th>File</th><th>Date</th><th>Actions</th></tr></thead>
+                <tbody>
+                  {downloads.map(d => (
+                    <tr key={d.id}>
+                      <td><strong>{d.title}</strong></td>
+                      <td><span className="dl-cat-badge">{d.category}</span></td>
+                      <td><a href={imgUrl(d.fileUrl)} target="_blank" rel="noreferrer" style={{ fontSize: '.78rem', color: 'var(--purple)' }}>{d.fileName || 'View'}</a></td>
+                      <td style={{ fontSize: '.75rem', color: 'var(--gray-400)' }}>{d.created_at ? new Date(d.created_at).toLocaleDateString() : '-'}</td>
+                      <td className="actions-col">
+                        <button className="btn-sm delete" onClick={async () => {
+                          if (!confirm('Delete this document?')) return;
+                          try { await deleteDownload(d.id); await loadData(); showToast('Deleted'); } catch (err) { showToast(err.message, 'error'); }
+                        }}><i className="fas fa-trash"></i></button>
+                      </td>
+                    </tr>
+                  ))}
+                  {downloads.length === 0 && <tr><td colSpan="5" style={{ textAlign: 'center', padding: 32, color: 'var(--gray-400)' }}>No documents uploaded yet</td></tr>}
+                </tbody>
+              </table>
             </div>
           </div>
         )}

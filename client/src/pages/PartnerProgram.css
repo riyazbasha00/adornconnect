@@ -1,0 +1,152 @@
+.pp-hero{
+  padding:56px 0 40px;background:var(--gradient);color:#fff;text-align:center
+}
+.pp-hero h1{font-size:2rem;font-weight:900;margin:10px 0 8px}
+.pp-hero p{font-size:.9rem;opacity:.85;max-width:500px;margin:0 auto;line-height:1.7}
+.pp-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:5px 14px;border-radius:50px;font-size:.7rem;font-weight:700;
+  background:rgba(255,255,255,.15);color:#fff;backdrop-filter:blur(8px)
+}
+
+.pp-section{padding:56px 0}
+.pp-head{text-align:center;margin-bottom:36px}
+.pp-count{
+  display:inline-block;font-size:.65rem;font-weight:700;text-transform:uppercase;
+  padding:3px 10px;border-radius:50px;background:rgba(109,59,255,.08);color:var(--purple);
+  letter-spacing:.3px;margin-bottom:10px
+}
+.pp-head h2{font-size:1.5rem;font-weight:800;color:var(--gray-900);margin-bottom:6px}
+.pp-head p{font-size:.88rem;color:var(--gray-500);line-height:1.7}
+
+.pp-types{display:flex;flex-direction:column;gap:20px}
+
+.pp-type-card{
+  background:#fff;border:1px solid var(--gray-200);border-radius:var(--radius);
+  padding:28px;overflow:hidden;transition:all .4s cubic-bezier(.22,1,.36,1);
+  position:relative
+}
+.pp-type-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:var(--gradient);transform:scaleX(0);transform-origin:left;
+  transition:transform .4s cubic-bezier(.22,1,.36,1)
+}
+.pp-type-card:hover{
+  transform:translateY(-4px);box-shadow:0 12px 36px rgba(50,33,96,.1);
+  border-color:rgba(109,59,255,.2)
+}
+.pp-type-card:hover::before{transform:scaleX(1)}
+
+.pp-type-header{display:flex;gap:16px;align-items:flex-start}
+.pp-type-icon{
+  width:52px;height:52px;border-radius:12px;display:flex;align-items:center;justify-content:center;
+  background:rgba(109,59,255,.06);color:var(--purple);font-size:1.3rem;flex-shrink:0;
+  transition:all .4s cubic-bezier(.22,1,.36,1)
+}
+.pp-type-card:hover .pp-type-icon{
+  background:var(--purple);color:#fff;transform:scale(1.08) rotate(-3deg);
+  box-shadow:0 6px 20px rgba(109,59,255,.3)
+}
+.pp-type-header h3{font-size:1rem;font-weight:700;color:var(--gray-900);margin-bottom:4px;transition:color .3s}
+.pp-type-card:hover .pp-type-header h3{color:var(--purple)}
+.pp-type-header p{font-size:.82rem;color:var(--gray-500);line-height:1.6}
+
+.pp-sub-cards{
+  margin-top:20px;padding-top:20px;border-top:1px solid var(--gray-100);
+  display:flex;gap:16px;flex-wrap:wrap
+}
+.pp-sub-card{
+  flex:1;min-width:260px;padding:20px;background:var(--gray-50);border-radius:10px;
+  display:flex;gap:14px;align-items:flex-start;transition:all .3s
+}
+.pp-sub-card:hover{background:#fff;box-shadow:0 4px 16px rgba(0,0,0,.06)}
+.pp-sub-icon{
+  width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;
+  background:rgba(109,59,255,.08);color:var(--purple);font-size:1rem;flex-shrink:0
+}
+.pp-sub-card h4{font-size:.88rem;font-weight:700;color:var(--gray-900);margin-bottom:4px}
+.pp-sub-card p{font-size:.78rem;color:var(--gray-500);line-height:1.6}
+
+.pp-benefits{background:var(--gray-50)}
+.pp-benefits-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:20px
+}
+
+.pp-benefit-card{
+  background:#fff;border:1px solid var(--gray-200);border-radius:var(--radius);
+  padding:24px;text-align:center;transition:all .4s cubic-bezier(.22,1,.36,1)
+}
+.pp-benefit-card:hover{
+  transform:translateY(-4px);box-shadow:0 8px 28px rgba(50,33,96,.08);
+  border-color:rgba(109,59,255,.2)
+}
+.pp-benefit-icon{
+  width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;
+  background:rgba(109,59,255,.06);color:var(--purple);font-size:1.2rem;margin:0 auto 14px;
+  transition:all .4s cubic-bezier(.22,1,.36,1)
+}
+.pp-benefit-card:hover .pp-benefit-icon{
+  background:var(--purple);color:#fff;transform:scale(1.08);
+  box-shadow:0 6px 20px rgba(109,59,255,.3)
+}
+.pp-benefit-card h4{font-size:.88rem;font-weight:700;color:var(--gray-900);margin-bottom:6px}
+.pp-benefit-card p{font-size:.78rem;color:var(--gray-500);line-height:1.6}
+
+.pp-cta{
+  padding:56px 0;background:var(--purple);color:#fff;text-align:center
+}
+.pp-cta h2{font-size:1.4rem;font-weight:800;margin-bottom:8px}
+.pp-cta p{font-size:.88rem;opacity:.8;margin-bottom:24px}
+.pp-cta-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+
+.pp-form-section{padding:56px 0;background:var(--gray-50)}
+.pp-form-card{
+  display:grid;grid-template-columns:1fr 1fr;gap:40px;
+  background:#fff;border:1px solid var(--gray-200);border-radius:var(--radius);
+  padding:40px;overflow:hidden;position:relative
+}
+.pp-form-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--gradient)
+}
+.pp-form-left h2{font-size:1.5rem;font-weight:800;color:var(--gray-900);margin:10px 0 8px}
+.pp-form-left>p{font-size:.85rem;color:var(--gray-500);line-height:1.7;margin-bottom:24px}
+
+.pp-form-perks{list-style:none;display:flex;flex-direction:column;gap:10px}
+.pp-form-perks li{
+  font-size:.82rem;color:var(--gray-600);display:flex;align-items:center;gap:8px
+}
+.pp-form-perks li i{color:var(--purple);font-size:.75rem;flex-shrink:0}
+
+.pp-form-right{display:flex;flex-direction:column;gap:16px}
+.pp-form-right h3{font-size:1rem;font-weight:700;color:var(--gray-900);margin-bottom:4px}
+
+.pp-field{display:flex;flex-direction:column;gap:5px}
+.pp-field label{font-size:.78rem;font-weight:600;color:var(--gray-700)}
+.pp-field input,.pp-field select{
+  padding:10px 14px;border:1.5px solid var(--gray-200);border-radius:8px;
+  font-size:.85rem;font-family:inherit;outline:none;transition:border-color .2s;
+  background:#fff
+}
+.pp-field input:focus,.pp-field select:focus{border-color:var(--purple)}
+.pp-field select{cursor:pointer;color:var(--gray-700)}
+
+.pp-submit{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  padding:12px 20px;border:none;border-radius:8px;
+  background:#25D366;color:#fff;font-size:.88rem;font-weight:700;font-family:inherit;
+  cursor:pointer;transition:all .3s;margin-top:4px
+}
+.pp-submit:hover{background:#1da851;transform:translateY(-2px);box-shadow:0 6px 20px rgba(37,211,102,.3)}
+.pp-submit i{font-size:1.1rem}
+
+@media(max-width:768px){
+  .pp-hero{padding:40px 0 28px}
+  .pp-hero h1{font-size:1.5rem}
+  .pp-section{padding:40px 0}
+  .pp-type-header{flex-direction:column;gap:10px}
+  .pp-sub-cards{flex-direction:column}
+  .pp-benefits-grid{grid-template-columns:1fr}
+  .pp-form-section{padding:40px 0}
+  .pp-form-card{grid-template-columns:1fr;padding:24px;gap:28px}
+  .pp-form-left h2{font-size:1.2rem}
+}

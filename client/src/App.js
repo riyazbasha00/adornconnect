@@ -7,6 +7,11 @@ import Home from './pages/Home';
 import Products from './pages/Products';
 import ProductDetail from './pages/ProductDetail';
 import AboutPage from './pages/AboutPage';
+import Solutions from './pages/Solutions';
+import PartnerProgram from './pages/PartnerProgram';
+import Support from './pages/Support';
+import KnowledgeCenter from './pages/KnowledgeCenter';
+import Downloads from './pages/Downloads';
 import Admin from './pages/Admin';
 import './App.css';
 
@@ -33,6 +38,11 @@ function App() {
             <Route path="/products" element={<Products />} />
             <Route path="/product" element={<ProductDetail />} />
             <Route path="/about" element={<AboutPage />} />
+            <Route path="/solutions" element={<Solutions />} />
+            <Route path="/partner-program" element={<PartnerProgram />} />
+            <Route path="/support" element={<Support />} />
+            <Route path="/knowledge-center" element={<KnowledgeCenter />} />
+            <Route path="/downloads" element={<Downloads />} />
             <Route path="/admin" element={<Admin />} />
           </Routes>
         </main>

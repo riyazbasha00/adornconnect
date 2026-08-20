@@ -1,30 +1,21 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { fetchProducts, fetchCategories, fetchBanner, imgUrl } from '../api';
-import ProductCard from '../components/ProductCard';
+import { fetchBanner, imgUrl } from '../api';
 import { HomeSEO } from '../components/SEO';
+import useScrollReveal from '../hooks/useScrollReveal';
 import './Home.css';
 
 const DEFAULT_BANNERS = [];
 
 export default function Home() {
-  const [featured, setFeatured] = useState([]);
-  const [bestselling, setBestselling] = useState([]);
   const [banners, setBanners] = useState(DEFAULT_BANNERS);
   const [current, setCurrent] = useState(0);
   const timer = useRef(null);
+  const revealRef = useScrollReveal();
 
   useEffect(() => {
     fetchBanner().then(b => {
       if (b && Array.isArray(b.images) && b.images.length) setBanners(b.images);
-    }).catch(() => {});
-    Promise.all([fetchProducts(), fetchCategories()]).then(([products]) => {
-
-      const f = products.filter(p => p.tags && p.tags.includes('featured'));
-      const b = products.filter(p => p.tags && p.tags.includes('bestseller'));
-
-      setFeatured(f);
-      setBestselling(b);
     }).catch(() => {});
   }, []);
 
@@ -44,6 +35,8 @@ export default function Home() {
   return (
     <>
       <HomeSEO />
+
+      {/* ─── Hero ─── */}
       <section className="hero" style={banners.length ? {} : { background: '#f5f5f5' }}>
         {banners.map((b, i) => (
           <div key={i} className={`hero-bg ${i === current ? 'active' : ''}`} style={{ backgroundImage: `url(${imgUrl(b)})` }}></div>
@@ -66,50 +59,200 @@ export default function Home() {
         <div className="container hero-content">
           <div className="hero-badge">
             <span className="hero-badge-dot"></span>
-            Premium Manufacturer & Supplier
+            Premium Manufacturer &amp; Supplier
           </div>
           <h1>Structured Cabling &amp;<br /> <span className="hero-hl">Security</span> Solutions</h1>
           <p className="hero-desc-desktop">Premium networking infrastructure, surveillance, and access control products for commercial, industrial, and residential projects across the UAE.</p>
           <p className="hero-desc-mobile">Premium networking, surveillance &amp; access control products across the UAE.</p>
           <div className="hero-btns">
             <Link to="/products" className="hero-btn hero-btn-primary">
-              <i className="fas fa-th-large"></i> Browse All Products
+              <i className="fas fa-th-large"></i> Explore Products
             </Link>
             <a href="https://wa.me/971526387275" className="hero-btn hero-btn-outline" target="_blank" rel="noopener noreferrer">
-              <i className="fab fa-whatsapp"></i> Get a Quote
+              <i className="fas fa-handshake"></i> Become a Partner
             </a>
-          </div>
-          <div className="hero-stats">
-            <div className="hero-stat">
-              <span className="hs-num">15+</span>
-              <span className="hs-label">Years Experience</span>
-            </div>
           </div>
         </div>
       </section>
 
-      {featured.length > 0 && (
-        <section className="container" id="featured">
-          <h2 className="section-title"><i className="fas fa-star"></i> Featured Products</h2>
-          <div className="prod-grid">
-            {featured.map(p => (
-              <ProductCard key={p.sku} product={p} />
-            ))}
+      <div ref={revealRef}>
+
+        {/* ─── About ADORN ─── */}
+        <section className="web-about">
+          <div className="container">
+            <div className="web-about-inner reveal">
+              <span className="ab-badge">About ADORN</span>
+              <h2>Building the Foundation for a <span className="hl">Connected World</span></h2>
+              <p className="web-about-lead">
+                ADORN is a UAE-based technology brand specializing in structured cabling, fiber optic connectivity, network cabinets, passive networking solutions, and ELV infrastructure products.
+              </p>
+              <p>
+                Designed for reliability, engineered for performance, and backed by technical expertise, ADORN helps businesses, contractors, system integrators, and consultants build secure, scalable, and future-ready network infrastructures.
+              </p>
+            </div>
           </div>
         </section>
-      )}
 
-      {bestselling.length > 0 && (
-        <section className="container">
-          <h2 className="section-title"><i className="fas fa-fire"></i> Best Selling</h2>
-          <div className="prod-grid">
-            {bestselling.map(p => (
-              <ProductCard key={p.sku} product={p} />
-            ))}
+        {/* ─── Who We Are ─── */}
+        <section className="web-who">
+          <div className="container">
+            <div className="web-who-inner reveal">
+              <span className="ab-badge">Who We Are</span>
+              <h2>Building Connections That Power <span className="hl">Tomorrow</span></h2>
+              <p>Technology is transforming the way people live, work, communicate, and do business. Behind every successful digital transformation lies a reliable network infrastructure that connects people, devices, applications, and data.</p>
+              <p>At ADORN, we believe network infrastructure is more than cables and connectivity. It is the foundation of every intelligent building, enterprise network, and digital ecosystem.</p>
+            </div>
+            <div className="web-why-grid">
+              <div className="web-why-card reveal">
+                <div className="web-why-icon"><i className="fas fa-bullseye"></i></div>
+                <h3>Why ADORN Exists</h3>
+                <p>To empower businesses and technology professionals with reliable infrastructure solutions, practical technical knowledge, and trusted partnerships that enable them to build the connected world of tomorrow.</p>
+              </div>
+              <div className="web-why-card reveal">
+                <div className="web-why-icon"><i className="fas fa-comments"></i></div>
+                <h3>Beyond Products</h3>
+                <p>We understand that success is not achieved by supplying products alone. It is built through confidence, consistency, education, and long-term relationships.</p>
+              </div>
+              <div className="web-why-card reveal">
+                <div className="web-why-icon"><i className="fas fa-cubes"></i></div>
+                <h3>Our Commitment</h3>
+                <p>Every cable, cabinet, fiber solution, connectivity product, and accessory we develop is designed to help our partners deliver dependable and scalable infrastructure that stands the test of time.</p>
+              </div>
+            </div>
+            <div className="web-who-vision reveal">
+              <p>As technology continues to evolve, so will ADORN. We will continue to innovate, expand our solutions, strengthen our partnerships, and raise the standards of networking and ELV infrastructure across the region.</p>
+              <p className="web-vision-quote">Because we believe that every great network begins with a strong foundation.<br />And every strong foundation begins with <span className="hl">trust</span>.</p>
+            </div>
           </div>
         </section>
-      )}
 
+        {/* ─── Purpose, Vision & Mission ─── */}
+        <section className="web-pvm">
+          <div className="container">
+            <div className="web-pvm-grid">
+              <div className="web-pvm-card reveal">
+                <div className="web-pvm-num">01</div>
+                <h3>Purpose</h3>
+                <p>To empower the people who build the world's digital infrastructure through trusted products, technical knowledge, and lasting partnerships.</p>
+              </div>
+              <div className="web-pvm-card reveal">
+                <div className="web-pvm-num">02</div>
+                <h3>Vision</h3>
+                <p>To become one of the GCC's most trusted infrastructure technology brands, recognized for quality, innovation, technical excellence, and developing the next generation of networking professionals.</p>
+              </div>
+              <div className="web-pvm-card reveal">
+                <div className="web-pvm-num">03</div>
+                <h3>Mission</h3>
+                <p>We design, develop, and deliver reliable passive networking and ELV infrastructure solutions while supporting our partners through technical expertise, education, and exceptional customer service, enabling them to build secure, scalable, and future-ready networks.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ─── Why Professionals Choose ADORN ─── */}
+        <section className="web-why-choose">
+          <div className="container">
+            <div className="web-pvm-card reveal" style={{ textAlign: 'center', maxWidth: 640, margin: '0 auto 40px' }}>
+              <span className="ab-badge">Why Professionals Choose ADORN</span>
+              <h2 style={{ fontSize: '1.4rem', marginTop: 12 }}>Trusted by Professionals Across the Region</h2>
+            </div>
+            <div className="web-choose-grid">
+              {[
+                { icon: 'fa-medal', title: 'Quality Without Compromise', desc: 'Every product is manufactured using carefully selected materials and tested to deliver consistent performance and long-term reliability.' },
+                { icon: 'fa-layer-group', title: 'Complete Infrastructure Portfolio', desc: 'One trusted brand for structured cabling, fiber, network cabinets, connectivity, and passive networking accessories.' },
+                { icon: 'fa-tools', title: 'Built for System Integrators', desc: 'Designed with installers, engineers, and consultants in mind, making deployment faster, simpler, and more reliable.' },
+                { icon: 'fa-graduation-cap', title: 'Technical Knowledge', desc: 'More than products. We provide technical guidance, training, and educational resources that help professionals build better networks.' },
+                { icon: 'fa-handshake', title: 'Growing Partner Network', desc: 'Building strong relationships with distributors, resellers, contractors, and consultants across the GCC.' },
+                { icon: 'fa-rocket', title: 'Future Ready', desc: 'Designed to support modern technologies including AI infrastructure, smart buildings, high-speed networking, PoE, IoT, and next-generation enterprise environments.' },
+              ].map((item, i) => (
+                <div className="web-choose-card reveal" key={i}>
+                  <div className="web-choose-icon"><i className={`fas ${item.icon}`}></i></div>
+                  <h4>{item.title}</h4>
+                  <p>{item.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ─── Core Values ─── */}
+        <section className="web-values">
+          <div className="container">
+            <div className="web-pvm-card reveal" style={{ textAlign: 'center', maxWidth: 640, margin: '0 auto 40px' }}>
+              <span className="ab-badge">Core Values</span>
+              <h2 style={{ fontSize: '1.4rem', marginTop: 12 }}>What Drives Everything We Do</h2>
+            </div>
+            <div className="web-values-grid">
+              {[
+                { icon: 'fa-shield-alt', title: 'Trust', desc: 'We build lasting relationships through honesty, transparency, and reliability.' },
+                { icon: 'fa-award', title: 'Quality', desc: 'We never compromise on the performance, durability, or reliability of our products.' },
+                { icon: 'fa-book-open', title: 'Knowledge', desc: 'We believe education creates stronger professionals, stronger partnerships, and better infrastructure.' },
+                { icon: 'fa-lightbulb', title: 'Innovation', desc: 'We continuously evolve our products and solutions to meet the changing demands of technology.' },
+                { icon: 'fa-users', title: 'Partnership', desc: 'Our success is built on the success of our customers, channel partners, consultants, and system integrators.' },
+                { icon: 'fa-heart', title: 'Commitment', desc: 'We stand behind every product, every partner, and every project with dedication and accountability.' },
+              ].map((item, i) => (
+                <div className="web-value-card reveal" key={i}>
+                  <div className="web-value-icon"><i className={`fas ${item.icon}`}></i></div>
+                  <h4>{item.title}</h4>
+                  <p>{item.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ─── Featured Solutions ─── */}
+        <section className="web-solutions">
+          <div className="container">
+            <div className="web-pvm-card reveal" style={{ textAlign: 'center', maxWidth: 640, margin: '0 auto 40px' }}>
+              <span className="ab-badge">Featured Solutions</span>
+              <h2 style={{ fontSize: '1.4rem', marginTop: 12 }}>Infrastructure Solutions for a Connected World</h2>
+              <p style={{ color: 'var(--gray-500)', marginTop: 8 }}>ADORN provides infrastructure solutions designed to support modern digital environments across commercial, enterprise, and technology applications.</p>
+            </div>
+            <div className="web-solutions-grid">
+              {[
+                { icon: 'fa-building', title: 'Smart Buildings', desc: 'Infrastructure solutions supporting intelligent, connected, and automated building environments.' },
+                { icon: 'fa-network-wired', title: 'Enterprise Networks', desc: 'Reliable structured cabling and passive networking solutions for modern business networks.' },
+                { icon: 'fa-server', title: 'Data Centres', desc: 'High-performance connectivity and infrastructure solutions for critical data centre environments.' },
+                { icon: 'fa-plug', title: 'Structured Cabling', desc: 'Reliable copper cabling solutions designed for scalable and dependable network performance.' },
+                { icon: 'fa-bolt', title: 'Fiber Optic Systems', desc: 'High-speed fiber connectivity solutions for reliable data transmission and modern network infrastructure.' },
+                { icon: 'fa-th-large', title: 'Passive Networking', desc: 'Essential connectivity products and accessories for building organized, reliable network infrastructure.' },
+                { icon: 'fa-broadcast-tower', title: 'ELV Infrastructure', desc: 'Infrastructure solutions supporting modern low-voltage technology and building systems.' },
+              ].map((item, i) => (
+                <div className="web-solution-card reveal" key={i}>
+                  <div className="web-solution-icon"><i className={`fas ${item.icon}`}></i></div>
+                  <h4>{item.title}</h4>
+                  <p>{item.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ─── CTA ─── */}
+        <section className="web-cta">
+          <div className="container">
+            <div className="web-cta-inner reveal">
+              <h2>Building the Connected World <span className="hl">Together</span></h2>
+              <p>ADORN exists to empower businesses and technology professionals with reliable network infrastructure solutions, technical knowledge, and trusted partnerships that build the connected world of tomorrow.</p>
+              <div className="web-cta-btns">
+                <Link to="/products" className="hero-btn hero-btn-primary">
+                  <i className="fas fa-th-large"></i> Explore Products
+                </Link>
+                <a href="https://wa.me/971526387275" className="hero-btn hero-btn-outline" target="_blank" rel="noopener noreferrer">
+                  <i className="fas fa-handshake"></i> Become a Partner
+                </a>
+                <a href="#contact" className="hero-btn hero-btn-outline">
+                  <i className="fas fa-envelope"></i> Contact Us
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </div>
+
+      {/* ─── Contact ─── */}
       <section className="about-bridge" id="contact">
         <div className="container">
           <div className="ab-head">

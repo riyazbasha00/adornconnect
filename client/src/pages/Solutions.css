@@ -1,0 +1,88 @@
+.sol-hero{
+  padding:56px 0 40px;background:var(--gradient);color:#fff;text-align:center
+}
+.sol-hero h1{font-size:2rem;font-weight:900;margin:10px 0 8px}
+.sol-hero p{font-size:.9rem;opacity:.85;max-width:500px;margin:0 auto;line-height:1.7}
+.sol-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:5px 14px;border-radius:50px;font-size:.7rem;font-weight:700;
+  background:rgba(255,255,255,.15);color:#fff;backdrop-filter:blur(8px)
+}
+
+.sol-section{padding:56px 0}
+.sol-head{text-align:center;margin-bottom:36px}
+.sol-count{
+  display:inline-block;font-size:.65rem;font-weight:700;text-transform:uppercase;
+  padding:3px 10px;border-radius:50px;background:rgba(109,59,255,.08);color:var(--purple);
+  letter-spacing:.3px;margin-bottom:10px
+}
+.sol-head h2{font-size:1.5rem;font-weight:800;color:var(--gray-900);margin-bottom:6px}
+.sol-head p{font-size:.88rem;color:var(--gray-500);line-height:1.7}
+
+.sol-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:20px
+}
+
+.sol-card{
+  background:#fff;border:1px solid var(--gray-200);border-radius:var(--radius);
+  padding:28px 24px;position:relative;overflow:hidden;transition:all .4s cubic-bezier(.22,1,.36,1);
+  display:flex;flex-direction:column;gap:10px
+}
+.sol-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:var(--gradient);transform:scaleX(0);transform-origin:left;
+  transition:transform .4s cubic-bezier(.22,1,.36,1)
+}
+.sol-card:hover{
+  transform:translateY(-6px);box-shadow:0 12px 36px rgba(50,33,96,.1);
+  border-color:rgba(109,59,255,.2)
+}
+.sol-card:hover::before{transform:scaleX(1)}
+
+.sol-card-icon{
+  width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;
+  background:rgba(109,59,255,.06);color:var(--purple);font-size:1.2rem;
+  transition:all .4s cubic-bezier(.22,1,.36,1)
+}
+.sol-card:hover .sol-card-icon{
+  background:var(--purple);color:#fff;transform:scale(1.08) rotate(-3deg);
+  box-shadow:0 6px 20px rgba(109,59,255,.3)
+}
+
+.sol-card h3{font-size:.92rem;font-weight:700;color:var(--gray-900);transition:color .3s}
+.sol-card:hover h3{color:var(--purple)}
+
+.sol-card p{font-size:.8rem;color:var(--gray-500);line-height:1.6}
+
+.sol-features{
+  list-style:none;display:flex;flex-direction:column;gap:4px;margin-top:4px
+}
+.sol-features li{
+  font-size:.75rem;color:var(--gray-600);display:flex;align-items:center;gap:6px
+}
+.sol-features li i{color:var(--purple);font-size:.6rem;flex-shrink:0}
+
+.sol-card-arrow{
+  margin-top:auto;padding-top:8px;font-size:.75rem;color:var(--gray-300);
+  transition:all .3s cubic-bezier(.22,1,.36,1)
+}
+.sol-card:hover .sol-card-arrow{color:var(--purple);transform:translateX(4px)}
+
+.sol-industries{background:var(--gray-50)}
+
+.sol-cta{
+  padding:56px 0;background:var(--purple);color:#fff;text-align:center
+}
+.sol-cta h2{font-size:1.4rem;font-weight:800;margin-bottom:8px}
+.sol-cta p{font-size:.88rem;opacity:.8;margin-bottom:24px}
+.sol-cta-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+
+@media(max-width:768px){
+  .sol-hero{padding:40px 0 28px}
+  .sol-hero h1{font-size:1.5rem}
+  .sol-section{padding:40px 0}
+  .sol-grid{grid-template-columns:1fr;gap:14px}
+  .sol-card{padding:22px 20px}
+  .sol-cta{padding:40px 0}
+  .sol-cta h2{font-size:1.1rem}
+}

@@ -10,6 +10,8 @@ try { compression = require('compression'); } catch {}
 const productsRouter = require('./routes/products');
 const categoriesRouter = require('./routes/categories');
 const uploadRouter = require('./routes/upload');
+const docsRouter = require('./routes/docs');
+const downloadsRouter = require('./routes/downloads');
 const { getBanner, updateBanner, getProducts, getCategories } = require('./db');
 
 const app = express();
@@ -62,6 +64,8 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads'), {
 app.use('/api/products', productsRouter);
 app.use('/api/categories', categoriesRouter);
 app.use('/api/upload', uploadRouter);
+app.use('/api/docs', docsRouter);
+app.use('/api/downloads', downloadsRouter);
 
 app.get('/api/banner', (req, res) => {
   res.json(getBanner());

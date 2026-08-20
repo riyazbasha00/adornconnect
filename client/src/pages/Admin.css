@@ -127,6 +127,7 @@
 .bulk-ok{font-size:.82rem;color:#2e7d32;font-weight:600}
 .bulk-skip{font-size:.82rem;color:var(--gray-500);font-weight:600}
 .bulk-err{font-size:.82rem;color:#c62828;font-weight:600}
+.dl-cat-badge{display:inline-block;padding:2px 8px;border-radius:50px;font-size:.65rem;font-weight:600;background:rgba(109,59,255,.06);color:var(--purple);text-transform:capitalize}
 
 @media(max-width:768px){
   .admin-layout{flex-direction:column;padding:12px}

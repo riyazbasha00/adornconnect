@@ -1,22 +1,28 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { fetchCategories } from '../api';
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import './Header.css';
 
 const LOGO = 'https://adorn.ae/wp-content/uploads/2026/04/Adorn_Logo_Print_RGB-01.jpg';
 
+const NAV_ITEMS = [
+  { label: 'Home', to: '/' },
+  { label: 'Products', to: '/products' },
+  { label: 'Solutions', to: '/solutions' },
+  { label: 'Academy', to: '/academy' },
+  { label: 'Knowledge center', to: '/knowledge-center' },
+  { label: 'Downloads', to: '/downloads' },
+  { label: 'Partner program', to: '/partner-program' },
+  { label: 'Where to buy', to: '/where-to-buy' },
+  { label: 'Projects', to: '/projects' },
+  { label: 'Support', to: '/support' },
+];
+
 export default function Header() {
-  const [cats, setCats] = useState([]);
   const [query, setQuery] = useState('');
   const [menuOpen, setMenuOpen] = useState(false);
   const [showMobileSearch, setShowMobileSearch] = useState(false);
   const [mobileQuery, setMobileQuery] = useState('');
   const navigate = useNavigate();
-  const location = useLocation();
-
-  useEffect(() => {
-    fetchCategories().then(setCats).catch(() => {});
-  }, [location.pathname]);
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -42,11 +48,6 @@ export default function Header() {
           <Link to="/" className="logo">
             <img src={LOGO} alt="ADORN — Structured Cabling & Security Solutions Dubai" width="140" height="40" />
           </Link>
-          <nav className="header-nav">
-            <Link to="/" className="hn-link" onClick={() => { setMenuOpen(false); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>Home</Link>
-            <Link to="/products" className="hn-link" onClick={() => setMenuOpen(false)}>Products</Link>
-            <Link to="/about" className="hn-link" onClick={() => { setMenuOpen(false); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>About</Link>
-          </nav>
           <form className="search-bar" onSubmit={handleSearch}>
             <input
               type="text"
@@ -81,17 +82,14 @@ export default function Header() {
 
       <nav className={`cat-nav ${menuOpen ? 'open' : ''}`}>
         <div className="container cat-nav-inner">
-          <Link to="/products" className="cat-link all-link" onClick={() => setMenuOpen(false)}>
-            <i className="fas fa-th-large"></i> All Categories
-          </Link>
-          {cats.map(c => (
+          {NAV_ITEMS.map(item => (
             <Link
-              key={c.id}
-              to={`/products?cat=${encodeURIComponent(c.id)}`}
+              key={item.to}
+              to={item.to}
               className="cat-link"
               onClick={() => setMenuOpen(false)}
             >
-              {c.label}
+              {item.label}
             </Link>
           ))}
         </div>

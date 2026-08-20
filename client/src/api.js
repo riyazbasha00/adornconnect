@@ -95,3 +95,26 @@ export async function updateBanner(data) {
     body: JSON.stringify(data),
   });
 }
+
+export async function fetchDownloads(category) {
+  const qs = category ? `?category=${encodeURIComponent(category)}` : '';
+  return api(`${BASE}/downloads${qs}`);
+}
+
+export async function addDownload(data) {
+  return api(`${BASE}/downloads`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data),
+  });
+}
+
+export async function deleteDownload(id) {
+  return api(`${BASE}/downloads?id=${encodeURIComponent(id)}`, { method: 'DELETE' });
+}
+
+export async function uploadDocument(file) {
+  const formData = new FormData();
+  formData.append('file', file);
+  return api(`${BASE}/docs`, { method: 'POST', body: formData });
+}
