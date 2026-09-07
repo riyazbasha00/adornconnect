@@ -13,6 +13,7 @@ import Support from './pages/Support';
 import KnowledgeCenter from './pages/KnowledgeCenter';
 import Downloads from './pages/Downloads';
 import Admin from './pages/Admin';
+import Maintenance from './pages/Maintenance';
 import './App.css';
 
 function ScrollTop() {
@@ -43,6 +44,9 @@ function App() {
             <Route path="/support" element={<Support />} />
             <Route path="/knowledge-center" element={<KnowledgeCenter />} />
             <Route path="/downloads" element={<Downloads />} />
+            <Route path="/academy" element={<Maintenance title="ADORN Academy" />} />
+            <Route path="/where-to-buy" element={<Maintenance title="Where to Buy" />} />
+            <Route path="/projects" element={<Maintenance title="Projects" />} />
             <Route path="/admin" element={<Admin />} />
           </Routes>
         </main>

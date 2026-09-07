@@ -592,14 +592,22 @@
 .btn-wa:hover i { transform: scale(1.15) }
 
 /* === Responsive === */
+@media (max-width: 1200px) {
+  .hero-content h1 { font-size: 1.85rem }
+  .hero-desc-desktop, .hero-desc-mobile { max-width: 480px }
+}
 @media (max-width: 1024px) {
   .web-solutions-grid { grid-template-columns: repeat(3,1fr) }
+  .web-solutions-grid .web-solution-card:last-child:nth-child(3n+1) { grid-column: 1 / -1; max-width: 480px; margin: 0 auto; width: 100% }
+  .web-why-grid, .web-pvm-grid, .web-choose-grid, .web-values-grid { grid-template-columns: repeat(2,1fr) }
+  .web-why-card:nth-child(3), .web-pvm-card:nth-child(3) { grid-column: 1 / -1; max-width: 480px; margin: 0 auto; width: 100% }
+  .web-choose-grid .web-choose-card:last-child:nth-child(odd), .web-values-grid .web-value-card:last-child:nth-child(odd) { grid-column: 1 / -1; max-width: 480px; margin: 0 auto; width: 100% }
 }
 @media (max-width: 768px) {
   .hero { min-height: 420px }
   .hero-content { padding: 32px 16px 70px; padding-left: 16px }
   .hero-badge { font-size: .6rem; padding: 4px 10px; gap: 4px; margin-bottom: 10px }
-  .hero-content h1 { font-size: 1.5rem; font-weight: 800; line-height: 1.2; margin-bottom: 8px }
+  .hero-content h1 { font-size: 1.45rem; font-weight: 800; line-height: 1.2; margin-bottom: 8px }
   .hero-desc-desktop { display: none }
   .hero-desc-mobile { display: block; font-size: .82rem; line-height: 1.5; margin-bottom: 16px; opacity: .6 }
   .hero-arrow { width: 32px; height: 32px; font-size: .7rem }
@@ -607,22 +615,39 @@
   .hero-arrow-next { right: 8px }
   .hero-dots { bottom: 12px }
   .hero-btns { flex-direction: column; gap: 8px; margin-bottom: 16px }
-  .hero-btn { justify-content: center; padding: 12px 20px; font-size: .85rem; border-radius: 10px }
+  .hero-btn { justify-content: center; padding: 13px 20px; font-size: .85rem; border-radius: 10px; width: 100%; max-width: 320px }
   .hero-wave svg { height: 40px }
+
+  .hero-orb-1 { width: 180px; height: 180px; opacity: .15 }
+  .hero-orb-2 { width: 140px; height: 140px; opacity: .12 }
+  .floating-shape { display: none }
 
   .web-about, .web-who, .web-pvm, .web-why-choose, .web-values, .web-solutions { padding: 40px 0 }
   .web-cta { padding: 32px 0 16px }
   .web-about-inner h2, .web-who-inner h2 { font-size: 1.25rem }
   .web-why-grid, .web-pvm-grid, .web-choose-grid, .web-values-grid { grid-template-columns: 1fr }
+  .web-why-card:nth-child(3), .web-pvm-card:nth-child(3), .web-choose-card:nth-child(3), .web-value-card:nth-child(3) { grid-column: auto; max-width: none; margin: 0 }
   .web-solutions-grid { grid-template-columns: repeat(2,1fr) }
+  .web-solutions-grid .web-solution-card:last-child:nth-child(odd) { grid-column: 1 / -1; max-width: 360px; margin: 0 auto; width: 100% }
   .web-why-card, .web-pvm-card, .web-choose-card, .web-value-card, .web-solution-card { padding: 22px 18px }
   .web-cta-inner { padding: 36px 24px }
+  .web-cta-inner h2 { font-size: 1.3rem }
   .web-cta-btns { flex-direction: column; align-items: center }
-  .web-cta-btns .hero-btn { width: 100%; justify-content: center }
+  .web-cta-btns .hero-btn { width: 100%; max-width: 360px; justify-content: center }
 
   .about-contact { display: flex; justify-content: center }
   .about-bridge { padding: 32px 0 }
   .ab-head h2 { font-size: 1.2rem }
   .contact-card { padding: 28px 20px }
   .section-wave svg { height: 32px }
+}
+@media (max-width: 480px) {
+  .hero { min-height: 400px }
+  .hero-content h1 { font-size: 1.3rem }
+  .hero-badge { font-size: .55rem; letter-spacing: 1px; padding: 4px 9px }
+  .hero-wave svg { height: 28px }
+  .web-solutions-grid { grid-template-columns: 1fr }
+  .web-cta-inner { padding: 32px 20px; border-radius: 14px }
+  .section-wave svg { height: 24px }
+  .about-bridge::before { height: 3px }
 }
