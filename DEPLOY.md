@@ -50,4 +50,17 @@ Then restart the Node.js app (Stop → Start, NOT Redeploy) so the new code load
 ## Local workflow
 - Build: `npm --prefix client run build` (CRA). Commit `client/build` along with source.
 - Push to `origin/main` on `riyazbasha00/adornconnect`.
-- Current good build: `static/js/main.e6bf9140.js` (two-line hero `<br/>`).
+- Current good build: `static/js/main.db1e1659.js` (Home animations + responsive fixes + maintenance pages).
+
+## Last manual deploy (Sep 7)
+- Current live version: `01a07ba0-8918-72a9-b53f-4794ae09822e`
+- Site was broken (500) — Redeploy had shipped only the flat `server/` layout (hPanel app root still `server`).
+  At version ROOT it was missing `client/build` and `data.json`.
+- Fix applied via SCP/SSH:
+  - Uploaded `client/build/*` → `.../<version>/client/build/`
+  - Uploaded `data.json` → `.../<version>/data.json`
+  - They must live at the VERSION ROOT because the flat server resolves `db.js` data path to
+    `nodejs/../data.json` and `buildDir` to `nodejs/../client/build`.
+- Server code in the live version already matched the repo (routes/db/index identical), so no server files copied.
+- Verified 200 on `/`, `/academy`, `/where-to-buy`, `/projects`, `/api/banner`, `/api/categories`, `/api/downloads`.
+- Server source clone `/home/u341249923/domains/adornconnect.com/nodejs` updated via `git pull --ff-only` to `02638fb`.
