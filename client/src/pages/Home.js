@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { fetchBanner, imgUrl } from '../api';
 import { HomeSEO } from '../components/SEO';
 import useScrollReveal from '../hooks/useScrollReveal';
+import TypingText from '../components/TypingText';
 import './Home.css';
 
 const DEFAULT_BANNERS = [];
@@ -56,22 +57,33 @@ export default function Home() {
             </div>
           </>
         )}
+        <div className="hero-orb hero-orb-1"></div>
+        <div className="hero-orb hero-orb-2"></div>
+
         <div className="container hero-content">
-          <div className="hero-badge">
+          <div className="hero-badge animate-rise" style={{ animationDelay: '.1s' }}>
             <span className="hero-badge-dot"></span>
             Premium Manufacturer &amp; Supplier
           </div>
-          <h1>Structured Cabling &amp;<br /> <span className="hero-hl">Security</span> Solutions</h1>
-          <p className="hero-desc-desktop">Premium networking infrastructure, surveillance, and access control products for commercial, industrial, and residential projects across the UAE.</p>
-          <p className="hero-desc-mobile">Premium networking, surveillance &amp; access control products across the UAE.</p>
-          <div className="hero-btns">
-            <Link to="/products" className="hero-btn hero-btn-primary">
+          <h1 className="animate-rise" style={{ animationDelay: '.25s' }}>
+            Structured Cabling &amp;<br />
+            <TypingText words={['Security Solutions', 'Fiber Optic Systems', 'Smart Building Infrastructure', 'Enterprise Networks']} className="hero-hl" />
+          </h1>
+          <p className="hero-desc-desktop animate-rise" style={{ animationDelay: '.4s' }}>Premium networking infrastructure, surveillance, and access control products for commercial, industrial, and residential projects across the UAE.</p>
+          <p className="hero-desc-mobile animate-rise" style={{ animationDelay: '.4s' }}>Premium networking, surveillance &amp; access control products across the UAE.</p>
+          <div className="hero-btns animate-rise" style={{ animationDelay: '.55s' }}>
+            <Link to="/products" className="hero-btn hero-btn-primary hero-btn-grow">
               <i className="fas fa-th-large"></i> Explore Products
             </Link>
-            <a href="https://wa.me/971526387275" className="hero-btn hero-btn-outline" target="_blank" rel="noopener noreferrer">
+            <a href="https://wa.me/971526387275" className="hero-btn hero-btn-outline hero-btn-grow" target="_blank" rel="noopener noreferrer">
               <i className="fas fa-handshake"></i> Become a Partner
             </a>
           </div>
+        </div>
+        <div className="hero-wave">
+          <svg viewBox="0 0 1000 100" preserveAspectRatio="none">
+            <path d="M0,10 C150,90 350,0 500,30 C650,60 850,15 1000,45 L1000,100 L0,100 Z" fill="white"></path>
+          </svg>
         </div>
       </section>
 
@@ -79,8 +91,10 @@ export default function Home() {
 
         {/* ─── About ADORN ─── */}
         <section className="web-about">
+          <div className="floating-shape floating-shape-1"></div>
+          <div className="floating-shape floating-shape-2"></div>
           <div className="container">
-            <div className="web-about-inner reveal">
+            <div className="web-about-inner reveal reveal-fade-up">
               <span className="ab-badge">About ADORN</span>
               <h2>Building the Foundation for a <span className="hl">Connected World</span></h2>
               <p className="web-about-lead">
@@ -93,54 +107,66 @@ export default function Home() {
           </div>
         </section>
 
+        <div className="section-wave section-wave-gray">
+          <svg viewBox="0 0 1000 100" preserveAspectRatio="none">
+            <path d="M0,0 L0,60 C200,100 400,20 600,50 C800,80 900,30 1000,40 L1000,0 Z" fill="white"></path>
+          </svg>
+        </div>
+
         {/* ─── Who We Are ─── */}
         <section className="web-who">
           <div className="container">
-            <div className="web-who-inner reveal">
+            <div className="web-who-inner reveal reveal-fade-up">
               <span className="ab-badge">Who We Are</span>
               <h2>Building Connections That Power <span className="hl">Tomorrow</span></h2>
               <p>Technology is transforming the way people live, work, communicate, and do business. Behind every successful digital transformation lies a reliable network infrastructure that connects people, devices, applications, and data.</p>
               <p>At ADORN, we believe network infrastructure is more than cables and connectivity. It is the foundation of every intelligent building, enterprise network, and digital ecosystem.</p>
             </div>
             <div className="web-why-grid">
-              <div className="web-why-card reveal">
+              <div className="web-why-card reveal reveal-left">
                 <div className="web-why-icon"><i className="fas fa-bullseye"></i></div>
                 <h3>Why ADORN Exists</h3>
                 <p>To empower businesses and technology professionals with reliable infrastructure solutions, practical technical knowledge, and trusted partnerships that enable them to build the connected world of tomorrow.</p>
               </div>
-              <div className="web-why-card reveal">
+              <div className="web-why-card reveal reveal-up">
                 <div className="web-why-icon"><i className="fas fa-comments"></i></div>
                 <h3>Beyond Products</h3>
                 <p>We understand that success is not achieved by supplying products alone. It is built through confidence, consistency, education, and long-term relationships.</p>
               </div>
-              <div className="web-why-card reveal">
+              <div className="web-why-card reveal reveal-right">
                 <div className="web-why-icon"><i className="fas fa-cubes"></i></div>
                 <h3>Our Commitment</h3>
                 <p>Every cable, cabinet, fiber solution, connectivity product, and accessory we develop is designed to help our partners deliver dependable and scalable infrastructure that stands the test of time.</p>
               </div>
             </div>
-            <div className="web-who-vision reveal">
+            <div className="web-who-vision reveal reveal-zoom">
               <p>As technology continues to evolve, so will ADORN. We will continue to innovate, expand our solutions, strengthen our partnerships, and raise the standards of networking and ELV infrastructure across the region.</p>
               <p className="web-vision-quote">Because we believe that every great network begins with a strong foundation.<br />And every strong foundation begins with <span className="hl">trust</span>.</p>
             </div>
           </div>
         </section>
 
+        <div className="section-wave section-wave-white">
+          <svg viewBox="0 0 1000 100" preserveAspectRatio="none">
+            <path d="M0,80 C150,30 350,90 500,50 C650,10 850,70 1000,40 L1000,100 L0,100 Z" fill="#322160" fillOpacity=".03"></path>
+          </svg>
+        </div>
+
         {/* ─── Purpose, Vision & Mission ─── */}
         <section className="web-pvm">
           <div className="container">
             <div className="web-pvm-grid">
-              <div className="web-pvm-card reveal">
+              <div className="web-pvm-card reveal reveal-left">
                 <div className="web-pvm-num">01</div>
                 <h3>Purpose</h3>
                 <p>To empower the people who build the world's digital infrastructure through trusted products, technical knowledge, and lasting partnerships.</p>
               </div>
-              <div className="web-pvm-card reveal">
+              <div className="web-pvm-card reveal reveal-up">
                 <div className="web-pvm-num">02</div>
                 <h3>Vision</h3>
                 <p>To become one of the GCC's most trusted infrastructure technology brands, recognized for quality, innovation, technical excellence, and developing the next generation of networking professionals.</p>
               </div>
-              <div className="web-pvm-card reveal">
+              <div className="web-pvm-card reveal reveal-right">
                 <div className="web-pvm-num">03</div>
                 <h3>Mission</h3>
                 <p>We design, develop, and deliver reliable passive networking and ELV infrastructure solutions while supporting our partners through technical expertise, education, and exceptional customer service, enabling them to build secure, scalable, and future-ready networks.</p>
@@ -152,7 +178,7 @@ export default function Home() {
         {/* ─── Why Professionals Choose ADORN ─── */}
         <section className="web-why-choose">
           <div className="container">
-            <div className="web-pvm-card reveal" style={{ textAlign: 'center', maxWidth: 640, margin: '0 auto 40px' }}>
+            <div className="web-pvm-card reveal reveal-fade-up" style={{ textAlign: 'center', maxWidth: 640, margin: '0 auto 40px' }}>
               <span className="ab-badge">Why Professionals Choose ADORN</span>
               <h2 style={{ fontSize: '1.4rem', marginTop: 12 }}>Trusted by Professionals Across the Region</h2>
             </div>
@@ -165,7 +191,7 @@ export default function Home() {
                 { icon: 'fa-handshake', title: 'Growing Partner Network', desc: 'Building strong relationships with distributors, resellers, contractors, and consultants across the GCC.' },
                 { icon: 'fa-rocket', title: 'Future Ready', desc: 'Designed to support modern technologies including AI infrastructure, smart buildings, high-speed networking, PoE, IoT, and next-generation enterprise environments.' },
               ].map((item, i) => (
-                <div className="web-choose-card reveal" key={i}>
+                <div className={`web-choose-card reveal reveal-${i % 3 === 0 ? 'left' : i % 3 === 2 ? 'right' : 'up'}`} key={i}>
                   <div className="web-choose-icon"><i className={`fas ${item.icon}`}></i></div>
                   <h4>{item.title}</h4>
                   <p>{item.desc}</p>
@@ -178,7 +204,7 @@ export default function Home() {
         {/* ─── Core Values ─── */}
         <section className="web-values">
           <div className="container">
-            <div className="web-pvm-card reveal" style={{ textAlign: 'center', maxWidth: 640, margin: '0 auto 40px' }}>
+            <div className="web-pvm-card reveal reveal-fade-up" style={{ textAlign: 'center', maxWidth: 640, margin: '0 auto 40px' }}>
               <span className="ab-badge">Core Values</span>
               <h2 style={{ fontSize: '1.4rem', marginTop: 12 }}>What Drives Everything We Do</h2>
             </div>
@@ -191,7 +217,7 @@ export default function Home() {
                 { icon: 'fa-users', title: 'Partnership', desc: 'Our success is built on the success of our customers, channel partners, consultants, and system integrators.' },
                 { icon: 'fa-heart', title: 'Commitment', desc: 'We stand behind every product, every partner, and every project with dedication and accountability.' },
               ].map((item, i) => (
-                <div className="web-value-card reveal" key={i}>
+                <div className={`web-value-card reveal reveal-${i % 3 === 0 ? 'left' : i % 3 === 2 ? 'right' : 'up'}`} key={i}>
                   <div className="web-value-icon"><i className={`fas ${item.icon}`}></i></div>
                   <h4>{item.title}</h4>
                   <p>{item.desc}</p>
@@ -204,7 +230,7 @@ export default function Home() {
         {/* ─── Featured Solutions ─── */}
         <section className="web-solutions">
           <div className="container">
-            <div className="web-pvm-card reveal" style={{ textAlign: 'center', maxWidth: 640, margin: '0 auto 40px' }}>
+            <div className="web-pvm-card reveal reveal-fade-up" style={{ textAlign: 'center', maxWidth: 640, margin: '0 auto 40px' }}>
               <span className="ab-badge">Featured Solutions</span>
               <h2 style={{ fontSize: '1.4rem', marginTop: 12 }}>Infrastructure Solutions for a Connected World</h2>
               <p style={{ color: 'var(--gray-500)', marginTop: 8 }}>ADORN provides infrastructure solutions designed to support modern digital environments across commercial, enterprise, and technology applications.</p>
@@ -219,7 +245,7 @@ export default function Home() {
                 { icon: 'fa-th-large', title: 'Passive Networking', desc: 'Essential connectivity products and accessories for building organized, reliable network infrastructure.' },
                 { icon: 'fa-broadcast-tower', title: 'ELV Infrastructure', desc: 'Infrastructure solutions supporting modern low-voltage technology and building systems.' },
               ].map((item, i) => (
-                <div className="web-solution-card reveal" key={i}>
+                <div className={`web-solution-card reveal reveal-${i % 4 === 0 ? 'left' : i % 4 === 3 ? 'right' : 'up'}`} key={i}>
                   <div className="web-solution-icon"><i className={`fas ${item.icon}`}></i></div>
                   <h4>{item.title}</h4>
                   <p>{item.desc}</p>
@@ -229,20 +255,29 @@ export default function Home() {
           </div>
         </section>
 
+        <div className="section-wave section-wave-cta">
+          <svg viewBox="0 0 1000 100" preserveAspectRatio="none">
+            <path d="M0,10 C200,70 400,20 600,55 C800,90 950,30 1000,50 L1000,100 L0,100 Z" fill="white"></path>
+          </svg>
+        </div>
+
         {/* ─── CTA ─── */}
         <section className="web-cta">
           <div className="container">
-            <div className="web-cta-inner reveal">
+            <div className="web-cta-inner reveal reveal-zoom">
+              <div className="cta-particle cta-particle-1"></div>
+              <div className="cta-particle cta-particle-2"></div>
+              <div className="cta-particle cta-particle-3"></div>
               <h2>Building the Connected World <span className="hl">Together</span></h2>
               <p>ADORN exists to empower businesses and technology professionals with reliable network infrastructure solutions, technical knowledge, and trusted partnerships that build the connected world of tomorrow.</p>
               <div className="web-cta-btns">
-                <Link to="/products" className="hero-btn hero-btn-primary">
+                <Link to="/products" className="hero-btn hero-btn-primary hero-btn-grow">
                   <i className="fas fa-th-large"></i> Explore Products
                 </Link>
-                <a href="https://wa.me/971526387275" className="hero-btn hero-btn-outline" target="_blank" rel="noopener noreferrer">
+                <a href="https://wa.me/971526387275" className="hero-btn hero-btn-outline hero-btn-grow" target="_blank" rel="noopener noreferrer">
                   <i className="fas fa-handshake"></i> Become a Partner
                 </a>
-                <a href="#contact" className="hero-btn hero-btn-outline">
+                <a href="#contact" className="hero-btn hero-btn-outline hero-btn-grow">
                   <i className="fas fa-envelope"></i> Contact Us
                 </a>
               </div>

@@ -23,6 +23,10 @@ export default function useScrollReveal() {
 
     children.forEach((el) => observer.observe(el));
 
+    if (window.__adornScrollParallax) {
+      window.__adornScrollParallax();
+    }
+
     return () => observer.disconnect();
   }, []);
 
