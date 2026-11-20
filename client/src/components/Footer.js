@@ -75,6 +75,13 @@ export default function Footer() {
           <h4>Quick Links <span className="h4-line"></span></h4>
           <nav>
             <Link to="/">Home</Link>
+            <Link to="/portfolio">Portfolio</Link>
+            <Link to="/academy">Adorn Academy</Link>
+            <Link to="/insights">ADORN Insights</Link>
+            <Link to="/resources">Resources</Link>
+            <Link to="/partner-network">Partner Network</Link>
+            <Link to="/projects">Projects</Link>
+            <Link to="/where-to-buy">Where to Buy</Link>
             <Link to="/products">Products</Link>
             <Link to="/about">About</Link>
           </nav>
@@ -106,7 +113,7 @@ export default function Footer() {
           <div className="fb-links">
             <Link to="/admin" className="admin-link" aria-label="Admin access">Admin</Link>
             <span className="fb-dot">&middot;</span>
-            <a href="#!">Privacy</a>
+            <Link to="/privacy">Privacy</Link>
             <span className="fb-dot">&middot;</span>
             <a href="#!">Terms</a>
           </div>

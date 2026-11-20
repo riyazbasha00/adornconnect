@@ -1181,5 +1181,56 @@
       "uploads/1786351498283-f1c4.png",
       "uploads/1784891140494-5kg0.png"
     ]
-  }
+  },
+  "downloads": [],
+  "enrollments": [
+    {
+      "id": "ENR-MWOX1I4R-Z1I6",
+      "courseName": "Level 2 — Intermediate Level Courses (Installation & Testing)",
+      "fullName": "RIYAZ AHAMED",
+      "email": "embriyaz@gmail.com",
+      "phone": "+919597134183",
+      "emirate": "Dubai",
+      "company": "Individual",
+      "designation": "Structured Cabling Installer / Technician",
+      "trainingMode": "Live Online Classroom",
+      "preferredBatch": "Weekend Batch (Saturday & Sunday)",
+      "siraLicense": "",
+      "notes": "",
+      "status": "Pending",
+      "created_at": "2026-11-20T11:48:50.571Z"
+    },
+    {
+      "id": "ENR-MWMWDVH1-EU96",
+      "courseName": "Level 1 — Beginner Level Courses (Foundations)",
+      "fullName": "RIYAZ AHAMED",
+      "email": "embriyaz@gmail.com",
+      "phone": "+919597134183",
+      "emirate": "Dubai",
+      "company": "Individual",
+      "designation": "Structured Cabling Installer / Technician",
+      "trainingMode": "In-Person Dubai Lab",
+      "preferredBatch": "Weekend Batch (Saturday & Sunday)",
+      "siraLicense": "",
+      "notes": "",
+      "status": "Pending",
+      "created_at": "2026-11-19T01:54:55.765Z"
+    },
+    {
+      "id": "ENR-MWMWCRX0-7PX5",
+      "courseName": "Level 1 Foundations",
+      "fullName": "Live Verification User",
+      "email": "verify@adornconnect.com",
+      "phone": "+971500000000",
+      "emirate": "Dubai",
+      "company": "Individual",
+      "designation": "Technical Professional",
+      "trainingMode": "In-Person Dubai Lab",
+      "preferredBatch": "Weekend Batch",
+      "siraLicense": "",
+      "notes": "",
+      "status": "Pending",
+      "created_at": "2026-11-19T01:54:04.500Z"
+    }
+  ]
 }

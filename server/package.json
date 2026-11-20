@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node --no-deprecation index.js",
-    "dev": "node --no-deprecation index.js"
+    "dev": "node --watch --no-deprecation index.js"
   },
   "dependencies": {
     "compression": "^1.8.1",

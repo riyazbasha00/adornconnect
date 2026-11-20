@@ -12,6 +12,8 @@ function load() {
     if (!data.products) data.products = [];
     if (!data.categories) data.categories = [];
     if (!data.banner) data.banner = { images: [] };
+    if (!data.downloads) data.downloads = [];
+    if (!data.enrollments) data.enrollments = [];
   }
   return data;
 }
@@ -126,9 +128,52 @@ function deleteDownload(id) {
   return true;
 }
 
+function getEnrollments() {
+  return load().enrollments || [];
+}
+
+function getEnrollment(id) {
+  return (load().enrollments || []).find(e => e.id === id) || null;
+}
+
+function addEnrollment(item) {
+  const d = load();
+  if (!d.enrollments) d.enrollments = [];
+  const enrollment = {
+    id: 'ENR-' + Date.now().toString(36).toUpperCase() + '-' + Math.random().toString(36).slice(2, 6).toUpperCase(),
+    ...item,
+    status: item.status || 'Pending',
+    created_at: new Date().toISOString()
+  };
+  d.enrollments.unshift(enrollment);
+  save();
+  return enrollment;
+}
+
+function updateEnrollment(id, updates) {
+  const d = load();
+  if (!d.enrollments) return false;
+  const idx = d.enrollments.findIndex(e => e.id === id);
+  if (idx === -1) return false;
+  d.enrollments[idx] = { ...d.enrollments[idx], ...updates, id };
+  save();
+  return d.enrollments[idx];
+}
+
+function deleteEnrollment(id) {
+  const d = load();
+  if (!d.enrollments) return false;
+  const len = d.enrollments.length;
+  d.enrollments = d.enrollments.filter(e => e.id !== id);
+  if (d.enrollments.length === len) return false;
+  save();
+  return true;
+}
+
 module.exports = {
   getProducts, getProduct, addProduct, updateProduct, deleteProduct,
   getCategories, getCategory, addCategory, updateCategory, deleteCategory,
   getBanner, updateBanner,
   getDownloads, addDownload, deleteDownload,
+  getEnrollments, getEnrollment, addEnrollment, updateEnrollment, deleteEnrollment,
 };

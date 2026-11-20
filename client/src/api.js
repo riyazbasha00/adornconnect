@@ -118,3 +118,28 @@ export async function uploadDocument(file) {
   formData.append('file', file);
   return api(`${BASE}/docs`, { method: 'POST', body: formData });
 }
+
+export async function fetchEnrollments(params = {}) {
+  const qs = new URLSearchParams(params).toString();
+  return api(`${BASE}/enrollments${qs ? '?' + qs : ''}`);
+}
+
+export async function createEnrollment(data) {
+  return api(`${BASE}/enrollments`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data),
+  });
+}
+
+export async function updateEnrollment(id, data) {
+  return api(`${BASE}/enrollments?id=${encodeURIComponent(id)}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data),
+  });
+}
+
+export async function deleteEnrollment(id) {
+  return api(`${BASE}/enrollments?id=${encodeURIComponent(id)}`, { method: 'DELETE' });
+}

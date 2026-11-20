@@ -3,7 +3,8 @@ import {
   fetchProducts, fetchCategories, createProduct, updateProduct, deleteProduct,
   createCategory, updateCategory, deleteCategory, uploadImage, imgUrl,
   fetchBanner, updateBanner as apiUpdateBanner,
-  fetchDownloads, addDownload, deleteDownload, uploadDocument
+  fetchDownloads, addDownload, deleteDownload, uploadDocument,
+  fetchEnrollments, updateEnrollment as apiUpdateEnrollment, deleteEnrollment as apiDeleteEnrollment
 } from '../api';
 import './Admin.css';
 
@@ -48,6 +49,12 @@ export default function Admin() {
   const [dlTitle, setDlTitle] = useState('');
   const [dlUploading, setDlUploading] = useState(false);
 
+  const [enrollments, setEnrollments] = useState([]);
+  const [enrFilterStatus, setEnrFilterStatus] = useState('all');
+  const [enrFilterEmirate, setEnrFilterEmirate] = useState('all');
+  const [enrSearch, setEnrSearch] = useState('');
+  const [selectedEnr, setSelectedEnr] = useState(null);
+
   const showToast = useCallback((msg, type = 'success') => {
     setToast({ msg, type });
     setTimeout(() => setToast(null), 3000);
@@ -60,12 +67,23 @@ export default function Admin() {
 
   const loadData = useCallback(async () => {
     try {
-      const [prods, cats, banner, dl] = await Promise.all([fetchProducts(), fetchCategories(true), fetchBanner(), fetchDownloads()]);
+      const [prods, cats, banner, dl, enrs] = await Promise.all([
+        fetchProducts(),
+        fetchCategories(true),
+        fetchBanner(),
+        fetchDownloads(),
+        fetchEnrollments()
+      ]);
       setProducts(prods);
       setCategories(cats);
       if (banner && Array.isArray(banner.images)) setBannerSlides(banner.images);
       setDownloads(dl || []);
-    } catch { setProducts([]); setCategories([]); }
+      setEnrollments(enrs || []);
+    } catch {
+      setProducts([]);
+      setCategories([]);
+      setEnrollments([]);
+    }
   }, []);
 
   useEffect(() => {
@@ -380,6 +398,63 @@ export default function Admin() {
     } catch (err) { showToast(err.message, 'error'); }
   };
 
+  const handleUpdateEnrollmentStatus = async (id, newStatus) => {
+    try {
+      await apiUpdateEnrollment(id, { status: newStatus });
+      setEnrollments(prev => prev.map(e => e.id === id ? { ...e, status: newStatus } : e));
+      if (selectedEnr && selectedEnr.id === id) {
+        setSelectedEnr(prev => ({ ...prev, status: newStatus }));
+      }
+      showToast(`Status updated to ${newStatus}`);
+    } catch (err) {
+      showToast(err.message || 'Failed to update status', 'error');
+    }
+  };
+
+  const handleDeleteEnrollment = async (id) => {
+    if (!window.confirm('Are you sure you want to delete this course registration?')) return;
+    try {
+      await apiDeleteEnrollment(id);
+      setEnrollments(prev => prev.filter(e => e.id !== id));
+      if (selectedEnr && selectedEnr.id === id) setSelectedEnr(null);
+      showToast('Registration deleted');
+    } catch (err) {
+      showToast(err.message || 'Failed to delete registration', 'error');
+    }
+  };
+
+  const exportEnrollmentsCSV = () => {
+    if (enrollments.length === 0) {
+      showToast('No enrollments to export', 'error');
+      return;
+    }
+    const headers = ['ID', 'Date', 'Candidate Name', 'Email', 'Phone', 'Course', 'Emirate', 'Company', 'Designation', 'Mode', 'Batch', 'SIRA License', 'Status', 'Notes'];
+    const rows = enrollments.map(e => [
+      `"${e.id || ''}"`,
+      `"${e.created_at ? new Date(e.created_at).toISOString() : ''}"`,
+      `"${(e.fullName || '').replace(/"/g, '""')}"`,
+      `"${(e.email || '').replace(/"/g, '""')}"`,
+      `"${(e.phone || '').replace(/"/g, '""')}"`,
+      `"${(e.courseName || '').replace(/"/g, '""')}"`,
+      `"${(e.emirate || '').replace(/"/g, '""')}"`,
+      `"${(e.company || '').replace(/"/g, '""')}"`,
+      `"${(e.designation || '').replace(/"/g, '""')}"`,
+      `"${(e.trainingMode || '').replace(/"/g, '""')}"`,
+      `"${(e.preferredBatch || '').replace(/"/g, '""')}"`,
+      `"${(e.siraLicense || '').replace(/"/g, '""')}"`,
+      `"${(e.status || '').replace(/"/g, '""')}"`,
+      `"${(e.notes || '').replace(/"/g, '""')}"`,
+    ]);
+    const csvContent = 'data:text/csv;charset=utf-8,' + [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement('a');
+    link.setAttribute('href', encodedUri);
+    link.setAttribute('download', `adorn_academy_enrollments_${new Date().toISOString().slice(0, 10)}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   if (!loggedIn) {
     return (
       <div className="login-screen">
@@ -398,6 +473,22 @@ export default function Admin() {
   const featuredCount = products.filter(p => p.tags && p.tags.includes('featured')).length;
   const bestSellingCount = products.filter(p => p.tags && p.tags.includes('bestseller')).length;
   const dlCount = downloads.length;
+  const enrCount = enrollments.length;
+
+  const filteredEnrollments = enrollments.filter(e => {
+    const matchStatus = enrFilterStatus === 'all' || (e.status && e.status.toLowerCase() === enrFilterStatus.toLowerCase());
+    const matchEmirate = enrFilterEmirate === 'all' || (e.emirate && e.emirate.toLowerCase() === enrFilterEmirate.toLowerCase());
+    const q = enrSearch.trim().toLowerCase();
+    const matchSearch = !q || (
+      (e.fullName && e.fullName.toLowerCase().includes(q)) ||
+      (e.email && e.email.toLowerCase().includes(q)) ||
+      (e.phone && e.phone.toLowerCase().includes(q)) ||
+      (e.company && e.company.toLowerCase().includes(q)) ||
+      (e.courseName && e.courseName.toLowerCase().includes(q)) ||
+      (e.id && e.id.toLowerCase().includes(q))
+    );
+    return matchStatus && matchEmirate && matchSearch;
+  });
 
   return (
     <div className="admin-layout">
@@ -411,6 +502,10 @@ export default function Admin() {
         <a href="#!" className={tab === 'images' ? 'active' : ''} onClick={() => setTab('images')}><i className="fas fa-images"></i> Images</a>
         <a href="#!" className={tab === 'banner' ? 'active' : ''} onClick={() => setTab('banner')}><i className="fas fa-image"></i> Banner</a>
         <a href="#!" className={tab === 'downloads' ? 'active' : ''} onClick={() => setTab('downloads')}><i className="fas fa-download"></i> Downloads</a>
+        <a href="#!" className={tab === 'enrollments' ? 'active' : ''} onClick={() => setTab('enrollments')}>
+          <i className="fas fa-user-graduate"></i> Enrollments
+          {enrCount > 0 && <span className="side-badge">{enrCount}</span>}
+        </a>
         <a href="#!" className="logout-link" onClick={() => { localStorage.removeItem('adorn_admin'); window.location.href = '/'; }}><i className="fas fa-sign-out-alt"></i> Logout</a>
       </aside>
 
@@ -424,7 +519,71 @@ export default function Admin() {
               <div className="dash-card"><i className="fas fa-star"></i><strong>{featuredCount}</strong><span>Featured</span></div>
               <div className="dash-card"><i className="fas fa-fire"></i><strong>{bestSellingCount}</strong><span>Best Selling</span></div>
               <div className="dash-card"><i className="fas fa-download"></i><strong>{dlCount}</strong><span>Downloads</span></div>
+              <div className="dash-card dash-clickable" onClick={() => setTab('enrollments')} style={{ cursor: 'pointer' }}>
+                <i className="fas fa-user-graduate" style={{ color: '#6d3bff' }}></i>
+                <strong style={{ color: '#6d3bff' }}>{enrCount}</strong>
+                <span>Enrollments</span>
+              </div>
             </div>
+
+            {enrollments.length > 0 && (
+              <div className="dash-recent-section" style={{ marginTop: 32 }}>
+                <div className="tab-header" style={{ marginBottom: 14 }}>
+                  <h3 style={{ fontSize: '1.08rem', margin: 0, fontWeight: 700 }}>
+                    <i className="fas fa-user-graduate" style={{ color: '#6d3bff', marginRight: 8 }}></i>
+                    Recent Course Registrations
+                  </h3>
+                  <button className="btn btn-outline" style={{ padding: '6px 14px', fontSize: '.78rem' }} onClick={() => setTab('enrollments')}>
+                    View All ({enrCount}) &rarr;
+                  </button>
+                </div>
+                <div className="table-wrap">
+                  <table className="admin-table">
+                    <thead>
+                      <tr>
+                        <th>Ref ID</th>
+                        <th>Candidate</th>
+                        <th>Course</th>
+                        <th>Emirate</th>
+                        <th>Mode</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {enrollments.slice(0, 5).map(e => (
+                        <tr key={e.id}>
+                          <td><code>{e.id}</code></td>
+                          <td>
+                            <strong>{e.fullName}</strong>
+                            <div style={{ fontSize: '.72rem', color: 'var(--gray-500)' }}>{e.email}</div>
+                          </td>
+                          <td><span style={{ fontWeight: 600 }}>{e.courseName}</span></td>
+                          <td><span className="badge-emirate">{e.emirate}</span></td>
+                          <td><small>{e.trainingMode}</small></td>
+                          <td style={{ fontSize: '.75rem', color: 'var(--gray-500)' }}>{e.created_at ? new Date(e.created_at).toLocaleDateString() : '-'}</td>
+                          <td>
+                            <span className={`status-pill pill-${(e.status || 'pending').toLowerCase()}`}>
+                              {e.status}
+                            </span>
+                          </td>
+                          <td>
+                            <button
+                              className="btn btn-outline"
+                              style={{ padding: '4px 10px', fontSize: '.72rem' }}
+                              onClick={() => { setSelectedEnr(e); setTab('enrollments'); }}
+                            >
+                              Details
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            )}
           </div>
         )}
 
@@ -678,6 +837,199 @@ export default function Admin() {
             </div>
           </div>
         )}
+
+        {tab === 'enrollments' && (
+          <div className="tab-content">
+            <div className="tab-header">
+              <div>
+                <h2 className="tab-title">ADORN Academy Enrollments</h2>
+                <p style={{ margin: '4px 0 0', fontSize: '.84rem', color: 'var(--gray-500)' }}>
+                  Manage candidate registrations for courses and certifications across Dubai &amp; the GCC.
+                </p>
+              </div>
+              <div className="tab-actions">
+                <button className="btn btn-outline" onClick={loadData}>
+                  <i className="fas fa-sync-alt"></i> Refresh
+                </button>
+                <button className="btn btn-primary" onClick={exportEnrollmentsCSV}>
+                  <i className="fas fa-file-csv"></i> Export CSV
+                </button>
+              </div>
+            </div>
+
+            {/* Counters */}
+            <div className="dash-grid" style={{ marginBottom: 20 }}>
+              <div className="dash-card">
+                <i className="fas fa-users" style={{ color: '#6d3bff' }}></i>
+                <strong style={{ color: '#6d3bff' }}>{enrollments.length}</strong>
+                <span>Total Registrations</span>
+              </div>
+              <div className="dash-card">
+                <i className="fas fa-clock" style={{ color: '#f59e0b' }}></i>
+                <strong style={{ color: '#f59e0b' }}>{enrollments.filter(e => e.status === 'Pending').length}</strong>
+                <span>Pending Confirmation</span>
+              </div>
+              <div className="dash-card">
+                <i className="fas fa-check-circle" style={{ color: '#10b981' }}></i>
+                <strong style={{ color: '#10b981' }}>{enrollments.filter(e => e.status === 'Confirmed').length}</strong>
+                <span>Confirmed Seats</span>
+              </div>
+              <div className="dash-card">
+                <i className="fas fa-map-marker-alt" style={{ color: '#2563eb' }}></i>
+                <strong style={{ color: '#2563eb' }}>{enrollments.filter(e => e.emirate === 'Dubai').length}</strong>
+                <span>Dubai Based</span>
+              </div>
+            </div>
+
+            {/* Filter Bar */}
+            <div className="enr-admin-filter-bar">
+              <div className="enr-admin-search">
+                <i className="fas fa-search"></i>
+                <input
+                  type="text"
+                  placeholder="Search candidate name, email, phone, company, course, or ID..."
+                  value={enrSearch}
+                  onChange={e => setEnrSearch(e.target.value)}
+                />
+                {enrSearch && (
+                  <button type="button" className="enr-search-clear" onClick={() => setEnrSearch('')}>
+                    <i className="fas fa-times"></i>
+                  </button>
+                )}
+              </div>
+
+              <div className="enr-admin-selects">
+                <select value={enrFilterStatus} onChange={e => setEnrFilterStatus(e.target.value)}>
+                  <option value="all">All Statuses</option>
+                  <option value="Pending">Pending</option>
+                  <option value="Confirmed">Confirmed</option>
+                  <option value="In-Training">In-Training</option>
+                  <option value="Completed">Completed</option>
+                  <option value="Cancelled">Cancelled</option>
+                </select>
+
+                <select value={enrFilterEmirate} onChange={e => setEnrFilterEmirate(e.target.value)}>
+                  <option value="all">All Emirates</option>
+                  <option value="Dubai">Dubai</option>
+                  <option value="Abu Dhabi">Abu Dhabi</option>
+                  <option value="Sharjah">Sharjah</option>
+                  <option value="Ajman">Ajman</option>
+                  <option value="Ras Al Khaimah">Ras Al Khaimah</option>
+                  <option value="Fujairah">Fujairah</option>
+                  <option value="Umm Al Quwain">Umm Al Quwain</option>
+                  <option value="Other GCC / International">Other GCC</option>
+                </select>
+              </div>
+            </div>
+
+            {/* Table */}
+            <div className="table-wrap">
+              <table className="admin-table">
+                <thead>
+                  <tr>
+                    <th>Ref ID &amp; Date</th>
+                    <th>Candidate Contact</th>
+                    <th>Course &amp; Training Mode</th>
+                    <th>Emirate &amp; Company</th>
+                    <th>Preferred Batch</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {filteredEnrollments.map(e => {
+                    const cleanPhone = (e.phone || '').replace(/[^0-9]/g, '');
+                    return (
+                      <tr key={e.id}>
+                        <td>
+                          <code>{e.id}</code>
+                          <div style={{ fontSize: '.72rem', color: 'var(--gray-400)', marginTop: 2 }}>
+                            {e.created_at ? new Date(e.created_at).toLocaleDateString() : '-'}
+                          </div>
+                        </td>
+                        <td>
+                          <strong>{e.fullName}</strong>
+                          <div style={{ fontSize: '.74rem', color: 'var(--gray-600)', marginTop: 2 }}>
+                            <i className="fas fa-envelope" style={{ marginRight: 4, color: 'var(--gray-400)' }}></i>
+                            <a href={`mailto:${e.email}`}>{e.email}</a>
+                          </div>
+                          <div style={{ fontSize: '.74rem', color: '#16a34a', marginTop: 2 }}>
+                            <i className="fab fa-whatsapp" style={{ marginRight: 4 }}></i>
+                            {e.phone}
+                          </div>
+                        </td>
+                        <td>
+                          <strong style={{ color: 'var(--purple)' }}>{e.courseName}</strong>
+                          <div style={{ fontSize: '.74rem', color: 'var(--gray-600)', marginTop: 2 }}>
+                            <i className="fas fa-chalkboard-teacher" style={{ marginRight: 4 }}></i>
+                            {e.trainingMode}
+                          </div>
+                        </td>
+                        <td>
+                          <span className="badge-emirate">{e.emirate}</span>
+                          <div style={{ fontSize: '.74rem', color: 'var(--gray-600)', marginTop: 3 }}>
+                            {e.company || 'Individual'} &bull; <small>{e.designation}</small>
+                          </div>
+                        </td>
+                        <td>
+                          <span style={{ fontSize: '.76rem', color: 'var(--gray-700)' }}>{e.preferredBatch}</span>
+                        </td>
+                        <td>
+                          <select
+                            className={`inline-select status-select status-${(e.status || 'pending').toLowerCase()}`}
+                            value={e.status || 'Pending'}
+                            onChange={evt => handleUpdateEnrollmentStatus(e.id, evt.target.value)}
+                          >
+                            <option value="Pending">Pending</option>
+                            <option value="Confirmed">Confirmed</option>
+                            <option value="In-Training">In-Training</option>
+                            <option value="Completed">Completed</option>
+                            <option value="Cancelled">Cancelled</option>
+                          </select>
+                        </td>
+                        <td className="actions-col">
+                          <button
+                            className="btn-sm"
+                            title="View Full Details"
+                            onClick={() => setSelectedEnr(e)}
+                          >
+                            <i className="fas fa-eye"></i>
+                          </button>
+                          {cleanPhone && (
+                            <a
+                              href={`https://wa.me/${cleanPhone}?text=${encodeURIComponent(`Hello ${e.fullName}, this is ADORN Academy Dubai regarding your registration for ${e.courseName} (Ref: ${e.id}).`)}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="btn-sm btn-wa-sm"
+                              title="Chat on WhatsApp"
+                            >
+                              <i className="fab fa-whatsapp"></i>
+                            </a>
+                          )}
+                          <button
+                            className="btn-sm delete"
+                            title="Delete"
+                            onClick={() => handleDeleteEnrollment(e.id)}
+                          >
+                            <i className="fas fa-trash"></i>
+                          </button>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                  {filteredEnrollments.length === 0 && (
+                    <tr>
+                      <td colSpan="7" style={{ textAlign: 'center', padding: 36, color: 'var(--gray-400)' }}>
+                        <i className="fas fa-user-graduate" style={{ fontSize: '2rem', marginBottom: 8, display: 'block' }}></i>
+                        No course enrollments matching filter
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        )}
       </main>
 
       {/* Product Modal */}
@@ -749,6 +1101,93 @@ export default function Admin() {
             <div className="modal-actions">
               <button className="btn btn-outline" onClick={() => setShowCModal(false)}>Cancel</button>
               <button className="btn btn-primary" onClick={saveCategory}>Save</button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Enrollment Detail Modal */}
+      {selectedEnr && (
+        <div className="modal-overlay" onClick={() => setSelectedEnr(null)}>
+          <div className="modal modal-wide" onClick={e => e.stopPropagation()}>
+            <div className="modal-header-enr" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', borderBottom: '1px solid var(--gray-200)', paddingBottom: 14, marginBottom: 18 }}>
+              <div>
+                <span className="badge-emirate" style={{ fontSize: '.72rem', background: '#6d3bff', color: '#fff' }}>Ref: {selectedEnr.id}</span>
+                <h3 style={{ margin: '8px 0 2px', fontSize: '1.25rem' }}>Enrollment Details</h3>
+                <span style={{ fontSize: '.76rem', color: 'var(--gray-500)' }}>
+                  Registered on: {selectedEnr.created_at ? new Date(selectedEnr.created_at).toLocaleString() : '-'}
+                </span>
+              </div>
+              <button className="btn btn-outline" style={{ padding: '4px 10px' }} onClick={() => setSelectedEnr(null)}>
+                <i className="fas fa-times"></i>
+              </button>
+            </div>
+
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 18 }}>
+              <div style={{ background: 'var(--gray-50)', padding: 16, borderRadius: 10, display: 'flex', flexDirection: 'column', gap: 8, fontSize: '.84rem' }}>
+                <h4 style={{ margin: '0 0 6px', fontSize: '.9rem', color: 'var(--gray-800)' }}>
+                  <i className="fas fa-user" style={{ color: '#6d3bff', marginRight: 6 }}></i> Candidate Information
+                </h4>
+                <div><span style={{ color: 'var(--gray-500)' }}>Full Name:</span> <strong>{selectedEnr.fullName}</strong></div>
+                <div><span style={{ color: 'var(--gray-500)' }}>Email:</span> <a href={`mailto:${selectedEnr.email}`}>{selectedEnr.email}</a></div>
+                <div><span style={{ color: 'var(--gray-500)' }}>WhatsApp / Phone:</span> <strong>{selectedEnr.phone}</strong></div>
+                <div><span style={{ color: 'var(--gray-500)' }}>Emirate / Location:</span> <strong className="badge-emirate">{selectedEnr.emirate}</strong></div>
+                <div><span style={{ color: 'var(--gray-500)' }}>Company:</span> <strong>{selectedEnr.company || 'Individual / Self-Sponsored'}</strong></div>
+                <div><span style={{ color: 'var(--gray-500)' }}>Professional Role:</span> <strong>{selectedEnr.designation}</strong></div>
+              </div>
+
+              <div style={{ background: 'var(--gray-50)', padding: 16, borderRadius: 10, display: 'flex', flexDirection: 'column', gap: 8, fontSize: '.84rem' }}>
+                <h4 style={{ margin: '0 0 6px', fontSize: '.9rem', color: 'var(--gray-800)' }}>
+                  <i className="fas fa-graduation-cap" style={{ color: '#6d3bff', marginRight: 6 }}></i> Course &amp; Schedule
+                </h4>
+                <div><span style={{ color: 'var(--gray-500)' }}>Course / Program:</span> <strong style={{ color: 'var(--purple)' }}>{selectedEnr.courseName}</strong></div>
+                <div><span style={{ color: 'var(--gray-500)' }}>Training Mode:</span> <strong>{selectedEnr.trainingMode}</strong></div>
+                <div><span style={{ color: 'var(--gray-500)' }}>Batch Preference:</span> <strong>{selectedEnr.preferredBatch}</strong></div>
+                <div><span style={{ color: 'var(--gray-500)' }}>SIRA / TDRA License:</span> <span>{selectedEnr.siraLicense || 'None'}</span></div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: 4 }}>
+                  <span style={{ color: 'var(--gray-500)' }}>Status:</span>
+                  <select
+                    className="inline-select"
+                    value={selectedEnr.status || 'Pending'}
+                    onChange={evt => handleUpdateEnrollmentStatus(selectedEnr.id, evt.target.value)}
+                  >
+                    <option value="Pending">Pending</option>
+                    <option value="Confirmed">Confirmed</option>
+                    <option value="In-Training">In-Training</option>
+                    <option value="Completed">Completed</option>
+                    <option value="Cancelled">Cancelled</option>
+                  </select>
+                </div>
+              </div>
+
+              {selectedEnr.notes && (
+                <div style={{ gridColumn: '1 / -1', background: 'var(--gray-50)', padding: 14, borderRadius: 10, fontSize: '.84rem' }}>
+                  <h4 style={{ margin: '0 0 6px', fontSize: '.88rem', color: 'var(--gray-800)' }}>
+                    <i className="fas fa-comment-alt" style={{ color: '#6d3bff', marginRight: 6 }}></i> Candidate Notes
+                  </h4>
+                  <p style={{ margin: 0, color: 'var(--gray-700)', lineHeight: 1.5 }}>{selectedEnr.notes}</p>
+                </div>
+              )}
+            </div>
+
+            <div className="modal-actions" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <div>
+                <a
+                  href={`https://wa.me/${(selectedEnr.phone || '').replace(/[^0-9]/g, '')}?text=${encodeURIComponent(`Hello ${selectedEnr.fullName}, this is ADORN Academy Dubai regarding your enrollment in ${selectedEnr.courseName} (Ref: ${selectedEnr.id}).`)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn-whatsapp"
+                  style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: '#25D366', color: '#fff', textDecoration: 'none', padding: '10px 18px', borderRadius: 8, fontWeight: 700, fontSize: '.84rem' }}
+                >
+                  <i className="fab fa-whatsapp" style={{ fontSize: '1.1rem' }}></i> Chat on WhatsApp
+                </a>
+              </div>
+              <div style={{ display: 'flex', gap: 8 }}>
+                <button className="btn btn-outline" onClick={() => setSelectedEnr(null)}>Close</button>
+                <button className="btn btn-danger" onClick={() => handleDeleteEnrollment(selectedEnr.id)}>
+                  <i className="fas fa-trash"></i> Delete Registration
+                </button>
+              </div>
             </div>
           </div>
         </div>

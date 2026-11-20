@@ -6,12 +6,12 @@ const LOGO = 'https://adorn.ae/wp-content/uploads/2026/04/Adorn_Logo_Print_RGB-0
 
 const NAV_ITEMS = [
   { label: 'Home', to: '/' },
+  { label: 'Portfolio', to: '/portfolio' },
+  { label: 'Adorn Academy', to: '/academy' },
+  { label: 'ADORN Insights', to: '/insights' },
+  { label: 'Resources', to: '/resources' },
+  { label: 'Partner Network', to: '/partner-network' },
   { label: 'Products', to: '/products' },
-  { label: 'Solutions', to: '/solutions' },
-  { label: 'Academy', to: '/academy' },
-  { label: 'Knowledge center', to: '/knowledge-center' },
-  { label: 'Downloads', to: '/downloads' },
-  { label: 'Partner program', to: '/partner-program' },
   { label: 'Where to buy', to: '/where-to-buy' },
   { label: 'Projects', to: '/projects' },
   { label: 'Support', to: '/support' },
