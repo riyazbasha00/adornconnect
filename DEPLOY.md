@@ -50,7 +50,19 @@ Then restart the Node.js app (Stop → Start, NOT Redeploy) so the new code load
 ## Local workflow
 - Build: `npm --prefix client run build` (CRA). Commit `client/build` along with source.
 - Push to `origin/main` on `riyazbasha00/adornconnect`.
-- Current good build: `static/js/main.db1e1659.js` (Home animations + responsive fixes + maintenance pages).
+- Current production build: `static/js/main.7c84058e.js` and `static/css/main.9a506f8b.css`.
+- Includes: Academy, Insights, Resources, Partner Network, Where to Buy, Projects, Course Registration modal with WhatsApp link & Admin panel management, dark left hero overlay with clear product showcase, and permanent ENOENT/fallback prevention.
+
+## Hostinger Deployment Steps
+1. Log into **Hostinger hPanel**: [https://hpanel.hostinger.com](https://hpanel.hostinger.com)
+2. Go to **Websites** → **adornconnect.com** → **Node.js** (or **Advanced** → **Git**).
+3. Ensure settings:
+   - **Repository:** `https://github.com/riyazbasha00/adornconnect.git`
+   - **Branch:** `main`
+   - **Application root:** `/` (repo root)
+   - **Application startup file:** `index.js`
+4. Click **Deploy** / **Pull** (or **Redeploy**).
+5. Click **Restart** (Stop → Start) on the Node.js application.
 
 ## Last manual deploy (Sep 7)
 - Current live version: `01a07ba0-8918-72a9-b53f-4794ae09822e`
