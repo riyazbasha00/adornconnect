@@ -71,9 +71,21 @@ app.get('/sitemap.xml', (req, res) => {
   res.send(xml);
 });
 
-app.use('/uploads', express.static(path.join(__dirname, 'uploads'), {
-  maxAge: '30d', etag: true,
-}));
+const uploadCandidates = [
+  path.join(__dirname, '..', 'uploads'),
+  path.join(__dirname, 'uploads'),
+  path.join(process.cwd(), 'uploads'),
+  path.join(process.cwd(), 'nodejs', 'uploads'),
+  '/home/u341249923/domains/adornconnect.com/nodejs/uploads',
+  '/home/u341249923/domains/adornconnect.com/uploads',
+];
+uploadCandidates.forEach(dir => {
+  try {
+    if (fs.existsSync(dir)) {
+      app.use('/uploads', express.static(dir, { maxAge: '30d', etag: true }));
+    }
+  } catch (e) {}
+});
 
 app.use('/api/products', productsRouter);
 app.use('/api/categories', categoriesRouter);

@@ -1,14 +1,78 @@
 const fs = require('fs');
 const path = require('path');
 
-const DATA_PATH = path.join(__dirname, '..', 'data.json');
+const candidateDataPaths = [
+  path.join(__dirname, '..', 'data.json'),
+  path.join(process.cwd(), 'data.json'),
+  path.join(__dirname, 'data.json'),
+  path.join(__dirname, '..', 'nodejs', 'data.json'),
+  path.join(process.cwd(), 'nodejs', 'data.json'),
+  path.join(__dirname, 'nodejs', 'data.json'),
+  '/home/u341249923/domains/adornconnect.com/nodejs/data.json',
+  '/home/u341249923/domains/adornconnect.com/data.json',
+];
 
+function resolveDataPath() {
+  for (const p of candidateDataPaths) {
+    try {
+      if (fs.existsSync(p)) {
+        return p;
+      }
+    } catch (e) {}
+  }
+  const def = path.join(__dirname, '..', 'data.json');
+  try {
+    const initialData = {
+      products: [],
+      categories: [],
+      banner: { images: [] },
+      downloads: [],
+      enrollments: []
+    };
+    fs.writeFileSync(def, JSON.stringify(initialData, null, 2), 'utf8');
+    return def;
+  } catch (err) {
+    try {
+      const fallback = path.join(__dirname, 'data.json');
+      if (!fs.existsSync(fallback)) {
+        fs.writeFileSync(fallback, JSON.stringify({
+          products: [],
+          categories: [],
+          banner: { images: [] },
+          downloads: [],
+          enrollments: []
+        }, null, 2), 'utf8');
+      }
+      return fallback;
+    } catch (e2) {
+      return def;
+    }
+  }
+}
+
+let DATA_PATH = resolveDataPath();
 let data = null;
 
 function load() {
   if (!data) {
-    const raw = fs.readFileSync(DATA_PATH, 'utf-8');
-    data = JSON.parse(raw);
+    DATA_PATH = resolveDataPath();
+    let raw = '';
+    try {
+      raw = fs.readFileSync(DATA_PATH, 'utf-8');
+      data = JSON.parse(raw);
+    } catch (err) {
+      data = {
+        products: [],
+        categories: [],
+        banner: { images: [] },
+        downloads: [],
+        enrollments: []
+      };
+      try {
+        fs.writeFileSync(DATA_PATH, JSON.stringify(data, null, 2), 'utf8');
+      } catch (e) {}
+    }
+
     if (!data.products) data.products = [];
     if (!data.categories) data.categories = [];
     if (!data.banner) data.banner = { images: [] };
@@ -19,7 +83,16 @@ function load() {
 }
 
 function save() {
-  fs.writeFileSync(DATA_PATH, JSON.stringify(data, null, 2));
+  try {
+    fs.writeFileSync(DATA_PATH, JSON.stringify(data, null, 2));
+  } catch (err) {
+    try {
+      DATA_PATH = resolveDataPath();
+      fs.writeFileSync(DATA_PATH, JSON.stringify(data, null, 2));
+    } catch (e) {
+      console.error('Failed to save data.json:', e);
+    }
+  }
 }
 
 function getProducts() {
