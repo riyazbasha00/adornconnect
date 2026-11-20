@@ -48,10 +48,16 @@ Then restart the Node.js app (Stop → Start, NOT Redeploy) so the new code load
     automatically.
 
 ## Local workflow
-- Build: `npm --prefix client run build` (CRA). Commit `client/build` along with source.
+- Build: `npm run build` (CRA + auto-sync to `server/build`). Commit `client/build` and `server/build` along with source.
 - Push to `origin/main` on `riyazbasha00/adornconnect`.
-- Current production build: `static/js/main.7c84058e.js` and `static/css/main.9a506f8b.css`.
-- Includes: Academy, Insights, Resources, Partner Network, Where to Buy, Projects, Course Registration modal with WhatsApp link & Admin panel management, dark left hero overlay with clear product showcase, and permanent ENOENT/fallback prevention.
+- Current production build: `static/js/main.06883961.js` (with backwards compatibility for `main.7c84058e.js`) and `static/css/main.9a506f8b.css`.
+- Includes:
+  - Mirrored `server/build` and `client/build` directories so assets resolve whether Hostinger deploys `/`, `nodejs/`, or `server/`.
+  - Multi-candidate build directory discovery and direct `/static` mounting.
+  - Asset extension guard preventing `app.get('*')` from serving HTML for JS/CSS files (preventing browser `Unexpected token '<'` syntax crashes).
+  - Diagnostic health route at `/api/health`.
+  - React `RootErrorBoundary` in `client/src/index.js`.
+  - Academy, Insights, Resources, Partner Network, Where to Buy, Projects, Course Registration modal with WhatsApp link & Admin panel management, dark left hero overlay with clear product showcase, and permanent ENOENT/fallback prevention.
 
 ## Hostinger Deployment Steps
 1. Log into **Hostinger hPanel**: [https://hpanel.hostinger.com](https://hpanel.hostinger.com)

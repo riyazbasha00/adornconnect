@@ -106,11 +106,35 @@ app.get('/order', (req, res) => {
   res.redirect(301, '/products');
 });
 
-const buildDir = [
+const candidateBuildDirs = [
+  path.join(__dirname, 'build'),
   path.join(__dirname, '..', 'client', 'build'),
   path.join(process.cwd(), 'client', 'build'),
+  path.join(process.cwd(), 'server', 'build'),
+  path.join(process.cwd(), 'nodejs', 'client', 'build'),
+  path.join(process.cwd(), 'nodejs', 'server', 'build'),
   path.join(__dirname, 'client', 'build'),
-].find(p => { try { return fs.statSync(p).isDirectory(); } catch { return false; } }) || path.join(__dirname, '..', 'client', 'build');
+  path.join(__dirname, '..', '..', 'client', 'build'),
+  path.join(__dirname, '..', 'nodejs', 'client', 'build'),
+  '/home/u341249923/domains/adornconnect.com/nodejs/client/build',
+  '/home/u341249923/domains/adornconnect.com/nodejs/server/build',
+  '/home/u341249923/domains/adornconnect.com/public_html/client/build',
+  '/home/u341249923/domains/adornconnect.com/client/build',
+];
+
+const validBuildDirs = candidateBuildDirs.filter(p => {
+  try {
+    return fs.existsSync(p) && fs.statSync(p).isDirectory() && fs.existsSync(path.join(p, 'index.html'));
+  } catch {
+    return false;
+  }
+});
+
+const buildDir = validBuildDirs[0] || [
+  path.join(__dirname, 'build'),
+  path.join(__dirname, '..', 'client', 'build'),
+  path.join(process.cwd(), 'client', 'build'),
+].find(p => { try { return fs.statSync(p).isDirectory(); } catch { return false; } }) || path.join(__dirname, 'build');
 
 const fallbackHtmlPath = path.join(__dirname, 'index-fallback.html');
 let cachedIndexHtml = '';
@@ -124,6 +148,31 @@ try {
     cachedIndexHtml = fs.readFileSync(fallbackHtmlPath, 'utf8');
   }
 } catch (e) {}
+
+// Health check and diagnostic API
+app.get('/api/health', (req, res) => {
+  const staticJsFiles = [];
+  try {
+    for (const bDir of (validBuildDirs.length ? validBuildDirs : [buildDir])) {
+      const jsDir = path.join(bDir, 'static', 'js');
+      if (fs.existsSync(jsDir)) {
+        staticJsFiles.push(...fs.readdirSync(jsDir));
+        break;
+      }
+    }
+  } catch (e) {}
+
+  res.json({
+    status: 'ok',
+    cwd: process.cwd(),
+    dirname: __dirname,
+    activeBuildDir: buildDir,
+    availableBuildDirs: validBuildDirs,
+    hasIndexHtml: fs.existsSync(path.join(buildDir, 'index.html')),
+    staticJsFiles,
+    timestamp: new Date().toISOString()
+  });
+});
 
 function sendRebuildingPage(res) {
   res.status(200).type('html').send(`<!DOCTYPE html>
@@ -164,8 +213,10 @@ function sendRebuildingPage(res) {
 </html>`);
 }
 
-app.use(express.static(buildDir, {
-  maxAge: '1h', etag: true,
+// Register static handlers for all detected build directories
+const staticOptions = {
+  maxAge: '1h',
+  etag: true,
   setHeaders: (res, p) => {
     if (p.endsWith('.html')) {
       res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
@@ -173,12 +224,46 @@ app.use(express.static(buildDir, {
       res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
     }
   }
-}));
+};
+
+validBuildDirs.forEach(dir => {
+  try {
+    app.use(express.static(dir, staticOptions));
+    const subStatic = path.join(dir, 'static');
+    if (fs.existsSync(subStatic)) {
+      app.use('/static', express.static(subStatic, { maxAge: '31536000', immutable: true }));
+    }
+  } catch (e) {}
+});
+
+app.use(express.static(buildDir, staticOptions));
+try {
+  const primarySubStatic = path.join(buildDir, 'static');
+  if (fs.existsSync(primarySubStatic)) {
+    app.use('/static', express.static(primarySubStatic, { maxAge: '31536000', immutable: true }));
+  }
+} catch (e) {}
 
 app.get('*', (req, res, next) => {
   // Never intercept API routes or upload assets with index.html fallback
   if (req.path.startsWith('/api/') || req.path.startsWith('/uploads/')) {
     return next();
+  }
+
+  // CRITICAL: Never return index.html for static asset requests (js, css, map, images, fonts, etc.)
+  // Returning HTML for a JS file causes "Uncaught SyntaxError: Unexpected token '<'" in the browser,
+  // which crashes React and leaves the user with a blank white page!
+  if (req.path.match(/\.(js|css|map|png|jpg|jpeg|gif|svg|ico|woff2?|ttf|eot|json|txt|pdf|webp)$/i)) {
+    for (const bDir of (validBuildDirs.length ? validBuildDirs : [buildDir])) {
+      try {
+        const relPath = req.path.replace(/^\//, '');
+        const directCandidate = path.join(bDir, relPath);
+        if (fs.existsSync(directCandidate)) {
+          return res.sendFile(directCandidate);
+        }
+      } catch (e) {}
+    }
+    return res.status(404).type('text/plain').send(`Asset not found: ${req.path}`);
   }
 
   res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');

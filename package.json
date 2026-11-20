@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "concurrently \"npm --prefix server run dev\" \"cmd /c set NODE_OPTIONS=--no-deprecation && npm --prefix client start\"",
-    "build": "npm --prefix client install && npm --prefix client run build",
+    "build": "npm --prefix client install && npm --prefix client run build && node -e \"const fs=require('fs');fs.cpSync('client/build','server/build',{recursive:true});\"",
     "seed": "node server/seed.js",
     "start": "node --no-deprecation index.js"
   },
