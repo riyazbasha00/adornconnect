@@ -50,8 +50,16 @@ Then restart the Node.js app (Stop → Start, NOT Redeploy) so the new code load
 ## Local workflow
 - Build: `npm run build` (CRA + auto-sync to `server/build`). Commit `client/build` and `server/build` along with source.
 - Push to `origin/main` on `riyazbasha00/adornconnect`.
-- Current production build: `static/js/main.f30f1c38.js` and `static/css/main.0966d158.css` (with backwards compatibility for legacy bundles).
+- Current production build: `static/js/main.3f043791.js` and `static/css/main.a7c9805a.css` (with backwards compatibility for legacy bundles).
 - Includes:
+  - Official Certificate Module in Admin Panel (`/admin`):
+    - Issue, manage, edit, and revoke accredited certifications.
+    - 12-digit certificate credential numbers with auto-generator and 4-4-4 formatting.
+    - View & Print luxury executive certificate modal formatted for A4 landscape print with live scannable QR code.
+  - Public Certificate Verification Portal (`/verify`, `/verify-certificate`, `/certificate/:certNumber`):
+    - Verify any certificate using the 12-digit credential number or scanning the printed QR code.
+    - Real-time authenticated registry check with official verification seal, candidate details, performance grade, and validity.
+  - Pure SVG QR Code generator (`client/src/utils/qr.js`) with zero dependencies and offline capability.
   - Fixed category counts in sidebar filter: Category counts and "All" counts always reflect total catalog inventory and never reset to 0 when selecting a category.
   - Mirrored `server/build` and `client/build` directories so assets resolve whether Hostinger deploys `/`, `nodejs/`, or `server/`.
   - Multi-candidate build directory discovery and direct `/static` mounting.

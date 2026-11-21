@@ -39,6 +39,9 @@ export default function Header() {
           <div className="tb-right">
             <span><i className="fas fa-envelope"></i> info@adorn.ae</span>
             <span><i className="fas fa-map-marker-alt"></i> Dubai, UAE</span>
+            <Link to="/verify" className="tb-verify-link" style={{ color: '#ff9a3d', fontWeight: 600, display: 'inline-flex', alignItems: 'center', gap: '5px' }}>
+              <i className="fas fa-award"></i> Verify Certificate
+            </Link>
           </div>
         </div>
       </div>

@@ -287,6 +287,159 @@
   background: #1da851 !important;
 }
 
+/* ══════════════════════════════════════════════
+   Certificates Admin Styles
+══════════════════════════════════════════════ */
+.cert-number-cell {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cert-num-code {
+  font-family: 'Courier New', Courier, monospace, sans-serif;
+  font-weight: 800;
+  color: #322160;
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-size: .84rem;
+  letter-spacing: 0.5px;
+}
+
+.btn-copy-num {
+  background: none;
+  border: none;
+  color: var(--gray-400);
+  cursor: pointer;
+  padding: 2px 4px;
+  font-size: .8rem;
+  transition: color .15s;
+}
+.btn-copy-num:hover {
+  color: var(--purple);
+}
+
+.status-pill.pill-active {
+  background: #dcfce7;
+  color: #166534;
+}
+.status-pill.pill-revoked {
+  background: #fee2e2;
+  color: #991b1b;
+}
+.status-pill.pill-expired {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.status-select.status-active { background: #dcfce7; color: #166534; border-color: #bbf7d0; }
+.status-select.status-revoked { background: #fee2e2; color: #991b1b; border-color: #fecaca; }
+.status-select.status-expired { background: #fef3c7; color: #92400e; border-color: #fde68a; }
+
+.btn-print-sm {
+  background: #ff9a3d !important;
+  color: #fff !important;
+  border: none !important;
+}
+.btn-print-sm:hover {
+  background: #f08b2c !important;
+}
+
+/* Certificate Print Modal Overlay */
+.cert-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.85);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  z-index: 9999;
+  padding: 20px;
+  overflow-y: auto;
+  backdrop-filter: blur(4px);
+}
+
+.cert-modal-toolbar {
+  background: #1e293b;
+  border-radius: 12px;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1040px;
+  width: 100%;
+  margin-bottom: 20px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+  color: #fff;
+}
+
+.cert-modal-toolbar-title {
+  font-size: .95rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.cert-modal-toolbar-title i {
+  color: #ff9a3d;
+}
+
+.cert-modal-toolbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.btn-toolbar {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: .82rem;
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+  font-family: inherit;
+  transition: .15s;
+}
+
+.btn-tb-print {
+  background: #ff9a3d;
+  color: #fff;
+}
+.btn-tb-print:hover {
+  background: #f08b2c;
+}
+
+.btn-tb-link {
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+}
+.btn-tb-link:hover {
+  background: rgba(255, 255, 255, 0.22);
+}
+
+.btn-tb-close {
+  background: rgba(239, 68, 68, 0.2);
+  color: #f87171;
+  border: 1px solid rgba(239, 68, 68, 0.4);
+}
+.btn-tb-close:hover {
+  background: #ef4444;
+  color: #fff;
+}
+
+.cert-modal-content {
+  max-width: 1040px;
+  width: 100%;
+  margin-bottom: 40px;
+}
+
 @media(max-width:768px){
   .admin-layout{flex-direction:column;padding:12px}
   .admin-sidebar{width:100%;position:static;display:flex;gap:4px;overflow-x:auto;padding:12px}
@@ -296,4 +449,5 @@
   .tab-actions{flex-wrap:wrap}
   .enr-admin-filter-bar{flex-direction:column}
   .enr-admin-selects{flex-direction:column}
+  .cert-modal-toolbar{flex-direction:column;gap:12px}
 }

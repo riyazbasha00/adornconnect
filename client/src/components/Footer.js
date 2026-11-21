@@ -77,6 +77,7 @@ export default function Footer() {
             <Link to="/">Home</Link>
             <Link to="/portfolio">Portfolio</Link>
             <Link to="/academy">Adorn Academy</Link>
+            <Link to="/verify" style={{ color: '#ff9a3d', fontWeight: 600 }}>Verify Certificate</Link>
             <Link to="/insights">ADORN Insights</Link>
             <Link to="/resources">Resources</Link>
             <Link to="/partner-network">Partner Network</Link>

@@ -21,6 +21,7 @@ import Resources from './pages/Resources';
 import PartnerNetwork from './pages/PartnerNetwork';
 import WhereToBuy from './pages/WhereToBuy';
 import Projects from './pages/Projects';
+import VerifyCertificate from './pages/VerifyCertificate';
 import './App.css';
 
 function ScrollTop() {
@@ -62,6 +63,9 @@ function App() {
             <Route path="/where-to-buy" element={<WhereToBuy />} />
             <Route path="/order" element={<Navigate to="/products" replace />} />
             <Route path="/projects" element={<Projects />} />
+            <Route path="/verify" element={<VerifyCertificate />} />
+            <Route path="/verify-certificate" element={<VerifyCertificate />} />
+            <Route path="/certificate/:certNumber" element={<VerifyCertificate />} />
             <Route path="/privacy" element={<PrivacyPolicy />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/admin" element={<Admin />} />

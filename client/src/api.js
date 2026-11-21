@@ -143,3 +143,34 @@ export async function updateEnrollment(id, data) {
 export async function deleteEnrollment(id) {
   return api(`${BASE}/enrollments?id=${encodeURIComponent(id)}`, { method: 'DELETE' });
 }
+
+// Certificate APIs
+export async function fetchCertificates(params = {}) {
+  const qs = new URLSearchParams(params).toString();
+  return api(`${BASE}/certificates${qs ? '?' + qs : ''}`);
+}
+
+export async function verifyCertificate(number) {
+  const clean = number.toString().replace(/[\s-]/g, '');
+  return api(`${BASE}/certificates/verify/${encodeURIComponent(clean)}`);
+}
+
+export async function createCertificate(data) {
+  return api(`${BASE}/certificates`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data),
+  });
+}
+
+export async function updateCertificate(id, data) {
+  return api(`${BASE}/certificates/${encodeURIComponent(id)}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data),
+  });
+}
+
+export async function deleteCertificate(id) {
+  return api(`${BASE}/certificates/${encodeURIComponent(id)}`, { method: 'DELETE' });
+}

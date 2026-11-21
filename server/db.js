@@ -27,7 +27,8 @@ function resolveDataPath() {
       categories: [],
       banner: { images: [] },
       downloads: [],
-      enrollments: []
+      enrollments: [],
+      certificates: []
     };
     fs.writeFileSync(def, JSON.stringify(initialData, null, 2), 'utf8');
     return def;
@@ -40,7 +41,8 @@ function resolveDataPath() {
           categories: [],
           banner: { images: [] },
           downloads: [],
-          enrollments: []
+          enrollments: [],
+          certificates: []
         }, null, 2), 'utf8');
       }
       return fallback;
@@ -243,10 +245,76 @@ function deleteEnrollment(id) {
   return true;
 }
 
+function getCertificates() {
+  return load().certificates || [];
+}
+
+function getCertificate(idOrNumber) {
+  if (!idOrNumber) return null;
+  const list = load().certificates || [];
+  const cleanQuery = idOrNumber.toString().replace(/[\s-]/g, '').toLowerCase();
+  return list.find(c => {
+    const cleanCertNum = (c.certNumber || '').toString().replace(/[\s-]/g, '').toLowerCase();
+    const cleanId = (c.id || '').toString().toLowerCase();
+    return cleanCertNum === cleanQuery || cleanId === cleanQuery;
+  }) || null;
+}
+
+function addCertificate(item) {
+  const d = load();
+  if (!d.certificates) d.certificates = [];
+
+  let certNum = (item.certNumber || '').toString().replace(/[\s-]/g, '');
+  if (!certNum || certNum.length !== 12 || !/^\d{12}$/.test(certNum)) {
+    let exists = true;
+    while (exists) {
+      certNum = Math.floor(100000000000 + Math.random() * 900000000000).toString();
+      exists = d.certificates.some(c => c.certNumber === certNum);
+    }
+  }
+
+  const certificate = {
+    id: 'CERT-' + Date.now().toString(36).toUpperCase() + '-' + Math.random().toString(36).slice(2, 6).toUpperCase(),
+    ...item,
+    certNumber: certNum,
+    status: item.status || 'Active',
+    created_at: new Date().toISOString()
+  };
+  d.certificates.unshift(certificate);
+  save();
+  return certificate;
+}
+
+function updateCertificate(id, updates) {
+  const d = load();
+  if (!d.certificates) return false;
+  const idx = d.certificates.findIndex(c => c.id === id || c.certNumber === id);
+  if (idx === -1) return false;
+
+  if (updates.certNumber) {
+    updates.certNumber = updates.certNumber.toString().replace(/[\s-]/g, '');
+  }
+
+  d.certificates[idx] = { ...d.certificates[idx], ...updates, id: d.certificates[idx].id };
+  save();
+  return d.certificates[idx];
+}
+
+function deleteCertificate(id) {
+  const d = load();
+  if (!d.certificates) return false;
+  const len = d.certificates.length;
+  d.certificates = d.certificates.filter(c => c.id !== id && c.certNumber !== id);
+  if (d.certificates.length === len) return false;
+  save();
+  return true;
+}
+
 module.exports = {
   getProducts, getProduct, addProduct, updateProduct, deleteProduct,
   getCategories, getCategory, addCategory, updateCategory, deleteCategory,
   getBanner, updateBanner,
   getDownloads, addDownload, deleteDownload,
   getEnrollments, getEnrollment, addEnrollment, updateEnrollment, deleteEnrollment,
+  getCertificates, getCertificate, addCertificate, updateCertificate, deleteCertificate,
 };

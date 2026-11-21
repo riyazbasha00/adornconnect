@@ -4,8 +4,10 @@ import {
   createCategory, updateCategory, deleteCategory, uploadImage, imgUrl,
   fetchBanner, updateBanner as apiUpdateBanner,
   fetchDownloads, addDownload, deleteDownload, uploadDocument,
-  fetchEnrollments, updateEnrollment as apiUpdateEnrollment, deleteEnrollment as apiDeleteEnrollment
+  fetchEnrollments, updateEnrollment as apiUpdateEnrollment, deleteEnrollment as apiDeleteEnrollment,
+  fetchCertificates, createCertificate, updateCertificate as apiUpdateCertificate, deleteCertificate as apiDeleteCertificate
 } from '../api';
+import { QRCodeView } from '../utils/qr';
 import './Admin.css';
 
 const LOGIN_KEY = 'adorn_admin';
@@ -13,6 +15,32 @@ const DEFAULT_PASS = 'admin123';
 
 const emptyProduct = { sku: '', name: '', cat: '', desc: '', price: '', unit: '', img: '', tags: [] };
 const emptyCategory = { id: '', label: '', enabled: true };
+
+const emptyCert = {
+  certNumber: '',
+  candidateName: '',
+  email: '',
+  phone: '',
+  company: '',
+  courseName: 'Certified Structured Cabling Specialist (Level 1)',
+  courseId: 'structured-cabling',
+  issueDate: new Date().toISOString().slice(0, 10),
+  expiryDate: new Date(Date.now() + 3 * 365 * 86400000).toISOString().slice(0, 10),
+  grade: 'Distinction (95%)',
+  issuer: 'ADORN Academy Technical Board',
+  trainerName: 'Eng. Tariq Al Nuaimi',
+  status: 'Active',
+  notes: ''
+};
+
+const STANDARD_COURSES = [
+  'Certified Structured Cabling Specialist (Level 1)',
+  'Certified Fiber Optic Specialist (Single-Mode & Multi-Mode)',
+  'Structured Cabling System Design & Engineering',
+  'ELV & Intelligent Infrastructure Professional',
+  'Copper Networking & High-Speed Testing (Cat6 & Cat6A)',
+  'ADORN Master Network Infrastructure Engineer'
+];
 
 export default function Admin() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -55,6 +83,15 @@ export default function Admin() {
   const [enrSearch, setEnrSearch] = useState('');
   const [selectedEnr, setSelectedEnr] = useState(null);
 
+  const [certificates, setCertificates] = useState([]);
+  const [certFilterStatus, setCertFilterStatus] = useState('all');
+  const [certSearch, setCertSearch] = useState('');
+  const [certForm, setCertForm] = useState({ ...emptyCert });
+  const [editCertIdx, setEditCertIdx] = useState(-1);
+  const [showCertModal, setShowCertModal] = useState(false);
+  const [selectedPrintCert, setSelectedPrintCert] = useState(null);
+  const [copiedCertNum, setCopiedCertNum] = useState('');
+
   const showToast = useCallback((msg, type = 'success') => {
     setToast({ msg, type });
     setTimeout(() => setToast(null), 3000);
@@ -67,22 +104,25 @@ export default function Admin() {
 
   const loadData = useCallback(async () => {
     try {
-      const [prods, cats, banner, dl, enrs] = await Promise.all([
+      const [prods, cats, banner, dl, enrs, certs] = await Promise.all([
         fetchProducts(),
         fetchCategories(true),
         fetchBanner(),
         fetchDownloads(),
-        fetchEnrollments()
+        fetchEnrollments(),
+        fetchCertificates()
       ]);
       setProducts(prods);
       setCategories(cats);
       if (banner && Array.isArray(banner.images)) setBannerSlides(banner.images);
       setDownloads(dl || []);
       setEnrollments(enrs || []);
+      setCertificates(certs || []);
     } catch {
       setProducts([]);
       setCategories([]);
       setEnrollments([]);
+      setCertificates([]);
     }
   }, []);
 
@@ -490,6 +530,124 @@ export default function Admin() {
     return matchStatus && matchEmirate && matchSearch;
   });
 
+  const generateRandom12Digits = () => {
+    let num = Math.floor(1 + Math.random() * 9).toString();
+    for (let i = 0; i < 11; i++) {
+      num += Math.floor(Math.random() * 10);
+    }
+    return num;
+  };
+
+  const format12 = (val) => {
+    if (!val) return '';
+    const digits = val.toString().replace(/\D/g, '').slice(0, 12);
+    const parts = [];
+    for (let i = 0; i < digits.length; i += 4) {
+      parts.push(digits.slice(i, i + 4));
+    }
+    return parts.join(' - ');
+  };
+
+  const openNewCert = () => {
+    const today = new Date();
+    const threeYears = new Date(today);
+    threeYears.setFullYear(today.getFullYear() + 3);
+
+    setCertForm({
+      ...emptyCert,
+      certNumber: generateRandom12Digits(),
+      issueDate: today.toISOString().slice(0, 10),
+      expiryDate: threeYears.toISOString().slice(0, 10),
+    });
+    setEditCertIdx(-1);
+    setShowCertModal(true);
+  };
+
+  const openEditCert = (idx) => {
+    const c = filteredCertificates[idx];
+    setCertForm({ ...c });
+    setEditCertIdx(idx);
+    setShowCertModal(true);
+  };
+
+  const saveCert = async () => {
+    if (!certForm.candidateName || !certForm.candidateName.trim()) {
+      showToast('Candidate name is required', 'error');
+      return;
+    }
+    if (!certForm.courseName || !certForm.courseName.trim()) {
+      showToast('Course name is required', 'error');
+      return;
+    }
+    const cleanNum = (certForm.certNumber || '').toString().replace(/\D/g, '');
+    if (cleanNum.length !== 12) {
+      showToast('Certificate number must be exactly 12 digits', 'error');
+      return;
+    }
+
+    try {
+      if (editCertIdx >= 0) {
+        await apiUpdateCertificate(certForm.id, { ...certForm, certNumber: cleanNum });
+        showToast('Certificate updated successfully');
+      } else {
+        await createCertificate({ ...certForm, certNumber: cleanNum });
+        showToast('Certificate issued successfully');
+      }
+      setShowCertModal(false);
+      await loadData();
+    } catch (err) {
+      showToast(err.message || 'Failed to save certificate', 'error');
+    }
+  };
+
+  const removeCert = async (id, num) => {
+    if (!window.confirm(`Delete certificate ${num}? This action cannot be undone.`)) return;
+    try {
+      await apiDeleteCertificate(id);
+      showToast('Certificate deleted');
+      await loadData();
+    } catch (err) {
+      showToast(err.message, 'error');
+    }
+  };
+
+  const handleUpdateCertStatus = async (id, status) => {
+    try {
+      await apiUpdateCertificate(id, { status });
+      setCertificates(prev => prev.map(c => c.id === id ? { ...c, status } : c));
+      showToast(`Status updated to ${status}`);
+    } catch (err) {
+      showToast(err.message, 'error');
+    }
+  };
+
+  const copyCertLink = (certNum) => {
+    const url = `${window.location.origin}/verify?cert=${certNum}`;
+    navigator.clipboard?.writeText(url).then(() => {
+      setCopiedCertNum(certNum);
+      setTimeout(() => setCopiedCertNum(''), 2000);
+      showToast('Verification link copied to clipboard');
+    });
+  };
+
+  const certCount = certificates.length;
+
+  const filteredCertificates = certificates.filter(c => {
+    const matchStatus = certFilterStatus === 'all' || (c.status && c.status.toLowerCase() === certFilterStatus.toLowerCase());
+    if (!matchStatus) return false;
+    if (!certSearch.trim()) return true;
+    const q = certSearch.trim().toLowerCase();
+    const qClean = q.replace(/[\s-]/g, '');
+    const numClean = (c.certNumber || '').replace(/[\s-]/g, '').toLowerCase();
+    return (
+      numClean.includes(qClean) ||
+      (c.candidateName && c.candidateName.toLowerCase().includes(q)) ||
+      (c.courseName && c.courseName.toLowerCase().includes(q)) ||
+      (c.company && c.company.toLowerCase().includes(q)) ||
+      (c.email && c.email.toLowerCase().includes(q))
+    );
+  });
+
   return (
     <div className="admin-layout">
       {toast && <div className={`toast ${toast.type}`}>{toast.msg}</div>}
@@ -505,6 +663,10 @@ export default function Admin() {
         <a href="#!" className={tab === 'enrollments' ? 'active' : ''} onClick={() => setTab('enrollments')}>
           <i className="fas fa-user-graduate"></i> Enrollments
           {enrCount > 0 && <span className="side-badge">{enrCount}</span>}
+        </a>
+        <a href="#!" className={tab === 'certificates' ? 'active' : ''} onClick={() => setTab('certificates')}>
+          <i className="fas fa-certificate"></i> Certificates
+          {certCount > 0 && <span className="side-badge" style={{ background: '#ff9a3d' }}>{certCount}</span>}
         </a>
         <a href="#!" className="logout-link" onClick={() => { localStorage.removeItem('adorn_admin'); window.location.href = '/'; }}><i className="fas fa-sign-out-alt"></i> Logout</a>
       </aside>
@@ -523,6 +685,11 @@ export default function Admin() {
                 <i className="fas fa-user-graduate" style={{ color: '#6d3bff' }}></i>
                 <strong style={{ color: '#6d3bff' }}>{enrCount}</strong>
                 <span>Enrollments</span>
+              </div>
+              <div className="dash-card dash-clickable" onClick={() => setTab('certificates')} style={{ cursor: 'pointer' }}>
+                <i className="fas fa-certificate" style={{ color: '#ff9a3d' }}></i>
+                <strong style={{ color: '#ff9a3d' }}>{certCount}</strong>
+                <span>Certificates</span>
               </div>
             </div>
 
@@ -1030,6 +1197,207 @@ export default function Admin() {
             </div>
           </div>
         )}
+
+        {tab === 'certificates' && (
+          <div className="tab-content">
+            <div className="tab-header">
+              <div>
+                <h2 className="tab-title">ADORN Academy Certificates</h2>
+                <p style={{ margin: '4px 0 0', fontSize: '.84rem', color: 'var(--gray-500)' }}>
+                  Issue and manage accredited technical certifications with 12-digit verification numbers and scannable QR codes.
+                </p>
+              </div>
+              <div className="tab-actions">
+                <button className="btn btn-outline" onClick={loadData}>
+                  <i className="fas fa-sync-alt"></i> Refresh
+                </button>
+                <button className="btn btn-primary" onClick={openNewCert}>
+                  <i className="fas fa-plus-circle"></i> Issue New Certificate
+                </button>
+              </div>
+            </div>
+
+            {/* Counters */}
+            <div className="dash-grid" style={{ marginBottom: 20 }}>
+              <div className="dash-card">
+                <i className="fas fa-certificate" style={{ color: '#6d3bff' }}></i>
+                <strong style={{ color: '#6d3bff' }}>{certificates.length}</strong>
+                <span>Total Issued</span>
+              </div>
+              <div className="dash-card">
+                <i className="fas fa-check-circle" style={{ color: '#10b981' }}></i>
+                <strong style={{ color: '#10b981' }}>{certificates.filter(c => c.status === 'Active').length}</strong>
+                <span>Active &amp; Valid</span>
+              </div>
+              <div className="dash-card">
+                <i className="fas fa-clock" style={{ color: '#f59e0b' }}></i>
+                <strong style={{ color: '#f59e0b' }}>{certificates.filter(c => c.status === 'Expired').length}</strong>
+                <span>Expired</span>
+              </div>
+              <div className="dash-card">
+                <i className="fas fa-ban" style={{ color: '#ef4444' }}></i>
+                <strong style={{ color: '#ef4444' }}>{certificates.filter(c => c.status === 'Revoked').length}</strong>
+                <span>Revoked</span>
+              </div>
+            </div>
+
+            {/* Filter Bar */}
+            <div className="enr-admin-filter-bar">
+              <div className="enr-admin-search">
+                <i className="fas fa-search"></i>
+                <input
+                  type="text"
+                  placeholder="Search by 12-digit number, candidate, course, company..."
+                  value={certSearch}
+                  onChange={e => setCertSearch(e.target.value)}
+                />
+                {certSearch && (
+                  <button className="enr-search-clear" onClick={() => setCertSearch('')}>
+                    <i className="fas fa-times"></i>
+                  </button>
+                )}
+              </div>
+              <div className="enr-admin-selects">
+                <select value={certFilterStatus} onChange={e => setCertFilterStatus(e.target.value)}>
+                  <option value="all">All Statuses ({certificates.length})</option>
+                  <option value="Active">Active ({certificates.filter(c => c.status === 'Active').length})</option>
+                  <option value="Expired">Expired ({certificates.filter(c => c.status === 'Expired').length})</option>
+                  <option value="Revoked">Revoked ({certificates.filter(c => c.status === 'Revoked').length})</option>
+                </select>
+              </div>
+            </div>
+
+            {/* Table */}
+            <div className="table-wrap">
+              <table className="admin-table">
+                <thead>
+                  <tr>
+                    <th>12-Digit Certificate ID</th>
+                    <th>Candidate</th>
+                    <th>Course / Certification</th>
+                    <th>Issue Date</th>
+                    <th>Validity</th>
+                    <th>Status</th>
+                    <th className="actions-col">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {filteredCertificates.map((c, idx) => (
+                    <tr key={c.id || idx}>
+                      <td>
+                        <div className="cert-number-cell">
+                          <span className="cert-num-code">{format12(c.certNumber)}</span>
+                          <button
+                            type="button"
+                            className="btn-copy-num"
+                            title="Copy 12-digit ID"
+                            onClick={() => {
+                              navigator.clipboard?.writeText(c.certNumber);
+                              showToast('12-digit ID copied: ' + c.certNumber);
+                            }}
+                          >
+                            <i className="fas fa-copy"></i>
+                          </button>
+                        </div>
+                      </td>
+                      <td>
+                        <strong>{c.candidateName}</strong>
+                        {c.company && (
+                          <div style={{ fontSize: '.74rem', color: 'var(--gray-600)', marginTop: 2 }}>
+                            {c.company}
+                          </div>
+                        )}
+                        {c.email && (
+                          <div style={{ fontSize: '.72rem', color: 'var(--gray-500)' }}>
+                            {c.email}
+                          </div>
+                        )}
+                      </td>
+                      <td>
+                        <strong style={{ color: 'var(--purple)', fontSize: '.84rem' }}>{c.courseName}</strong>
+                        {c.grade && (
+                          <div style={{ fontSize: '.74rem', color: 'var(--gray-600)', marginTop: 2 }}>
+                            Grade: <span style={{ fontWeight: 600, color: '#92400e' }}>{c.grade}</span>
+                          </div>
+                        )}
+                      </td>
+                      <td>
+                        <span style={{ fontSize: '.78rem', color: 'var(--gray-700)' }}>{c.issueDate || '—'}</span>
+                      </td>
+                      <td>
+                        <span style={{ fontSize: '.78rem', color: 'var(--gray-700)' }}>{c.expiryDate || 'Lifetime'}</span>
+                      </td>
+                      <td>
+                        <select
+                          className={`inline-select status-select status-${(c.status || 'active').toLowerCase()}`}
+                          value={c.status || 'Active'}
+                          onChange={evt => handleUpdateCertStatus(c.id, evt.target.value)}
+                        >
+                          <option value="Active">Active</option>
+                          <option value="Expired">Expired</option>
+                          <option value="Revoked">Revoked</option>
+                        </select>
+                      </td>
+                      <td className="actions-col">
+                        <button
+                          className="btn-sm btn-print-sm"
+                          title="View &amp; Print Official Certificate"
+                          onClick={() => setSelectedPrintCert(c)}
+                        >
+                          <i className="fas fa-print"></i> Print
+                        </button>
+                        <a
+                          href={`/verify?cert=${c.certNumber}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="btn-sm"
+                          title="Open Online Verification Page"
+                        >
+                          <i className="fas fa-external-link-alt"></i>
+                        </a>
+                        <button
+                          className="btn-sm"
+                          title="Copy Verification Link"
+                          onClick={() => copyCertLink(c.certNumber)}
+                        >
+                          <i className={`fas ${copiedCertNum === c.certNumber ? 'fa-check' : 'fa-link'}`}></i>
+                        </button>
+                        <button
+                          className="btn-sm"
+                          title="Edit Certificate"
+                          onClick={() => openEditCert(idx)}
+                        >
+                          <i className="fas fa-pen"></i>
+                        </button>
+                        <button
+                          className="btn-sm delete"
+                          title="Delete Certificate"
+                          onClick={() => removeCert(c.id, c.certNumber)}
+                        >
+                          <i className="fas fa-trash"></i>
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                  {filteredCertificates.length === 0 && (
+                    <tr>
+                      <td colSpan="7" style={{ textAlign: 'center', padding: 36, color: 'var(--gray-400)' }}>
+                        <i className="fas fa-certificate" style={{ fontSize: '2rem', marginBottom: 8, display: 'block', color: 'var(--gray-300)' }}></i>
+                        No certificates matching filter.{' '}
+                        <button
+                          onClick={openNewCert}
+                          style={{ background: 'none', border: 'none', color: 'var(--purple)', fontWeight: 700, cursor: 'pointer' }}
+                        >
+                          Issue the first certificate &rarr;
+                        </button>
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        )}
       </main>
 
       {/* Product Modal */}
@@ -1187,6 +1555,293 @@ export default function Admin() {
                 <button className="btn btn-danger" onClick={() => handleDeleteEnrollment(selectedEnr.id)}>
                   <i className="fas fa-trash"></i> Delete Registration
                 </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Certificate Issue/Edit Modal */}
+      {showCertModal && (
+        <div className="modal-overlay" onClick={() => setShowCertModal(false)}>
+          <div className="modal" style={{ maxWidth: 640 }} onClick={e => e.stopPropagation()}>
+            <h3>
+              <i className="fas fa-certificate" style={{ color: '#ff9a3d', marginRight: 8 }}></i>
+              {editCertIdx >= 0 ? 'Edit Certificate' : 'Issue New Accredited Certificate'}
+            </h3>
+            <div className="modal-grid">
+              <label className="full">
+                Candidate Full Name *
+                <input
+                  value={certForm.candidateName}
+                  onChange={e => setCertForm({ ...certForm, candidateName: e.target.value })}
+                  placeholder="e.g. Riyaz Ahamed"
+                  required
+                />
+              </label>
+
+              <label className="full">
+                12-Digit Certificate Number *
+                <div style={{ display: 'flex', gap: 8, marginTop: 4 }}>
+                  <input
+                    value={certForm.certNumber}
+                    onChange={e => {
+                      const digits = e.target.value.replace(/\D/g, '').slice(0, 12);
+                      setCertForm({ ...certForm, certNumber: digits });
+                    }}
+                    placeholder="12 digits (e.g. 849201837462)"
+                    maxLength={12}
+                    style={{ fontFamily: 'monospace', letterSpacing: 1, fontWeight: 700 }}
+                  />
+                  <button
+                    type="button"
+                    className="btn btn-outline"
+                    onClick={() => setCertForm({ ...certForm, certNumber: generateRandom12Digits() })}
+                    title="Generate unique 12-digit number"
+                    style={{ whiteSpace: 'nowrap', padding: '0 12px' }}
+                  >
+                    <i className="fas fa-random"></i> Auto Generate
+                  </button>
+                </div>
+                <small style={{ color: 'var(--gray-500)', fontSize: '.72rem', display: 'block', marginTop: 4 }}>
+                  Must be exactly 12 numeric digits. This number is used for online verification and encoded in the printed QR code.
+                </small>
+              </label>
+
+              <label className="full">
+                Course / Program *
+                <input
+                  list="courseList"
+                  value={certForm.courseName}
+                  onChange={e => setCertForm({ ...certForm, courseName: e.target.value })}
+                  placeholder="Select or type certification title"
+                />
+                <datalist id="courseList">
+                  {STANDARD_COURSES.map((cn, i) => (
+                    <option key={i} value={cn} />
+                  ))}
+                </datalist>
+              </label>
+
+              <label>
+                Company / Organization
+                <input
+                  value={certForm.company}
+                  onChange={e => setCertForm({ ...certForm, company: e.target.value })}
+                  placeholder="e.g. Adorn Telecommunications LLC"
+                />
+              </label>
+
+              <label>
+                Grade / Performance
+                <input
+                  value={certForm.grade}
+                  onChange={e => setCertForm({ ...certForm, grade: e.target.value })}
+                  placeholder="e.g. Distinction (95%), Certified"
+                />
+              </label>
+
+              <label>
+                Candidate Email
+                <input
+                  type="email"
+                  value={certForm.email}
+                  onChange={e => setCertForm({ ...certForm, email: e.target.value })}
+                  placeholder="candidate@company.ae"
+                />
+              </label>
+
+              <label>
+                Candidate Phone
+                <input
+                  value={certForm.phone}
+                  onChange={e => setCertForm({ ...certForm, phone: e.target.value })}
+                  placeholder="+971 50 123 4567"
+                />
+              </label>
+
+              <label>
+                Issue Date
+                <input
+                  type="date"
+                  value={certForm.issueDate}
+                  onChange={e => setCertForm({ ...certForm, issueDate: e.target.value })}
+                />
+              </label>
+
+              <label>
+                Expiry Date / Validity
+                <input
+                  value={certForm.expiryDate}
+                  onChange={e => setCertForm({ ...certForm, expiryDate: e.target.value })}
+                  placeholder="e.g. 2029-11-20 or Lifetime"
+                />
+              </label>
+
+              <label>
+                Trainer / Instructor Name
+                <input
+                  value={certForm.trainerName}
+                  onChange={e => setCertForm({ ...certForm, trainerName: e.target.value })}
+                  placeholder="e.g. Eng. Tariq Al Nuaimi"
+                />
+              </label>
+
+              <label>
+                Credential Status
+                <select
+                  value={certForm.status}
+                  onChange={e => setCertForm({ ...certForm, status: e.target.value })}
+                >
+                  <option value="Active">Active &amp; Valid</option>
+                  <option value="Expired">Expired</option>
+                  <option value="Revoked">Revoked</option>
+                </select>
+              </label>
+
+              <label className="full">
+                Internal Assessment Notes
+                <textarea
+                  value={certForm.notes}
+                  onChange={e => setCertForm({ ...certForm, notes: e.target.value })}
+                  placeholder="Practical assessment scores, exam batch details, or special honors..."
+                  rows={2}
+                />
+              </label>
+            </div>
+
+            <div className="modal-actions">
+              <button className="btn btn-outline" onClick={() => setShowCertModal(false)}>Cancel</button>
+              <button className="btn btn-primary" onClick={saveCert}>
+                <i className="fas fa-check"></i> {editCertIdx >= 0 ? 'Update Certificate' : 'Issue Certificate'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Printable Certificate Modal with QR Code */}
+      {selectedPrintCert && (
+        <div className="cert-modal-overlay" onClick={() => setSelectedPrintCert(null)}>
+          <div className="cert-modal-toolbar" onClick={e => e.stopPropagation()}>
+            <div className="cert-modal-toolbar-title">
+              <i className="fas fa-award"></i>
+              <span>Official Certificate Preview — {format12(selectedPrintCert.certNumber)}</span>
+            </div>
+            <div className="cert-modal-toolbar-actions">
+              <button
+                className="btn-toolbar btn-tb-print"
+                onClick={() => window.print()}
+              >
+                <i className="fas fa-print"></i> Print Certificate (A4 Landscape)
+              </button>
+              <button
+                className="btn-toolbar btn-tb-link"
+                onClick={() => copyCertLink(selectedPrintCert.certNumber)}
+              >
+                <i className={`fas ${copiedCertNum === selectedPrintCert.certNumber ? 'fa-check' : 'fa-link'}`}></i>
+                {copiedCertNum === selectedPrintCert.certNumber ? 'Copied!' : 'Copy Verify URL'}
+              </button>
+              <a
+                href={`/verify?cert=${selectedPrintCert.certNumber}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-toolbar btn-tb-link"
+              >
+                <i className="fas fa-external-link-alt"></i> Open Public Verification
+              </a>
+              <button
+                className="btn-toolbar btn-tb-close"
+                onClick={() => setSelectedPrintCert(null)}
+              >
+                <i className="fas fa-times"></i> Close
+              </button>
+            </div>
+          </div>
+
+          <div className="cert-modal-content" onClick={e => e.stopPropagation()}>
+            <div className="certificate-print-frame">
+              <div className="cert-sheet">
+                <div className="cert-border-outer">
+                  <div className="cert-border-inner">
+                    <div className="cert-corner corner-tl"></div>
+                    <div className="cert-corner corner-tr"></div>
+                    <div className="cert-corner corner-bl"></div>
+                    <div className="cert-corner corner-br"></div>
+
+                    <div className="cert-header">
+                      <div className="cert-logo-wrap">
+                        <img src="https://adorn.ae/wp-content/uploads/2026/04/Adorn_Logo_Print_RGB-01.jpg" alt="ADORN" className="cert-logo" />
+                      </div>
+                      <div className="cert-org-title">
+                        ADORN ACADEMY OF NETWORK &amp; INFRASTRUCTURE TECHNOLOGY
+                      </div>
+                      <div className="cert-reg-sub">
+                        DUBAI, UNITED ARAB EMIRATES &bull; ACCREDITED TECHNICAL TRAINING
+                      </div>
+                      <div className="cert-divider-line"></div>
+                      <h1 className="cert-award-title">CERTIFICATE OF ACHIEVEMENT</h1>
+                      <p className="cert-award-sub">THIS IS TO OFFICIALLY CERTIFY THAT</p>
+                    </div>
+
+                    <div className="cert-candidate-block">
+                      <div className="cert-candidate-name">{selectedPrintCert.candidateName}</div>
+                      {selectedPrintCert.company && (
+                        <div className="cert-candidate-company">Representing: {selectedPrintCert.company}</div>
+                      )}
+                    </div>
+
+                    <p className="cert-body-text">
+                      has successfully satisfied all rigorous curriculum benchmarks, practical lab assessments, and examination requirements prescribed for the certification of
+                    </p>
+
+                    <div className="cert-course-block">
+                      <div className="cert-course-title">{selectedPrintCert.courseName}</div>
+                      <div className="cert-grade-tag">Performance: {selectedPrintCert.grade || 'Certified Practitioner'}</div>
+                    </div>
+
+                    <div className="cert-footer-row">
+                      <div className="cert-col cert-sig-col">
+                        <div className="cert-sig-line">
+                          <span className="cert-sig-hand">{selectedPrintCert.trainerName || 'Eng. Tariq Al Nuaimi'}</span>
+                        </div>
+                        <div className="cert-sig-title">Head of Technical Training</div>
+                        <div className="cert-sig-sub">ADORN Academy, Dubai</div>
+                      </div>
+
+                      <div className="cert-col cert-seal-col">
+                        <div className="cert-official-seal">
+                          <div className="seal-ring-outer">
+                            <div className="seal-ring-inner">
+                              <i className="fas fa-award seal-icon"></i>
+                              <span className="seal-txt">ADORN CERTIFIED</span>
+                              <span className="seal-sub">DUBAI &bull; UAE</span>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="cert-meta-info">
+                          <div><strong>Certificate ID:</strong> {format12(selectedPrintCert.certNumber)}</div>
+                          <div><strong>Issue Date:</strong> {selectedPrintCert.issueDate} &bull; <strong>Valid:</strong> {selectedPrintCert.expiryDate || 'Lifetime'}</div>
+                        </div>
+                      </div>
+
+                      <div className="cert-col cert-qr-col">
+                        <div className="cert-qr-box">
+                          <QRCodeView
+                            value={`${window.location.origin}/verify?cert=${selectedPrintCert.certNumber}`}
+                            size={110}
+                            color="#322160"
+                          />
+                        </div>
+                        <div className="cert-qr-label">
+                          <i className="fas fa-qrcode"></i> Scan to Verify Credential
+                        </div>
+                        <div className="cert-qr-url">adornconnect.com/verify</div>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
               </div>
             </div>
           </div>

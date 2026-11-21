@@ -1232,5 +1232,43 @@
       "status": "Pending",
       "created_at": "2026-11-19T01:54:04.500Z"
     }
+  ],
+  "certificates": [
+    {
+      "id": "CERT-202611-001",
+      "certNumber": "849201837462",
+      "candidateName": "Riyaz Ahamed",
+      "email": "embriyaz@gmail.com",
+      "phone": "+971 50 123 4567",
+      "company": "Adorn Telecommunications LLC",
+      "courseId": "structured-cabling",
+      "courseName": "Certified Structured Cabling Specialist (Level 1)",
+      "issueDate": "2026-11-20",
+      "expiryDate": "2029-11-20",
+      "grade": "Distinction (98%)",
+      "issuer": "ADORN Academy Technical Board",
+      "trainerName": "Eng. Tariq Al Nuaimi",
+      "status": "Active",
+      "notes": "Completed 40 hours of theory and hands-on lab practicals at Dubai Training Facility.",
+      "created_at": "2026-11-20T10:00:00.000Z"
+    },
+    {
+      "id": "CERT-202611-002",
+      "certNumber": "518392047163",
+      "candidateName": "David Chen",
+      "email": "d.chen@apextechnologies.ae",
+      "phone": "+971 52 987 6543",
+      "company": "Apex Network Solutions Dubai",
+      "courseId": "fiber-optics",
+      "courseName": "Certified Fiber Optic Specialist (Single-Mode & Multi-Mode)",
+      "issueDate": "2026-11-15",
+      "expiryDate": "2029-11-15",
+      "grade": "Pass with Honors (94%)",
+      "issuer": "ADORN Academy Technical Board",
+      "trainerName": "Eng. Tariq Al Nuaimi",
+      "status": "Active",
+      "notes": "OTDR testing, fusion splicing, and link loss budgeting certified.",
+      "created_at": "2026-11-15T09:30:00.000Z"
+    }
   ]
 }

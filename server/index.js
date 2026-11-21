@@ -13,6 +13,7 @@ const uploadRouter = require('./routes/upload');
 const docsRouter = require('./routes/docs');
 const downloadsRouter = require('./routes/downloads');
 const enrollmentsRouter = require('./routes/enrollments');
+const certificatesRouter = require('./routes/certificates');
 const { getBanner, updateBanner, getProducts, getCategories } = require('./db');
 
 const app = express();
@@ -93,6 +94,7 @@ app.use('/api/upload', uploadRouter);
 app.use('/api/docs', docsRouter);
 app.use('/api/downloads', downloadsRouter);
 app.use('/api/enrollments', enrollmentsRouter);
+app.use('/api/certificates', certificatesRouter);
 
 app.get('/api/banner', (req, res) => {
   res.json(getBanner());
