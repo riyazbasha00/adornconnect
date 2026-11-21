@@ -50,8 +50,9 @@ Then restart the Node.js app (Stop → Start, NOT Redeploy) so the new code load
 ## Local workflow
 - Build: `npm run build` (CRA + auto-sync to `server/build`). Commit `client/build` and `server/build` along with source.
 - Push to `origin/main` on `riyazbasha00/adornconnect`.
-- Current production build: `static/js/main.06883961.js` (with backwards compatibility for `main.7c84058e.js`) and `static/css/main.9a506f8b.css`.
+- Current production build: `static/js/main.f30f1c38.js` and `static/css/main.0966d158.css` (with backwards compatibility for legacy bundles).
 - Includes:
+  - Fixed category counts in sidebar filter: Category counts and "All" counts always reflect total catalog inventory and never reset to 0 when selecting a category.
   - Mirrored `server/build` and `client/build` directories so assets resolve whether Hostinger deploys `/`, `nodejs/`, or `server/`.
   - Multi-candidate build directory discovery and direct `/static` mounting.
   - Asset extension guard preventing `app.get('*')` from serving HTML for JS/CSS files (preventing browser `Unexpected token '<'` syntax crashes).
